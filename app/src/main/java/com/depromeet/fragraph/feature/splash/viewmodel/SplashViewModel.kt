@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.depromeet.fragraph.core.event.Event
 import com.depromeet.fragraph.domain.model.PageType
 import com.depromeet.fragraph.domain.repository.AuthRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -14,11 +15,11 @@ class SplashViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private var finishedAnimation: Boolean = false
+    private var isLottieFinished: Boolean = false
     private var openViewType: PageType = PageType.SPLASH
 
     data class OpenAppEvent(
-        val isFinishedAnimation: Boolean,
+        val isLottieFinished: Boolean,
         val openPageType: PageType,
     )
     private val _openAppEvent = MutableLiveData<Event<OpenAppEvent>>()
@@ -30,19 +31,17 @@ class SplashViewModel @ViewModelInject constructor(
     }
 
     fun finishAnimation() {
-        finishedAnimation = true
-        _openAppEvent.value = Event(OpenAppEvent(finishedAnimation, openViewType))
+        isLottieFinished = true
+        _openAppEvent.postValue(Event(OpenAppEvent(isLottieFinished, openViewType)))
     }
 
     private fun checkAccessToken() {
-        viewModelScope.launch {
-            authRepository.getAccessToken().first()?.let {
-                openViewType = PageType.REPORT
-                _openAppEvent.value = Event(OpenAppEvent(finishedAnimation, openViewType))
-            } ?: kotlin.run {
-                openViewType = PageType.SIGNIN
-                _openAppEvent.value = Event(OpenAppEvent(finishedAnimation, openViewType))
-            }
+        authRepository.getAccessToken()?.let {
+            openViewType = PageType.REPORT
+            _openAppEvent.postValue(Event(OpenAppEvent(isLottieFinished, openViewType)))
+        } ?: kotlin.run {
+            openViewType = PageType.SIGNIN
+            _openAppEvent.postValue(Event(OpenAppEvent(isLottieFinished, openViewType)))
         }
     }
 

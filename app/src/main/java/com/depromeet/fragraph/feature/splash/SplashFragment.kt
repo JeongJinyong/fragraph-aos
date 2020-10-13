@@ -46,7 +46,7 @@ class SplashFragment : Fragment() {
 
         splashViewModel.openAppEvent.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandled()?.let {event ->
-                if(event.isFinishedAnimation) {
+                if(event.isLottieFinished) {
                     when(event.openPageType) {
                         PageType.SIGNIN -> goSignIn()
                         PageType.REPORT -> Timber.tag(TAG).e("This page not implementation")

@@ -18,13 +18,5 @@
             app:lottie_fileName="lottie/lottie_splash.json"
             />
 
-        <Button
-            android:id="@+id/sampleBtn"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom"
-            android:text="클릭 테스트"
-            />
-
     </FrameLayout>
 </layout>

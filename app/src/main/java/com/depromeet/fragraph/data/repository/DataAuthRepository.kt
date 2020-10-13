@@ -1,15 +1,21 @@
 package com.depromeet.fragraph.data.repository
 
-import com.depromeet.fragraph.data.device.DataStoreManager
+import android.content.Context
+import com.depromeet.fragraph.core.KEY_AUTH_TOKEN
+import com.depromeet.fragraph.core.ext.authSharedPreferences
 import com.depromeet.fragraph.domain.repository.AuthRepository
-import kotlinx.coroutines.flow.Flow
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class DataAuthRepository @Inject constructor(
-    private val dataStoreManager: DataStoreManager,
+    @ApplicationContext private val context: Context
 ) : AuthRepository {
 
-    override fun getAccessToken(): Flow<String?> {
-        return dataStoreManager.getAccessTokenInPref()
+    override fun getAccessToken(): String? {
+        return context.authSharedPreferences().getString(KEY_AUTH_TOKEN, null)
     }
+
+//    override fun loginWithKakao(kakaoToken: String): Flow<String> {
+//
+//    }
 }
