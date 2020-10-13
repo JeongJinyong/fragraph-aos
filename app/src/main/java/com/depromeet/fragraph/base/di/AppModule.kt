@@ -1,7 +1,5 @@
 package com.depromeet.fragraph.base.di
 
-import android.app.Application
-import android.content.Context
 import com.depromeet.fragraph.base.initializer.AppInitializer
 import com.depromeet.fragraph.base.initializer.KakaoInitializer
 import com.depromeet.fragraph.base.initializer.TimberInitializer

@@ -2,7 +2,15 @@ package com.depromeet.fragraph.base
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.ui.AppBarConfiguration
 import com.depromeet.fragraph.R
+import com.depromeet.fragraph.databinding.ActivityMainBinding
+import com.depromeet.fragraph.feature.splash.viewmodel.SplashViewModel
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import dagger.hilt.android.AndroidEntryPoint
@@ -12,26 +20,29 @@ import timber.log.Timber
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private val sharedViewModel: SharedViewModel by viewModels()
+
+    private val binding: ActivityMainBinding by lazy {
+        DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_main
+        )
+    }
+
+    private val navController: NavController by lazy {
+        Navigation.findNavController(this, R.id.root_nav_host_fragment)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding
+        initNavigation()
+    }
 
-        kakao.setOnClickListener {
-            val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-                if (error != null) {
-                    Timber.tag(TAG).e(error, "로그인 실패")
-                }
-                else if (token != null) {
-                    Timber.tag(TAG).i( "로그인 성공 ${token.accessToken}")
-                }
-            }
+    private fun initNavigation() {
 
-            // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
-            if (LoginClient.instance.isKakaoTalkLoginAvailable(this@MainActivity)) {
-                LoginClient.instance.loginWithKakaoTalk(this@MainActivity, callback = callback)
-            } else {
-                LoginClient.instance.loginWithKakaoAccount(this@MainActivity, callback = callback)
-            }
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            Timber.tag(TAG).d("destinationId: ${destination.id}, destinationLabel: ${destination.label}")
         }
     }
 
