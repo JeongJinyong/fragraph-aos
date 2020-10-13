@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.depromeet.fragraph.R
 import com.depromeet.fragraph.base.MainActivity
+import com.depromeet.fragraph.databinding.FragmentSignInBinding
+import com.depromeet.fragraph.databinding.FragmentSplashBinding
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +31,7 @@ class SignInFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val binding = FragmentSignInBinding.bind(view)
 
 //        kakao.setOnClickListener {
 //            val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->

@@ -1,4 +1,29 @@
 package com.depromeet.fragraph.feature.report
 
-class ReportFragment {
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.depromeet.fragraph.R
+import com.depromeet.fragraph.databinding.FragmentReportBinding
+import com.depromeet.fragraph.databinding.FragmentSplashBinding
+
+class ReportFragment: Fragment() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_report, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val binding = FragmentReportBinding.bind(view)
+    }
 }
