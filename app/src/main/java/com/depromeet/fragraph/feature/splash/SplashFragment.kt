@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.depromeet.fragraph.R
+import com.depromeet.fragraph.databinding.FragmentSignInBinding
 import com.depromeet.fragraph.databinding.FragmentSplashBinding
 import com.depromeet.fragraph.domain.model.PageType
 import com.depromeet.fragraph.feature.splash.viewmodel.SplashViewModel
@@ -18,6 +19,7 @@ import timber.log.Timber
 @AndroidEntryPoint
 class SplashFragment : Fragment() {
 
+    private lateinit var binding: FragmentSplashBinding
     private val splashViewModel: SplashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,12 +28,12 @@ class SplashFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_splash, container, false)
+        binding = FragmentSplashBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val binding = FragmentSplashBinding.bind(view)
-
         binding.lottieViewSplash.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator?) {}
             override fun onAnimationEnd(animation: Animator?) {
@@ -44,16 +46,16 @@ class SplashFragment : Fragment() {
             override fun onAnimationRepeat(animation: Animator?) {}
         })
 
-        splashViewModel.openAppEvent.observe(viewLifecycleOwner, { event ->
+        splashViewModel.openAppEvent.observe(viewLifecycleOwner) { event ->
             event.getContentIfNotHandled()?.let {event ->
                 if(event.isLottieFinished) {
                     when(event.openPageType) {
                         PageType.SIGNIN -> goSignIn()
-                        PageType.REPORT -> Timber.tag(TAG).e("This page not implementation")
+                        PageType.REPORT -> goReport()
                     }
                 }
             }
-        })
+        }
     }
 
     private fun goSignIn() {

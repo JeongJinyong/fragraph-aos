@@ -6,7 +6,6 @@ import androidx.lifecycle.*
 import com.depromeet.fragraph.core.event.Event
 import com.depromeet.fragraph.domain.model.PageType
 import com.depromeet.fragraph.domain.repository.AuthRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -36,12 +35,14 @@ class SplashViewModel @ViewModelInject constructor(
     }
 
     private fun checkAccessToken() {
-        authRepository.getAccessToken()?.let {
-            openViewType = PageType.REPORT
-            _openAppEvent.postValue(Event(OpenAppEvent(isLottieFinished, openViewType)))
-        } ?: kotlin.run {
-            openViewType = PageType.SIGNIN
-            _openAppEvent.postValue(Event(OpenAppEvent(isLottieFinished, openViewType)))
+        viewModelScope.launch {
+            authRepository.getAccessToken().first()?.let {
+                openViewType = PageType.REPORT
+                _openAppEvent.postValue(Event(OpenAppEvent(isLottieFinished, openViewType)))
+            } ?: kotlin.run {
+                openViewType = PageType.SIGNIN
+                _openAppEvent.postValue(Event(OpenAppEvent(isLottieFinished, openViewType)))
+            }
         }
     }
 
