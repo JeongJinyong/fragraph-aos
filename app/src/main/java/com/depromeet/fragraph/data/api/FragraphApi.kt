@@ -8,16 +8,16 @@ import com.depromeet.fragraph.data.api.response.SocialLoginData
 import retrofit2.http.*
 
 interface FragraphApi {
-    @POST("/auth/{provider_name}/signin")
+    @POST("/api/v1/auth/{provider_name}/signin")
     suspend fun loginWithSocial(
         @Path("provider_name") providerName: String,
         @Body request: SocialLoginRequest,
     ): ApiResponse<SocialLoginData>
 
-    @GET("/me")
+    @GET("/api/v1/me")
     suspend fun getMyInfo(): ApiResponse<GetUserData>
 
-    @PUT("/me")
+    @PUT("/api/v1/me")
     suspend fun updateMyInfo(
         @Body request: UpdateMyInfoRequest,
     ): ApiResponse<GetUserData>

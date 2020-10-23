@@ -8,7 +8,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.depromeet.fragraph.R
+import com.depromeet.fragraph.core.ext.toast
 import com.depromeet.fragraph.databinding.FragmentSignInBinding
 import com.depromeet.fragraph.databinding.FragmentSplashBinding
 import com.depromeet.fragraph.feature.signin.viewmodel.SignInViewModel
@@ -36,10 +38,10 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
         signInViewModel.kakaoOpened.observe(viewLifecycleOwner) { event ->
             event.getContentIfNotHandled()?.let {
-
                 val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                     if (error != null) {
                         Timber.tag(TAG).e(error, "로그인 실패")
+                        requireContext().toast("로그인 실패")
                     } else if (token != null) {
                         signInViewModel.signInByKakao(token.accessToken)
                     }
@@ -53,6 +55,17 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                 }
             }
         }
+
+        signInViewModel.openMainEvent.observe(viewLifecycleOwner) {event ->
+            event.getContentIfNotHandled()?.let {
+                goReport()
+            }
+        }
+
+    }
+
+    private fun goReport() {
+        findNavController().navigate(R.id.action_signInFragment_to_reportFragment)
     }
 
     companion object {

@@ -26,14 +26,14 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String", "API_ENDPOINT", "\"https://florascent.kscory.com/v1/\""
+            buildConfigField "String", "API_ENDPOINT", "\"https://fragraph.kscory.com/\""
 
             resValue "string", "kakao_sdk_app_key", apikeyProperties['KAKAO_SDK_APP_KEY']
             resValue "string", "kakao_sdk_data_schema", apikeyProperties['KAKAO_SDK_DATA_SCHEMA']
         }
 
         release {
-            buildConfigField "String", "API_ENDPOINT", "\"https://fragraph.kscory.com/api/v1/\""
+            buildConfigField "String", "API_ENDPOINT", "\"https://fragraph.kscory.com/\""
 
             resValue "string", "kakao_sdk_app_key", apikeyProperties['KAKAO_SDK_APP_KEY']
             resValue "string", "kakao_sdk_data_schema", apikeyProperties['KAKAO_SDK_DATA_SCHEMA']
