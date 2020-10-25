@@ -1,6 +1,6 @@
 package com.depromeet.fragraph.data.api.response
 
-data class GetUserData(
+data class MusicApiData(
     val id: Int,
     val nickname: String,
     val profileUrl: String?,
