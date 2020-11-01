@@ -1,5 +1,6 @@
 package com.depromeet.fragraph.data.api
 
+import com.depromeet.fragraph.data.api.adapter.response.FragraphNetworkResponse
 import com.depromeet.fragraph.data.api.request.PostHistoryRequest
 import com.depromeet.fragraph.data.api.request.PostMemoRequest
 import com.depromeet.fragraph.data.api.request.SocialLoginRequest
@@ -12,56 +13,56 @@ interface FragraphApi {
     suspend fun loginWithSocial(
         @Path("provider_name") providerName: String,
         @Body request: SocialLoginRequest,
-    ): ApiResponse<SocialLoginData>
+    ): LoginWithSocialApiResponse
 
     @GET("/api/v1/me")
-    suspend fun getMyInfo(): ApiResponse<UserApiData>
+    suspend fun getMyInfo(): FragraphNetworkResponse<GetMyInfoApiResponse, ErrorResponse>
 
     @PUT("/api/v1/me")
     suspend fun updateMyInfo(
         @Body request: UpdateMyInfoRequest,
-    ): ApiResponse<UserApiData>
+    ): UpdateMyInfoApiResponse
 
     @GET("/api/v1/tags")
-    suspend fun getTags(): ApiResponse<GetTagsData>
+    suspend fun getTags(): GetTagsApiResponse
 
     @GET("/api/v1/incenses")
-    suspend fun getIncenses(): ApiResponse<GetIncensesData>
+    suspend fun getIncenses(): GetIncensesApiResponse
 
     @GET("/api/v1/recommendations")
     suspend fun getIncenses(
         @Query("tag") tagIds: List<Int>
-    ): ApiResponse<GetRecommendationData>
+    ): GetRecommendationApiResponse
 
     @POST("/api/v1/histories")
     suspend fun postHistory(
         @Body request: PostHistoryRequest,
-    ): ApiResponse<PostHistoryData>
+    ): PostHistoryApiResponse
 
     @GET("/api/v1/histories")
-    suspend fun getHistories(): ApiResponse<GetHistoriesData>
+    suspend fun getHistories(): GetHistoriesApiResponse
 
     @DELETE("/api/v1/histories/{history_id}")
     suspend fun deleteHistory(
         @Path("history_id") historyId: Int,
-    ): ApiResponse<Unit>
+    ): DeleteHistoriesApiResponse
 
     @POST("/api/v1/histories/{history_id}/memos")
     suspend fun postMemo(
         @Path("history_id") historyId: Int,
         @Body request: PostMemoRequest,
-    ): ApiResponse<PostMemoData>
+    ): PostMemoResponse
 
     @PUT("/api/v1/histories/{history_id}/memos/{memo_id}")
     suspend fun putMemo(
         @Path("history_id") historyId: Int,
         @Path("memo_id") memoId: Int,
         @Body request: PostMemoRequest,
-    ): ApiResponse<PostMemoData>
+    ): PutMemoResponse
 
     @DELETE("/api/v1/histories/{history_id}/memos/{memo_id}")
     suspend fun deleteMemo(
         @Path("history_id") historyId: Int,
         @Path("memo_id") memoId: Int,
-    ): ApiResponse<Unit>
+    ): DeleteMemoResponse
 }

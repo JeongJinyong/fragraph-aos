@@ -4,8 +4,10 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.depromeet.fragraph.core.event.Event
+import com.depromeet.fragraph.domain.model.AppError
 import com.depromeet.fragraph.domain.model.PageType
 import com.depromeet.fragraph.domain.repository.AuthRepository
+import com.depromeet.fragraph.domain.repository.IncenseRepository
 import com.depromeet.fragraph.domain.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -40,10 +42,21 @@ class SplashViewModel @ViewModelInject constructor(
 
     private fun getUserInfo() {
         viewModelScope.launch(Dispatchers.IO) {
+
             authRepository.getAccessToken().first()?.let {
                 userRepository.getMyInfo()
                     .catch { e ->
-                        Timber.tag(TAG).e(e, "error")
+                        when (e) {
+                            is AppError.ApiCustomizedException.TokenExpiredException -> {
+                                // 토큰 만료시에는 signin 으로 이동시킨다.
+                                openViewType = PageType.SIGNIN
+                                _openAppEvent.postValue(Event(OpenAppEvent(isLottieFinished, openViewType)))
+                            }
+                            else -> {
+                                Timber.tag(TAG).e(e, "error")
+                                throw Exception(e)
+                            }
+                        }
                     }
                     .collect {
                     openViewType = PageType.REPORT
