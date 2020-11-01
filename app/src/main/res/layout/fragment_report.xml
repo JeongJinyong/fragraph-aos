@@ -5,19 +5,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feature.report.ReportFragment"
     >
+
+    <data>
+        <variable
+            name="vm"
+            type="com.depromeet.fragraph.feature.report.viewmodel.ReportViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="Report Fragment"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/tv_weekly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weekly"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="44dp"
+            android:lineSpacingExtra="0sp"
+            android:textColor="#212121"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0" />
+
+        <FrameLayout
+            android:id="@+id/fl_report_chart_contnet"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_weekly"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0">
+
+            <com.depromeet.fragraph.feature.report.view.ReportChartView
+                android:id="@+id/report_chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:bind_day="@{vm.days}"
+                app:bind_bar_data="@{vm.playTimes}"/>
+        </FrameLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -8,11 +8,9 @@ import com.depromeet.fragraph.domain.model.PageType
 import com.depromeet.fragraph.domain.repository.AuthRepository
 import com.depromeet.fragraph.domain.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapConcat
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class SplashViewModel @ViewModelInject constructor(
     private val authRepository: AuthRepository,
@@ -43,7 +41,11 @@ class SplashViewModel @ViewModelInject constructor(
     private fun getUserInfo() {
         viewModelScope.launch(Dispatchers.IO) {
             authRepository.getAccessToken().first()?.let {
-                userRepository.getMyInfo().collect {
+                userRepository.getMyInfo()
+                    .catch { e ->
+                        Timber.tag(TAG).e(e, "error")
+                    }
+                    .collect {
                     openViewType = PageType.REPORT
                     _openAppEvent.postValue(Event(OpenAppEvent(isLottieFinished, openViewType)))
                 }
