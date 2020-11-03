@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.depromeet.fragraph.R
+import com.depromeet.fragraph.core.event.EventObserver
 import com.depromeet.fragraph.databinding.FragmentSignInBinding
 import com.depromeet.fragraph.databinding.FragmentSplashBinding
 import com.depromeet.fragraph.domain.model.PageType
@@ -26,8 +27,10 @@ class SplashFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentSplashBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         return binding.root
@@ -46,16 +49,15 @@ class SplashFragment : Fragment() {
             override fun onAnimationRepeat(animation: Animator?) {}
         })
 
-        splashViewModel.openAppEvent.observe(viewLifecycleOwner) { event ->
-            event.getContentIfNotHandled()?.let {event ->
-                if(event.isLottieFinished) {
-                    when(event.openPageType) {
-                        PageType.SIGNIN -> goSignIn()
-                        PageType.REPORT -> goReport()
-                    }
+        splashViewModel.openAppEvent.observe(viewLifecycleOwner, EventObserver { event ->
+            if (event.isLottieFinished) {
+                when (event.openPageType) {
+                    PageType.SIGNIN -> goSignIn()
+                    PageType.REPORT -> goReport()
+                    else -> goSignIn()
                 }
             }
-        }
+        })
     }
 
     private fun goSignIn() {

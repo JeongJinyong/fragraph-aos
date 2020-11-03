@@ -3,6 +3,7 @@ package com.depromeet.fragraph.feature.report.view
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
+import androidx.databinding.BindingAdapter
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -99,4 +100,11 @@ class ReportChartView @JvmOverloads constructor(
             }
         }
     }
+}
+
+@BindingAdapter("bind_day", "bind_bar_data", requireAll = true)
+fun ReportChartView.setBarData(days: List<String>, playTimes: List<Float>) {
+    setDataAndStyle(days, playTimes)
+    animateY(1000)
+    invalidate()
 }

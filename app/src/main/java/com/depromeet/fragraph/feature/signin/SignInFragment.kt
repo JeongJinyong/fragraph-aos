@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.depromeet.fragraph.R
+import com.depromeet.fragraph.core.event.EventObserver
 import com.depromeet.fragraph.core.ext.toast
 import com.depromeet.fragraph.databinding.FragmentSignInBinding
 import com.depromeet.fragraph.databinding.FragmentSplashBinding
@@ -22,7 +23,7 @@ import timber.log.Timber
 @AndroidEntryPoint
 class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
-//    private lateinit var binding: FragmentSignInBinding
+    //    private lateinit var binding: FragmentSignInBinding
     private val signInViewModel: SignInViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,31 +37,30 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                 vm = signInViewModel
             }
 
-        signInViewModel.kakaoOpened.observe(viewLifecycleOwner) { event ->
-            event.getContentIfNotHandled()?.let {
-                val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-                    if (error != null) {
-                        Timber.tag(TAG).e(error, "로그인 실패")
-                        requireContext().toast("로그인 실패")
-                    } else if (token != null) {
-                        signInViewModel.signInByKakao(token.accessToken)
-                    }
-                }
-
-                // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
-                if (LoginClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
-                    LoginClient.instance.loginWithKakaoTalk(requireContext(), callback = callback)
-                } else {
-                    LoginClient.instance.loginWithKakaoAccount(requireContext(), callback = callback)
+        signInViewModel.kakaoOpened.observe(viewLifecycleOwner, EventObserver { event ->
+            val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+                if (error != null) {
+                    Timber.tag(TAG).e(error, "로그인 실패")
+                    requireContext().toast("로그인 실패")
+                } else if (token != null) {
+                    signInViewModel.signInByKakao(token.accessToken)
                 }
             }
-        }
 
-        signInViewModel.openMainEvent.observe(viewLifecycleOwner) {event ->
-            event.getContentIfNotHandled()?.let {
-                goReport()
+            // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
+            if (LoginClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
+                LoginClient.instance.loginWithKakaoTalk(requireContext(), callback = callback)
+            } else {
+                LoginClient.instance.loginWithKakaoAccount(
+                    requireContext(),
+                    callback = callback
+                )
             }
-        }
+        })
+
+        signInViewModel.openMainEvent.observe(viewLifecycleOwner, EventObserver { event ->
+            goReport()
+        })
 
     }
 

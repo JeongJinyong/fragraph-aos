@@ -23,7 +23,7 @@ class DataFragraphRepository @Inject constructor(
         return flow {
             fragraphApi.getIncenses().data?.let {incenseData ->
                 val incenses = incenseData.incenses
-                    .map { Incense(it.id, it.title, it.detail) }
+                    .map { Incense(it.id, it.title, it.detail, "") }
                 emit(incenses)
             }
         }
