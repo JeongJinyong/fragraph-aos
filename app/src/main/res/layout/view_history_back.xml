@@ -7,12 +7,12 @@
     <data>
         <variable
             name="history"
-            type="com.depromeet.fragraph.domain.model.History" />
+            type="com.depromeet.fragraph.feature.report.model.HistoryUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ImageView
             android:layout_width="0dp"

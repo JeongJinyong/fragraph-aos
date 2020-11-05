@@ -54,20 +54,21 @@
                 app:bind_bar_data="@{vm.playTimes}"/>
         </FrameLayout>
 
-        <FrameLayout
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_histories"
-            android:layout_width="290dp"
+            android:layout_width="0dp"
             android:layout_height="350dp"
             android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fl_report_chart_contnet"
-            app:layout_constraintVertical_bias="0">
+            app:layout_constraintVertical_bias="0"
+            app:bind_items="@{vm.histories}"
+            tools:listitem="@layout/item_history"
+            >
 
-            <include layout="@layout/view_history_front"
-                bind:history="@{vm.histories}"/>
-        </FrameLayout>
+        </androidx.recyclerview.widget.RecyclerView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
