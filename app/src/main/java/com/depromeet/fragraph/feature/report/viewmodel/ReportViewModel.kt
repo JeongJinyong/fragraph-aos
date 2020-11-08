@@ -6,16 +6,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.depromeet.fragraph.core.event.Event
 import com.depromeet.fragraph.domain.model.History
 import com.depromeet.fragraph.domain.model.Incense
 import com.depromeet.fragraph.domain.model.Memo
 import com.depromeet.fragraph.domain.repository.UserRepository
 import com.depromeet.fragraph.feature.report.model.HistoryUiModel
 
-class ReportViewModel@ViewModelInject constructor(
+class ReportViewModel @ViewModelInject constructor(
     private val userRepository: UserRepository,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    private val _openRecommendationEvent = MutableLiveData<Event<Unit>>()
+    val openRecommendationEvent: LiveData<Event<Unit>>
+        get() = _openRecommendationEvent
 
     private val _days = MutableLiveData(listOf("01", "02", "03", "04", "05", "06", "07"))
     val days: LiveData<List<String>>
@@ -41,4 +46,9 @@ class ReportViewModel@ViewModelInject constructor(
             HistoryUiModel(1, 1603894614000, 300, incense, memo, false),
         )
     )
+
+
+    fun startRecommendation() {
+        _openRecommendationEvent.postValue(Event(Unit))
+    }
 }

@@ -1,4 +1,4 @@
-package com.depromeet.fragraph.feature.report.view
+package com.depromeet.fragraph.feature.report.adapter
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet

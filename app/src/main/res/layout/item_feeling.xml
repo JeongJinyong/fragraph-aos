@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+        <variable
+            name="feeling"
+            type="com.depromeet.fragraph.feature.recommendation.feeling_select.model.FeelingUiModel" />
+    </data>
+
+
+<FrameLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@{feeling.selected ? @drawable/btn_feeling_selected : @drawable/btn_feeling_normal}"
+    >
+
+    <TextView
+        android:id="@+id/tv_item_feeling"
+        android:text="@{feeling.name}"
+        android:textColor="@{feeling.selected ? @color/feeling_selected_text_color : @color/feeling_non_selected_text_color}"
+        android:layout_marginStart="@dimen/space_s_large"
+        android:layout_marginEnd="@dimen/space_s_large"
+        android:layout_marginTop="@dimen/space_x_small"
+        android:layout_marginBottom="@dimen/space_x_small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="잠이 필요해"/>
+
+</FrameLayout>
+</layout>

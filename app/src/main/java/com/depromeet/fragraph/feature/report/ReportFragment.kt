@@ -1,21 +1,17 @@
 package com.depromeet.fragraph.feature.report
 
-import android.animation.AnimatorInflater
-import android.animation.AnimatorSet
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.fragraph.R
+import com.depromeet.fragraph.core.event.EventObserver
 import com.depromeet.fragraph.databinding.FragmentReportBinding
-import com.depromeet.fragraph.databinding.FragmentSplashBinding
-import com.depromeet.fragraph.feature.report.view.HistoryRecyclerViewAdapter
+import com.depromeet.fragraph.feature.report.adapter.HistoryRecyclerViewAdapter
 import com.depromeet.fragraph.feature.report.viewmodel.ReportViewModel
-import com.depromeet.fragraph.feature.signin.viewmodel.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,5 +36,13 @@ class ReportFragment: Fragment(R.layout.fragment_report) {
             adapter = HistoryRecyclerViewAdapter(scale)
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
         }
+
+        reportViewModel.openRecommendationEvent.observe(viewLifecycleOwner, EventObserver {
+            goFeelingSelect()
+        })
+    }
+
+    private fun goFeelingSelect() {
+        findNavController().navigate(R.id.action_reportFragment_to_feelingSelectFragment)
     }
 }

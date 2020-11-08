@@ -36,9 +36,21 @@
             app:popUpToInclusive="true"
             />
     </fragment>
+
     <fragment
         android:id="@+id/reportFragment"
         android:name="com.depromeet.fragraph.feature.report.ReportFragment"
         android:label="fragment_report"
-        tools:layout="@layout/fragment_report" />
+        tools:layout="@layout/fragment_report">
+
+        <action
+            android:id="@+id/action_reportFragment_to_feelingSelectFragment"
+            app:destination="@id/feelingSelectFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/feelingSelectFragment"
+        android:name="com.depromeet.fragraph.feature.recommendation.feeling_select.FeelingSelectFragment"
+        android:label="fragment_feeling_select"
+        tools:layout="@layout/fragment_feeling_select" />
 </navigation>
