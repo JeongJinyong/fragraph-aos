@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">fragraph</string>
-
+    <string name="empty"> </string>
 </resources>

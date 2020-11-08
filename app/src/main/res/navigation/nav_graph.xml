@@ -52,5 +52,28 @@
         android:id="@+id/feelingSelectFragment"
         android:name="com.depromeet.fragraph.feature.recommendation.feeling_select.FeelingSelectFragment"
         android:label="fragment_feeling_select"
-        tools:layout="@layout/fragment_feeling_select" />
+        tools:layout="@layout/fragment_feeling_select">
+
+        <action
+            android:id="@+id/action_feelingSelectFragment_to_incenseSelectFragment"
+            app:destination="@id/incenseSelectFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/incenseSelectFragment"
+        android:name="com.depromeet.fragraph.feature.recommendation.incense_select.IncenseSelectFragment"
+        android:label="fragment_incense_select"
+        tools:layout="@layout/fragment_incense_select" >
+        <action
+            android:id="@+id/action_incenseSelectFragment_to_meditationFragment"
+            app:destination="@id/meditationFragment"
+            app:popUpTo="@id/reportFragment"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/meditationFragment"
+        android:name="com.depromeet.fragraph.feature.meditation.MeditationFragment"
+        android:label="fragment_meditation"
+        tools:layout="@layout/fragment_meditation" />
 </navigation>

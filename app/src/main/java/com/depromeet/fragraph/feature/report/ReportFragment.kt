@@ -19,8 +19,6 @@ class ReportFragment: Fragment(R.layout.fragment_report) {
 
     private val reportViewModel: ReportViewModel by viewModels()
 
-    var mIsBackVisible = false
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = FragmentReportBinding.bind(view)
             .apply {

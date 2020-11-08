@@ -13,6 +13,6 @@ data class GetRecommendationApiResponse(
 data class RecommendationApiData(
     val tags: List<TagsApiData>,
     val incense: IncenseApiData,
-    val music: MusicApiResponse,
-    val video: VideoApiResponse,
+    val music: MusicApiData,
+    val video: VideoApiData,
 )

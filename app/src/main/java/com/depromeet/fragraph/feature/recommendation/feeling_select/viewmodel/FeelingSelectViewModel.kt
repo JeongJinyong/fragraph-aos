@@ -6,18 +6,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.depromeet.fragraph.core.event.Event
 import com.depromeet.fragraph.domain.repository.UserRepository
 import com.depromeet.fragraph.feature.recommendation.feeling_select.model.FeelingUiModel
 import timber.log.Timber
 
 class FeelingSelectViewModel @ViewModelInject constructor(
-    private val userRepository: UserRepository,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _feelings = MutableLiveData<List<FeelingUiModel>>(listOf())
     val feelings: LiveData<List<FeelingUiModel>>
         get() = _feelings
+
+    private val _openIncenseSelectEvent = MutableLiveData<Event<Unit>>()
+    val openIncenseSelectEvent: LiveData<Event<Unit>>
+        get() = _openIncenseSelectEvent
 
     init {
         _feelings.value = listOf(
@@ -98,6 +102,7 @@ class FeelingSelectViewModel @ViewModelInject constructor(
             }
 
         Timber.tag(TAG).d("tagids : $feelingIds")
+        _openIncenseSelectEvent.postValue(Event(Unit))
     }
 
     companion object {

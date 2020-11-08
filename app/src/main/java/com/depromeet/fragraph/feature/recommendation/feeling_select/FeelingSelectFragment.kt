@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.depromeet.fragraph.R
+import com.depromeet.fragraph.core.event.EventObserver
 import com.depromeet.fragraph.databinding.FragmentFeelingSelectBinding
 import com.depromeet.fragraph.feature.recommendation.feeling_select.adapter.FeelingRecyclerViewAdapter
 import com.depromeet.fragraph.feature.recommendation.feeling_select.viewmodel.FeelingSelectViewModel
@@ -35,5 +37,13 @@ class FeelingSelectFragment: Fragment(R.layout.fragment_feeling_select) {
             adapter = feelingRecyclerViewAdapter
             layoutManager = FlexboxLayoutManager(requireContext(), FlexDirection.ROW)
         }
+
+        feelingSelectViewModel.openIncenseSelectEvent.observe(viewLifecycleOwner, EventObserver {
+            goIncenseSelect()
+        })
+    }
+
+    private fun goIncenseSelect() {
+        findNavController().navigate(R.id.action_feelingSelectFragment_to_incenseSelectFragment)
     }
 }

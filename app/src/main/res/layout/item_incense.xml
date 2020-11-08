@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="incense"
+            type="com.depromeet.fragraph.feature.recommendation.incense_select.model.IncenseItemUiModel" />
+
+        <import type="android.view.View"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_incense"
+            android:layout_width="260dp"
+            android:layout_height="340dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/sample_history_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:image_from_url="@{incense.image}"
+            tools:src="@drawable/sample_history_background" />
+
+        <TextView
+            android:id="@+id/tv_incense_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{incense.title}"
+            android:textSize="28sp"
+            android:textColor="#212121"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_incense"
+            app:layout_constraintHorizontal_bias="0"
+            tools:text="라벤더" />
+
+        <TextView
+            android:id="@+id/tv_incense_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{incense.category.title}"
+            android:textSize="14sp"
+            android:textColor="#212121"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_incense_title"
+            app:layout_constraintHorizontal_bias="0"
+            tools:text="숙면, 신경안정" />
+
+        <com.depromeet.fragraph.core.ui.VerticalTextView
+            android:id="@+id/vertical_view_feeling_first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{incense.feelings.get(0).name}"
+            app:layout_constraintStart_toEndOf="@+id/iv_incense"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            tools:text="피곤한 하루" />
+
+        <com.depromeet.fragraph.core.ui.VerticalTextView
+            android:id="@+id/vertical_view_feeling_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{incense.feelings.size() > 1 ? View.VISIBLE : View.GONE}"
+            android:text="@{incense.feelings.size() > 1 ? incense.feelings.get(1).name : @string/empty}"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toEndOf="@+id/iv_incense"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/vertical_view_feeling_first"
+            app:layout_constraintHorizontal_bias="0"
+            tools:text="피곤한 하루" />
+
+        <com.depromeet.fragraph.core.ui.VerticalTextView
+            android:id="@+id/vertical_view_feeling_third"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{incense.feelings.size() > 2 ? View.VISIBLE : View.GONE}"
+            android:text="@{incense.feelings.size() > 2 ? incense.feelings.get(2).name : @string/empty}"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toEndOf="@+id/iv_incense"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/vertical_view_feeling_second"
+            app:layout_constraintHorizontal_bias="0"
+            tools:text="피곤한 하루" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_incense_feeling"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="vertical_view_feeling_first,vertical_view_feeling_second,vertical_view_feeling_third"/>
+
+        <View
+            android:id="@+id/view_feeling_end"
+            android:layout_width="3dp"
+            android:layout_height="300dp"
+            android:layout_marginStart="@dimen/space_s_large"
+            android:background="#000000"
+            app:layout_constraintStart_toEndOf="@+id/barrier_incense_feeling"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
