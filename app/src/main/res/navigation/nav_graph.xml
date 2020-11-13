@@ -22,6 +22,13 @@
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true"
             />
+        <!-- Todo temp 삭제시킬 것 -->
+        <action
+            android:id="@+id/action_splashFragment_to_meditationFragment"
+            app:destination="@id/meditationFragment"
+            app:popUpTo="@id/meditationFragment"
+            app:popUpToInclusive="true"
+            />
     </fragment>
 
     <fragment

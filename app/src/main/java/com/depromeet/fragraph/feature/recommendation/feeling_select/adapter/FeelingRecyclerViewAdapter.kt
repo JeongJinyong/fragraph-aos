@@ -37,7 +37,7 @@ class FeelingRecyclerViewAdapter(
 
     class ViewHolder(
         val binding: ItemFeelingBinding,
-        private val lifecycleOwner: LifecycleOwner
+        lifecycleOwner: LifecycleOwner
     ): RecyclerView.ViewHolder(binding.root) {
         init {
             binding.lifecycleOwner = lifecycleOwner

@@ -15,5 +15,115 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/iv_meditation_bg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:image_from_url="@{vm.videoUrl}"
+            tools:src="@drawable/sample_history_background"/>
+
+        <ImageView
+            android:id="@+id/iv_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintVertical_bias="0"
+            />
+
+        <TextView
+            android:id="@+id/tv_meditation_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="42dp"
+            android:text="Mon 19"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_exit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0"
+            tools:text="Mon 19"
+            />
+
+        <TextView
+            android:id="@+id/tv_meditation_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:text="October"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_meditation_day"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0"
+            tools:text="October"
+            />
+
+        <TextView
+            android:id="@+id/tv_meditation_playtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="30dp"
+            android:text="@{String.valueOf(vm.remainingTime)}"
+            android:textSize="56sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_meditation_month"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0"
+            tools:text="05 : 14"
+            />
+
+        <TextView
+            android:id="@+id/tv_meditation_incense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:text="@{vm.incense}"
+            android:textSize="56sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_meditation_playtime"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0"
+            tools:text="라벤더"
+            />
+        
+        <ProgressBar
+            android:id="@+id/pb_music_duration"
+            android:layout_width="20dp"
+            android:layout_height="0dp"
+            android:progress="@{vm.remainingTime}"
+            android:max="@{vm.totalPlaytime}"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="30dp"
+            android:rotation="180"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_meditation_month"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            style="@style/Widget.AppCompat.ProgressBar.Vertical"
+            />
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
