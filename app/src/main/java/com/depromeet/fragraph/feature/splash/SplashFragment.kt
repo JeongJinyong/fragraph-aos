@@ -52,13 +52,13 @@ class SplashFragment : Fragment() {
         splashViewModel.openAppEvent.observe(viewLifecycleOwner, EventObserver { event ->
             if (event.isLottieFinished) {
                 // Todo: 개발 끝나고는 signin 과 report 로 갈 것
-                findNavController().navigate(R.id.action_splashFragment_to_meditationFragment)
+//                findNavController().navigate(R.id.action_splashFragment_to_meditationFragment)
 
-//                when (event.openPageType) {
-//                    PageType.SIGNIN -> goSignIn()
-//                    PageType.REPORT -> goReport()
-//                    else -> goSignIn()
-//                }
+                when (event.openPageType) {
+                    PageType.SIGNIN -> goSignIn()
+                    PageType.REPORT -> goReport()
+                    else -> goSignIn()
+                }
             }
         })
     }

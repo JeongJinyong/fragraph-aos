@@ -73,22 +73,45 @@
             tools:text="October"
             />
 
-        <TextView
-            android:id="@+id/tv_meditation_playtime"
+        <LinearLayout
+            android:id="@+id/ll_meditation_playtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="48dp"
             android:layout_marginTop="30dp"
-            android:text="@{String.valueOf(vm.remainingTime)}"
-            android:textSize="56sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_meditation_month"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
-            tools:text="05 : 14"
-            />
+            >
+            <TextView
+                android:id="@+id/tv_meditation_playtime_min"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{vm.remainingTimeMin}"
+                android:textSize="56sp"
+                tools:text="05"
+                />
+
+            <TextView
+                android:id="@+id/tv_meditation_playtime_mid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" : "
+                android:textSize="56sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_meditation_playtime_seconds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{vm.remainingTimeSeconds}"
+                android:textSize="56sp"
+                tools:text="14"
+                />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_meditation_incense"
@@ -99,7 +122,7 @@
             android:textSize="56sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_meditation_playtime"
+            app:layout_constraintTop_toBottomOf="@+id/ll_meditation_playtime"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
@@ -110,8 +133,6 @@
             android:id="@+id/pb_music_duration"
             android:layout_width="20dp"
             android:layout_height="0dp"
-            android:progress="@{vm.remainingTime}"
-            android:max="@{vm.totalPlaytime}"
             android:layout_marginStart="18dp"
             android:layout_marginTop="30dp"
             android:rotation="180"
@@ -120,6 +141,8 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_meditation_month"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
+            app:bind_total_value="@{vm.totalPlaytime}"
+            app:bind_progress_value="@{vm.remainingTime}"
             style="@style/Widget.AppCompat.ProgressBar.Vertical"
             />
 

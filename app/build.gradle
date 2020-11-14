@@ -83,6 +83,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // AndroidX - media
+    implementation "androidx.media:media:1.2.0"
     def media2_version = "1.0.3"
     implementation "androidx.media2:media2-session:$media2_version"
     implementation "androidx.media2:media2-widget:$media2_version"

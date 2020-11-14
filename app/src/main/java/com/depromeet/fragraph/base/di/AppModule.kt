@@ -3,6 +3,7 @@ package com.depromeet.fragraph.base.di
 import com.depromeet.fragraph.base.initializer.AppInitializer
 import com.depromeet.fragraph.base.initializer.KakaoInitializer
 import com.depromeet.fragraph.base.initializer.TimberInitializer
+import com.depromeet.fragraph.core.player.Player
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,5 +24,10 @@ object AppModule {
     @IntoSet
     fun provideKakaoInitializer(): AppInitializer {
         return KakaoInitializer()
+    }
+
+    @Provides
+    fun providePlayer(): Player {
+        return Player()
     }
 }

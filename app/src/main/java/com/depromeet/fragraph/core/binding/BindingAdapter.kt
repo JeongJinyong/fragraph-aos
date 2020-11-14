@@ -3,6 +3,7 @@ package com.depromeet.fragraph.core.binding
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -23,4 +24,14 @@ fun ImageView.bindImageFromUrl(imageUrl: String?) {
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(this)
     }
+}
+
+@BindingAdapter("bind_total_value")
+fun ProgressBar.bindTotalValue(value: Int) {
+    this.max = value
+}
+
+@BindingAdapter("bind_progress_value")
+fun ProgressBar.bindProgressValue(value: Int) {
+    this.progress = value
 }
