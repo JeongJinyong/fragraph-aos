@@ -4,11 +4,14 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.depromeet.fragraph.base.GlideApp
 import com.depromeet.fragraph.base.ui.IRecyclerViewAdapter
+import com.depromeet.fragraph.core.ext.enums.toNormal
+import com.depromeet.fragraph.domain.model.enums.IncenseTitle
 
 @BindingAdapter("bind_items")
 fun <T> RecyclerView.setItems(items : List<T>) {
@@ -34,4 +37,9 @@ fun ProgressBar.bindTotalValue(value: Int) {
 @BindingAdapter("bind_progress_value")
 fun ProgressBar.bindProgressValue(value: Int) {
     this.progress = value
+}
+
+@BindingAdapter("bind_incense_title_text_normal")
+fun TextView.bindIncenseTitleTextNormal(value: IncenseTitle) {
+    this.text = value.toNormal()
 }

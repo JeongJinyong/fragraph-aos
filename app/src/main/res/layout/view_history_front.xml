@@ -47,7 +47,6 @@
             android:id="@+id/tv_history_incense_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{history.incense.title}"
             android:layout_alignParentTop="true"
             android:textSize="20sp"
             android:textColor="#212121"
@@ -58,6 +57,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_history_day"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
+            app:bind_incense_title_text_normal="@{history.incense.title}"
             tools:text="Lavendar"/>
 
         <TextView

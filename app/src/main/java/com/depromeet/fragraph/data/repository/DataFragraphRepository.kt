@@ -2,22 +2,20 @@ package com.depromeet.fragraph.data.repository
 
 import android.content.Context
 import com.depromeet.fragraph.data.api.FragraphApi
-import com.depromeet.fragraph.data.api.request.UpdateMyInfoRequest
 import com.depromeet.fragraph.domain.model.Incense
-import com.depromeet.fragraph.domain.model.User
+import com.depromeet.fragraph.domain.model.Report
+import com.depromeet.fragraph.domain.model.enums.IncenseTitle
 import com.depromeet.fragraph.domain.repository.IncenseRepository
-import com.depromeet.fragraph.domain.repository.UserRepository
+import com.depromeet.fragraph.domain.repository.ReportRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class DataFragraphRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val fragraphApi: FragraphApi,
-) : IncenseRepository {
+) : IncenseRepository, ReportRepository {
 
     override fun getIncenses(): Flow<List<Incense>> {
         return flow {
@@ -26,6 +24,14 @@ class DataFragraphRepository @Inject constructor(
                     .map { Incense(it.id, it.title, it.detail, "") }
                 emit(incenses)
             }
+        }
+    }
+
+    override fun getReport(): Flow<Report> {
+        return flow {
+            val titles = listOf(IncenseTitle.LAVENDER, IncenseTitle.PEPPERMINT, IncenseTitle.SANDALWOOD, IncenseTitle.ORANGE, IncenseTitle.EUCALYPTUS)
+            val values = listOf(7f, 4f, 8f, 5f, 10f)
+            emit(Report(titles, values))
         }
     }
 }

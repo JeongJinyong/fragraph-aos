@@ -1,5 +1,7 @@
 package com.depromeet.fragraph.data.api.response
 
+import com.depromeet.fragraph.domain.model.enums.IncenseTitle
+
 data class GetIncensesApiResponse(
     override val code: String,
     override val message: String,
@@ -13,6 +15,6 @@ data class GetIncensesApiResponse(
 
 data class IncenseApiData(
     val id: Int,
-    val title: String,
+    val title: IncenseTitle,
     val detail: String,
 )

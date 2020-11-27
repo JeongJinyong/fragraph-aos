@@ -3,6 +3,7 @@ package com.depromeet.fragraph.data.api
 import android.content.Context
 import com.depromeet.fragraph.BuildConfig
 import com.depromeet.fragraph.data.api.adapter.response.NetworkResponseAdapterFactory
+import com.depromeet.fragraph.data.api.factory.EnumConverterFactory
 import com.depromeet.fragraph.data.api.interceptor.AuthInterceptor
 import dagger.Module
 import dagger.Provides
@@ -29,6 +30,7 @@ class ApiModule {
             .client(okHttpClient)
             .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .addConverterFactory(converter)
+            .addConverterFactory(EnumConverterFactory())
             .build()
             .create(FragraphApi::class.java)
 
