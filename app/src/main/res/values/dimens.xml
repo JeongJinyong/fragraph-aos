@@ -6,4 +6,8 @@
     <dimen name="space_s_large">18dp</dimen>
     <dimen name="space_large">20dp</dimen>
     <dimen name="space_x_large">24dp</dimen>
+
+    <!--  report  -->
+    <dimen name="report_chart_extra_bottom">3dp</dimen>
+    <dimen name="report_chart_x_axis_font_size">12sp</dimen>
 </resources>

@@ -97,12 +97,14 @@
         <FrameLayout
             android:id="@+id/fl_report_chart_contnet"
             android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="40dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="@dimen/space_small"
+            android:layout_marginStart="@dimen/space_small"
+            android:layout_marginEnd="@dimen/space_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_report_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_report_description_prefix"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0">
 
@@ -110,8 +112,8 @@
                 android:id="@+id/report_chart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:bind_day="@{vm.days}"
-                app:bind_bar_data="@{vm.playTimes}"/>
+                app:bind_incense="@{vm.reportModel.titles}"
+                app:bind_bar_data="@{vm.reportModel.counts}"/>
         </FrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView

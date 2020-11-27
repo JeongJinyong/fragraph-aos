@@ -10,6 +10,7 @@ import com.depromeet.fragraph.domain.model.enums.IncenseTitle
 import com.depromeet.fragraph.domain.repository.ReportRepository
 import com.depromeet.fragraph.feature.report.model.HistoryUiModel
 import com.depromeet.fragraph.feature.report.model.ReportUiModel
+import com.depromeet.fragraph.feature.report.model.getDefaultReportUiModel
 import com.depromeet.fragraph.feature.signin.SignInFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -27,7 +28,7 @@ class ReportViewModel @ViewModelInject constructor(
     val openRecommendationEvent: LiveData<Event<Unit>>
         get() = _openRecommendationEvent
 
-    private val _reportModel = MutableLiveData<ReportUiModel>()
+    private val _reportModel = MutableLiveData(getDefaultReportUiModel())
     val reportModel: MutableLiveData<ReportUiModel>
         get() = _reportModel
 
