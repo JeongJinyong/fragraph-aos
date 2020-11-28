@@ -11,70 +11,108 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="@dimen/history_card_width"
+        android:layout_height="@dimen/history_card_height">
 
         <ImageView
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/sample_history_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:src="@drawable/sample_history_background"
+            app:bind_history_background="@{history.incenseTitle}"
+            tools:src="@drawable/default_history_background"
             />
-
-        <TextView
-            android:id="@+id/tv_history_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{history.createdAt}"
-            android:layout_alignParentTop="true"
-            android:textSize="12sp"
-            android:textColor="#000000"
-            android:layout_marginTop="@dimen/space_x_large"
-            android:layout_marginStart="@dimen/space_x_large"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintVertical_bias="0"
-            tools:text="thu_2020"/>
 
         <TextView
             android:id="@+id/tv_history_incense_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:includeFontPadding="false"
             android:textSize="20sp"
-            android:textColor="#212121"
-            android:layout_marginTop="4dp"
-            android:layout_marginStart="@dimen/space_x_large"
+            android:textColor="@color/colorWhiteGray_6"
+            android:fontFamily="@font/gilroy_extra_bold"
+            android:layout_marginTop="@dimen/space_large"
+            android:layout_marginStart="@dimen/space_large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_history_day"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
             app:bind_incense_title_text_normal="@{history.incenseTitle}"
             tools:text="Lavendar"/>
 
-        <TextView
-            android:id="@+id/tv_history_memo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{history.memo.content}"
-            android:layout_alignParentTop="true"
-            android:textSize="24sp"
-            android:textColor="#212121"
-            android:lineSpacingExtra="7sp"
-            android:layout_marginStart="@dimen/space_x_large"
+        <ImageView
+            android:id="@+id/iv_history_memo_image"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginEnd="@dimen/space_large"
+            android:scaleType="centerCrop"
+            app:image_from_url="@{history.memo.image}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="오늘 너무 힘든 하루"/>
+            app:layout_constraintTop_toTopOf="@+id/tv_history_incense_title"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_history_incense_title"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintVertical_bias="0.5"
+            tools:src="@drawable/feeling_bg"
+            />
 
+        <View
+            android:id="@+id/view_history_top_line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/space_x_small"
+            android:layout_marginStart="@dimen/space_large"
+            android:layout_marginEnd="@dimen/space_large"
+            android:background="@color/colorWhiteGray_6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_history_incense_title"
+            />
+
+        <TextView
+            android:id="@+id/tv_history_memo_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:includeFontPadding="false"
+            android:text="@{history.memo.title}"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhiteGray_6"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            android:layout_marginStart="@dimen/space_large"
+            android:layout_marginEnd="@dimen/space_large"
+            android:layout_marginTop="@dimen/space_xx_large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/view_history_top_line"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0.5"
+            tools:text="가나다라마바장ㄴ.."/>
+
+        <TextView
+            android:id="@+id/tv_keyword_second"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_alignParentBottom="true"
+            android:includeFontPadding="false"
+            android:text="@{history.memo.content}"
+            android:textSize="14sp"
+            android:textColor="@color/colorWhiteGray_6"
+            android:fontFamily="@font/spoqa_han_sans_regular"
+            android:layout_marginStart="@dimen/space_large"
+            android:layout_marginEnd="@dimen/space_large"
+            android:layout_marginTop="@dimen/space_median"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_history_memo_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0.5"
+            tools:text=" 기관과 그들의 동력은 위하여 날카로우나 힘있다. 같은 열매를 인간의 품었기 따뜻한 심장의 그들에게 아니다. 이상이 위하여서, 듣기만 하였으며, 꾸며 이상의 싶이 피가 끓는 쓸쓸하랴? 쓸쓸한 간에 무엇이 것이다. 따뜻한 같이 주며, 작고 우리 그들에게 끓는다. 위하여서 내는 살았으며, 피는 위하여, 일월과 피부가 옷을 "/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:image_from_url="@{vm.videoUrl}"
-            tools:src="@drawable/sample_history_background"/>
+            tools:src="@drawable/default_history_background"/>
 
         <ImageView
             android:id="@+id/iv_exit"

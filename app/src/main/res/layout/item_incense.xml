@@ -22,13 +22,13 @@
             android:layout_width="260dp"
             android:layout_height="340dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/sample_history_background"
+            android:src="@drawable/default_history_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:image_from_url="@{incense.image}"
-            tools:src="@drawable/sample_history_background" />
+            tools:src="@drawable/default_history_background" />
 
         <TextView
             android:id="@+id/tv_incense_title"

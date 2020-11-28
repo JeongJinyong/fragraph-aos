@@ -4,10 +4,7 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.depromeet.fragraph.core.event.Event
-import com.depromeet.fragraph.core.ext.FRAGRAPH_HISTORY_FORMAT
-import com.depromeet.fragraph.core.ext.JUST_DAY
 import com.depromeet.fragraph.core.ext.miliSecondsToMonth
-import com.depromeet.fragraph.core.ext.miliSecondsToStringFormat
 import com.depromeet.fragraph.domain.repository.HistoryRepository
 import com.depromeet.fragraph.domain.repository.ReportRepository
 import com.depromeet.fragraph.feature.report.model.HistoryUiModel
@@ -17,6 +14,7 @@ import com.depromeet.fragraph.feature.signin.SignInFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -67,17 +65,12 @@ class ReportViewModel @ViewModelInject constructor(
                     Timber.tag(SignInFragment.TAG).e("히스토리 가져오는 중 오류 발생")
                 }
                 .map { histories->
-                    histories.map {
-                        HistoryUiModel(
-                            it.id,
-                            "${it.createdAt.miliSecondsToStringFormat(FRAGRAPH_HISTORY_FORMAT)}. ${it.createdAt.miliSecondsToStringFormat(JUST_DAY)}요일",
-                            "${it.playTime/60}분 재생",
-                            it.incense.title,
-                            it.memo,
-                            isExisted = true,
-                            isBack = false,
-                        )
-                    }
+                    histories.filter { it.keywords.size > 2 }
+                        .map {
+                            HistoryUiModel(it.id, it.createdAt, "${it.playTime/60}분 재생", it.incense.title, it.memo,
+                                it.keywords[0].name, it.keywords[1].name, it.keywords[2].name,
+                                isExisted = true, isBack = false)
+                        }
                 }
                 .map {
                     val newHistories = mutableListOf<HistoryUiModel>()

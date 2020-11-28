@@ -14,4 +14,6 @@
     <string name="report_x_sandalwood">sandal\nwood&#160;&#160;</string>
     <string name="report_x_orange">oran\nnge&#160;</string>
     <string name="report_x_eucalyptus">eucalyp\ntus&#160;&#160;&#160;&#160;</string>
+
+    <string name="history_keyword">#%s</string>
 </resources>
