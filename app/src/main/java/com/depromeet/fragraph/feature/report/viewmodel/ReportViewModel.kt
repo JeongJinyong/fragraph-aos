@@ -4,9 +4,11 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.depromeet.fragraph.core.event.Event
-import com.depromeet.fragraph.domain.model.Incense
-import com.depromeet.fragraph.domain.model.Memo
-import com.depromeet.fragraph.domain.model.enums.IncenseTitle
+import com.depromeet.fragraph.core.ext.FRAGRAPH_HISTORY_FORMAT
+import com.depromeet.fragraph.core.ext.JUST_DAY
+import com.depromeet.fragraph.core.ext.miliSecondsToMonth
+import com.depromeet.fragraph.core.ext.miliSecondsToStringFormat
+import com.depromeet.fragraph.domain.repository.HistoryRepository
 import com.depromeet.fragraph.domain.repository.ReportRepository
 import com.depromeet.fragraph.feature.report.model.HistoryUiModel
 import com.depromeet.fragraph.feature.report.model.ReportUiModel
@@ -21,6 +23,7 @@ import timber.log.Timber
 
 class ReportViewModel @ViewModelInject constructor(
     private val reportRepository: ReportRepository,
+    private val historyRepository: HistoryRepository,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -32,33 +35,15 @@ class ReportViewModel @ViewModelInject constructor(
     val reportModel: MutableLiveData<ReportUiModel>
         get() = _reportModel
 
-    private val _days = MutableLiveData(listOf("lavender", "pepper mint", "03", "04", "05", "06", "07"))
-    val days: LiveData<List<String>>
-        get() = _days
+    private val _month = MutableLiveData("${System.currentTimeMillis().miliSecondsToMonth()}월")
+    val month: MutableLiveData<String>
+        get() = _month
 
-    private val _playTimes = MutableLiveData(listOf(30f, 300f, 400f, 200f, 500f, 430f, 120f))
-    val playTimes: LiveData<List<Float>>
-        get() = _playTimes
-
-    val incense = Incense(1, IncenseTitle.LAVENDER, "어쩌구 저쩌구", "이미지라네")
-    val memo = Memo(1, "삼겹살 먹어서 기분 짱좋음")
-    val histories = MutableLiveData<List<HistoryUiModel>>(
-        listOf(
-            HistoryUiModel(1, 1603894614000, 300, incense, memo, false),
-            HistoryUiModel(1, 1603894614000, 300, incense, memo, false),
-            HistoryUiModel(1, 1603894614000, 300, incense, memo, false),
-            HistoryUiModel(1, 1603894614000, 300, incense, memo, false),
-            HistoryUiModel(1, 1603894614000, 300, incense, memo, false),
-            HistoryUiModel(1, 1603894614000, 300, incense, memo, false),
-            HistoryUiModel(1, 1603894614000, 300, incense, memo, false),
-            HistoryUiModel(1, 1603894614000, 300, incense, memo, false),
-            HistoryUiModel(1, 1603894614000, 300, incense, memo, false),
-            HistoryUiModel(1, 1603894614000, 300, incense, memo, false),
-        )
-    )
+    val histories = MutableLiveData<List<HistoryUiModel>>(listOf())
 
     init {
         getReport()
+        getHistories(System.currentTimeMillis().miliSecondsToMonth(), addAfter = true)
     }
 
     private fun getReport() {
@@ -72,6 +57,42 @@ class ReportViewModel @ViewModelInject constructor(
                     ReportUiModel(playCount.toInt().toString(), it.titles, it.counts)
                 }
                 .collect { _reportModel.postValue(it) }
+        }
+    }
+
+    fun getHistories(month: String, addAfter: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            historyRepository.getHistories(month)
+                .catch {
+                    Timber.tag(SignInFragment.TAG).e("히스토리 가져오는 중 오류 발생")
+                }
+                .map { histories->
+                    histories.map {
+                        HistoryUiModel(
+                            it.id,
+                            "${it.createdAt.miliSecondsToStringFormat(FRAGRAPH_HISTORY_FORMAT)}. ${it.createdAt.miliSecondsToStringFormat(JUST_DAY)}요일",
+                            "${it.playTime/60}분 재생",
+                            it.incense.title,
+                            it.memo,
+                            isExisted = true,
+                            isBack = false,
+                        )
+                    }
+                }
+                .map {
+                    val newHistories = mutableListOf<HistoryUiModel>()
+                    if (addAfter) {
+                        newHistories.addAll(histories.value!!)
+                        newHistories.addAll(it)
+                    } else {
+                        newHistories.addAll(it)
+                        newHistories.addAll(histories.value!!)
+                    }
+                    newHistories
+                }
+                .collect {
+                    histories.postValue(it)
+                }
         }
     }
 

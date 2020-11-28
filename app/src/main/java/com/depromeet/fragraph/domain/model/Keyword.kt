@@ -1,6 +1,6 @@
 package com.depromeet.fragraph.domain.model
 
-data class Feeling(
+data class Keyword(
     val id : Int,
     val name: String,
     val weight: Float,

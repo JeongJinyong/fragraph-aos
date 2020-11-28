@@ -1,9 +1,6 @@
 package com.depromeet.fragraph.data.repository
 
-import com.depromeet.fragraph.domain.repository.AuthRepository
-import com.depromeet.fragraph.domain.repository.IncenseRepository
-import com.depromeet.fragraph.domain.repository.ReportRepository
-import com.depromeet.fragraph.domain.repository.UserRepository
+import com.depromeet.fragraph.domain.repository.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -24,4 +21,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun reportRepository(impl: DataFragraphRepository): ReportRepository
+
+    @Binds
+    abstract fun historyRepository(impl: DataFragraphRepository): HistoryRepository
 }

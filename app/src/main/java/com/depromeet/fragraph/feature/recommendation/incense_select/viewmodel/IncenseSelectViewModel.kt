@@ -8,10 +8,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.depromeet.fragraph.core.event.Event
 import com.depromeet.fragraph.domain.model.Category
-import com.depromeet.fragraph.domain.model.Feeling
+import com.depromeet.fragraph.domain.model.Keyword
 import com.depromeet.fragraph.domain.model.Music
 import com.depromeet.fragraph.domain.model.Video
-import com.depromeet.fragraph.feature.recommendation.feeling_select.model.FeelingUiModel
 import com.depromeet.fragraph.feature.recommendation.incense_select.model.IncenseItemUiModel
 
 class IncenseSelectViewModel @ViewModelInject constructor(
@@ -50,9 +49,9 @@ class IncenseSelectViewModel @ViewModelInject constructor(
         )
 
         val feelings = listOf(
-            Feeling(2, "우울해", 0.4f),
-            Feeling(1, "하늘을 날아갈 것 같은", 0.8f),
-            Feeling(3, "잠 못드는 밤", 0.3f),
+            Keyword(2, "우울해", 0.4f),
+            Keyword(1, "하늘을 날아갈 것 같은", 0.8f),
+            Keyword(3, "잠 못드는 밤", 0.3f),
         )
 
         _incenses.value = listOf(

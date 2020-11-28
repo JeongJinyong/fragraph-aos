@@ -30,7 +30,7 @@
             android:id="@+id/tv_history_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.valueOf(history.day)}"
+            android:text="@{history.createdAt}"
             android:layout_alignParentTop="true"
             android:textSize="12sp"
             android:textColor="#000000"
@@ -57,7 +57,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_history_day"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
-            app:bind_incense_title_text_normal="@{history.incense.title}"
+            app:bind_incense_title_text_normal="@{history.incenseTitle}"
             tools:text="Lavendar"/>
 
         <TextView

@@ -9,6 +9,8 @@ import java.util.*
 const val SEOUL = "Asia/Seoul"
 const val LONDON = "Europe/London"
 
+const val JUST_DAY = "E"
+const val JUST_MONTH = "MM"
 const val JUST_MINUTES = "mm"
 const val JUST_SECONDS = "ss"
 const val DF_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ssXXX"
@@ -17,6 +19,7 @@ const val DF_NORMAL = "yyyy-MM-dd HH:mm:ss"
 const val DF_ISO_8601_DATE = "yyyy-MM-dd"
 
 // fragraph 에서 사용하는 format
+const val FRAGRAPH_HISTORY_FORMAT = "yyyy. MM. dd"
 //const val FRAGRAPH_REMAINING_TIME_FORMAT = "mm : ss"
 
 fun Date.toDatetime(): String {
@@ -31,6 +34,18 @@ fun String.toDatetimeSimpleISO8601(timezone: String = SEOUL): Date? {
     val dateformater: DateFormat = SimpleDateFormat(DF_SIMPLE_ISO_8601)
     dateformater.timeZone = TimeZone.getTimeZone(timezone)
     return dateformater.parse(this)
+}
+
+fun Long.miliSecondsToStringFormat(format: String, timezone: String = SEOUL): String {
+    val dateformater: DateFormat = SimpleDateFormat(format)
+    dateformater.timeZone = TimeZone.getTimeZone(timezone)
+    return dateformater.format(Date(this))
+}
+
+fun Long.miliSecondsToMonth(timezone: String = SEOUL): String {
+    val dateformater: DateFormat = SimpleDateFormat(JUST_MONTH)
+    dateformater.timeZone = TimeZone.getTimeZone(timezone)
+    return dateformater.format(Date(this))
 }
 
 fun Int.miliSecondsToMinutes(timezone: String = SEOUL): String {
