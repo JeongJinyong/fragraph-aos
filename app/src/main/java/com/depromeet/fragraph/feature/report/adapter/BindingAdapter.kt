@@ -42,7 +42,7 @@ fun ImageView.bindHistoryBackground(value: IncenseTitle) {
 
 @BindingAdapter("bind_history_alpha_anim")
 fun FrameLayout.bindHistoryAlphaAnim(visibility: Int) {
-    if (visibility == View.VISIBLE && this.visibility == View.INVISIBLE) {
+    if (visibility == View.VISIBLE) {
         // 알파값 생성
 //        val anim = AnimationUtils.loadAnimation(this.context, R.anim.alpha_history_other)
 //        this.startAnimation(anim)
@@ -59,7 +59,7 @@ fun FrameLayout.bindHistoryAlphaAnim(visibility: Int) {
         this.visibility = View.VISIBLE
     }
 
-    if (visibility == View.INVISIBLE && this.visibility == View.VISIBLE) {
+    if (visibility == View.INVISIBLE) {
         // 알파값 삭제
 //        val anim = AnimationUtils.loadAnimation(this.context, R.anim.alpha_history_center)
 //        this.startAnimation(anim)

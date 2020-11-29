@@ -3,7 +3,6 @@ package com.depromeet.fragraph.feature.report.model
 import androidx.lifecycle.MutableLiveData
 import com.depromeet.fragraph.domain.model.Memo
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
-import com.depromeet.fragraph.feature.recommendation.feeling_select.model.FeelingUiModel
 
 data class HistoryUiModel(
     val id: Int,

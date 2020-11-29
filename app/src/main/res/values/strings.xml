@@ -16,4 +16,9 @@
     <string name="report_x_eucalyptus">eucalyp\ntus&#160;&#160;&#160;&#160;</string>
 
     <string name="history_keyword">#%s</string>
+
+    <!--  keyword select view  -->
+    <string name="keyword_toast_more_than_three">키워드는 3개까지 선택 가능합니다.</string>
+    <string name="keyword_toast_less_than_three">키워드가 부족합니다.</string>
+    <string name="keyword_amount">%s/3</string>
 </resources>

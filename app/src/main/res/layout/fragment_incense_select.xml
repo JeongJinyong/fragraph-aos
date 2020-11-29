@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:background="@drawable/btn_feeling_normal"
+            android:background="@drawable/btn_keyword_non_selected"
             app:layout_constraintEnd_toStartOf="@+id/btn_start_meditation"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rv_incenses"

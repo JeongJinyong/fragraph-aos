@@ -6,6 +6,7 @@ import com.depromeet.fragraph.domain.model.*
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
 import com.depromeet.fragraph.domain.repository.HistoryRepository
 import com.depromeet.fragraph.domain.repository.IncenseRepository
+import com.depromeet.fragraph.domain.repository.KeywordRepository
 import com.depromeet.fragraph.domain.repository.ReportRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +16,9 @@ import javax.inject.Inject
 class DataFragraphRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val fragraphApi: FragraphApi,
-) : IncenseRepository, ReportRepository, HistoryRepository {
+) : IncenseRepository, KeywordRepository, ReportRepository, HistoryRepository {
+
+    val selectedKeywords = mutableListOf<Keyword>()
 
     override fun getIncenses(): Flow<List<Incense>> {
         return flow {
@@ -25,6 +28,23 @@ class DataFragraphRepository @Inject constructor(
                 emit(incenses)
             }
         }
+    }
+
+    override fun getRecommendationIncenses(): Flow<List<Recommendation>> {
+        return flow {
+
+        }
+    }
+
+    override fun getRandomKeywords(): Flow<List<Keyword>> {
+        return flow{
+            emit(keywords.shuffled().subList(0, 21))
+        }
+    }
+
+    override fun saveSelectKeywords(keywords: List<Keyword>) {
+        selectedKeywords.clear()
+        selectedKeywords.addAll(keywords)
     }
 
     override fun getReport(): Flow<Report> {

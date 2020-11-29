@@ -5,6 +5,6 @@ enum class PageType {
     SIGNIN,
     REPORT,
     MEDITATION,
-    FEELING_SELECT,
+    KEYWORD_SELECT,
     INCENSE_SELECT,
 }

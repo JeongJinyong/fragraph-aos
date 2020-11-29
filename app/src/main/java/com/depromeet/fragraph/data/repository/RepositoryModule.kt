@@ -20,6 +20,9 @@ abstract class RepositoryModule {
     abstract fun incenseRepository(impl: DataFragraphRepository): IncenseRepository
 
     @Binds
+    abstract fun keywordRepository(impl: DataFragraphRepository): KeywordRepository
+
+    @Binds
     abstract fun reportRepository(impl: DataFragraphRepository): ReportRepository
 
     @Binds

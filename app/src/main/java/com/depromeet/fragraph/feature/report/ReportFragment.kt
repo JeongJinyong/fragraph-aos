@@ -2,12 +2,10 @@ package com.depromeet.fragraph.feature.report
 
 import android.os.Bundle
 import android.view.View
-import android.widget.AbsListView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.fragraph.R
 import com.depromeet.fragraph.core.event.EventObserver
@@ -18,8 +16,8 @@ import com.depromeet.fragraph.feature.report.adapter.HistoryRecyclerViewScrollLi
 import com.depromeet.fragraph.feature.report.adapter.HistoryRecyclerViewSnapHelper
 import com.depromeet.fragraph.feature.report.viewmodel.ReportViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
+// Todo 이미지 있다면 클릭시 확대 애니메이션 적용 필요
 // Todo 알파값 애니메이션 변경 필요
 
 @AndroidEntryPoint
@@ -53,11 +51,11 @@ class ReportFragment: Fragment(R.layout.fragment_report) {
         }
 
         reportViewModel.openRecommendationEvent.observe(viewLifecycleOwner, EventObserver {
-            goFeelingSelect()
+            goKeywordSelect()
         })
     }
 
-    private fun goFeelingSelect() {
-        findNavController().navigate(R.id.action_reportFragment_to_feelingSelectFragment)
+    private fun goKeywordSelect() {
+        findNavController().navigate(R.id.action_reportFragment_to_keywordSelectFragment)
     }
 }

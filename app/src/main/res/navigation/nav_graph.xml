@@ -51,18 +51,18 @@
         tools:layout="@layout/fragment_report">
 
         <action
-            android:id="@+id/action_reportFragment_to_feelingSelectFragment"
-            app:destination="@id/feelingSelectFragment" />
+            android:id="@+id/action_reportFragment_to_keywordSelectFragment"
+            app:destination="@id/keywordSelectFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/feelingSelectFragment"
-        android:name="com.depromeet.fragraph.feature.recommendation.feeling_select.FeelingSelectFragment"
-        android:label="fragment_feeling_select"
-        tools:layout="@layout/fragment_feeling_select">
+        android:id="@+id/keywordSelectFragment"
+        android:name="com.depromeet.fragraph.feature.recommendation.keyword_select.KeywordSelectFragment"
+        android:label="fragment_keyword_select"
+        tools:layout="@layout/fragment_keyword_select">
 
         <action
-            android:id="@+id/action_feelingSelectFragment_to_incenseSelectFragment"
+            android:id="@+id/action_keywordSelectFragment_to_incenseSelectFragment"
             app:destination="@id/incenseSelectFragment" />
     </fragment>
 
