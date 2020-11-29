@@ -13,4 +13,8 @@ enum class IncenseTitle {
     ORANGE,
     @SerializedName("EUCALYPTUS")
     EUCALYPTUS,
+
+    // 빈 값 위해 넣어둠
+    @SerializedName("EMPTY")
+    EMPTY,
 }

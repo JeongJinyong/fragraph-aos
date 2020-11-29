@@ -23,15 +23,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:bind_history_background="@{history.incenseTitle}"
-            tools:src="@drawable/default_history_background"
+            tools:src="@drawable/incense_empty_background"
             />
 
         <TextView
-            android:id="@+id/tv_history_incense_title"
+            android:id="@+id/tv_history_empty_incense_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:includeFontPadding="false"
+            android:text="Title"
             android:textSize="20sp"
             android:textColor="@color/colorWhiteGray_6"
             android:fontFamily="@font/gilroy_extra_bold"
@@ -42,25 +43,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
-            app:bind_incense_title_text_normal="@{history.incenseTitle}"
-            tools:text="Lavendar"/>
-
-        <ImageView
-            android:id="@+id/iv_history_more"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="@dimen/space_large"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_history_incense_title"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_history_incense_title"
-            app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintVertical_bias="0.5"
-            android:src="@drawable/ic_baseline_more_horiz_24"
-            />
+            tools:text="Title"/>
 
         <View
-            android:id="@+id/view_history_top_line"
+            android:id="@+id/view_history_empty_top_line"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/space_x_small"
@@ -69,28 +55,28 @@
             android:background="@color/colorWhiteGray_6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_history_incense_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_history_empty_incense_title"
             />
 
         <TextView
-            android:id="@+id/tv_keyword_first"
+            android:id="@+id/tv_history_empty_description_first"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:includeFontPadding="false"
-            android:text="@{@string/history_keyword(history.keywordFirst)}"
+            android:text="기록이 없습니다."
             android:textSize="22sp"
             android:textColor="@color/colorWhiteGray_6"
             android:fontFamily="@font/spoqa_han_sans_bold"
             android:layout_marginStart="@dimen/space_large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/view_history_top_line"
+            app:layout_constraintTop_toTopOf="@+id/view_history_empty_top_line"
             app:layout_constraintBottom_toTopOf="@+id/tv_keyword_second"
             app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0.5"
-            tools:text="#잠이 오지 않는"/>
+            tools:text="기록이 없습니다."/>
 
         <TextView
             android:id="@+id/tv_keyword_second"
@@ -98,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:includeFontPadding="false"
-            android:text="@{@string/history_keyword(history.keywordSecond)}"
+            android:text="향상을 시작해주세요!"
             android:textSize="22sp"
             android:textColor="@color/colorWhiteGray_6"
             android:fontFamily="@font/spoqa_han_sans_bold"
@@ -106,34 +92,14 @@
             android:layout_marginTop="@dimen/space_xx_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_keyword_first"
-            app:layout_constraintBottom_toTopOf="@+id/tv_keyword_third"
+            app:layout_constraintTop_toBottomOf="@+id/tv_history_empty_description_first"
+            app:layout_constraintBottom_toTopOf="@+id/view_history_empty_bottom_line"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0.5"
-            tools:text="#피곤한"/>
-
-        <TextView
-            android:id="@+id/tv_keyword_third"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:includeFontPadding="false"
-            android:text="@{@string/history_keyword(history.keywordThird)}"
-            android:textSize="22sp"
-            android:textColor="@color/colorWhiteGray_6"
-            android:fontFamily="@font/spoqa_han_sans_bold"
-            android:layout_marginStart="@dimen/space_large"
-            android:layout_marginTop="@dimen/space_xx_small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_keyword_second"
-            app:layout_constraintBottom_toBottomOf="@+id/view_history_bottom_line"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintVertical_bias="0.5"
-            tools:text="#스트레스"/>
+            tools:text="향상을 시작해주세요!"/>
 
         <View
-            android:id="@+id/view_history_bottom_line"
+            android:id="@+id/view_history_empty_bottom_line"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginBottom="@dimen/space_x_small"
@@ -142,11 +108,11 @@
             android:background="@color/colorWhiteGray_6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/tv_history_date"
+            app:layout_constraintBottom_toTopOf="@+id/tv_history_empty_date"
             />
 
         <TextView
-            android:id="@+id/tv_history_date"
+            android:id="@+id/tv_history_empty_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -157,17 +123,17 @@
             android:layout_marginStart="@dimen/space_large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/tv_history_playtime"
+            app:layout_constraintBottom_toTopOf="@+id/tv_history_empty_playtime"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="1"
             app:bind_history_date="@{history.createdAt}"
             tools:text="2020. 11. 22. 일요일"/>
 
         <TextView
-            android:id="@+id/tv_history_playtime"
+            android:id="@+id/tv_history_empty_playtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{history.playTime}"
+            android:text="0분 재생"
             android:includeFontPadding="false"
             android:textSize="12sp"
             android:textColor="@color/colorWhiteGray_6"
@@ -180,6 +146,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="1"
-            tools:text="15분 재생"/>
+            tools:text="0분 재생"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

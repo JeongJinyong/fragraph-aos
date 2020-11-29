@@ -67,6 +67,7 @@ class DataFragraphRepository @Inject constructor(
                 History(9, (Math.random() * 1000).toInt(), incenses[(Math.random() * 5).toInt()], memos[(Math.random() * 5).toInt()], 1605218730578, listOf(keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()])),
                 History(10, (Math.random() * 1000).toInt(), incenses[(Math.random() * 5).toInt()], memos[(Math.random() * 5).toInt()], 1605283530578, listOf(keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()])),
                 History(11, (Math.random() * 1000).toInt(), incenses[(Math.random() * 5).toInt()], memos[(Math.random() * 5).toInt()], 1605369930578, listOf(keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()])),
+                History(12, (Math.random() * 1000).toInt(), incenses[(Math.random() * 5).toInt()], memos[(Math.random() * 5).toInt()], 1606611930578, listOf(keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()])),
             )
 
             emit(histories)

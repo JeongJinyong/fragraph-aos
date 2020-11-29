@@ -1,7 +1,9 @@
 package com.depromeet.fragraph.feature.report.model
 
+import androidx.lifecycle.MutableLiveData
 import com.depromeet.fragraph.domain.model.Memo
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
+import com.depromeet.fragraph.feature.recommendation.feeling_select.model.FeelingUiModel
 
 data class HistoryUiModel(
     val id: Int,
@@ -14,8 +16,16 @@ data class HistoryUiModel(
     val keywordThird: String,
     val isExisted: Boolean,
     var isBack: Boolean,
-)
+    val isCenter: MutableLiveData<Boolean>,
+) {
+    fun changeCenterPosition(isCenter: Boolean) {
+        this.isCenter.value = isCenter
+    }
+}
 
 fun getEmptyUiModel(createdAt: Long) = HistoryUiModel(
-    0, createdAt, "0", IncenseTitle.LAVENDER, Memo(0, "", "",null), "", "", "", isExisted = true, isBack = false
+    0, createdAt, "0", IncenseTitle.EMPTY,
+    Memo(0, "", "", null), "", "", "",
+    isExisted = false, isBack = false,
+    isCenter = MutableLiveData(false),
 )

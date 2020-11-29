@@ -8,29 +8,73 @@
         <variable
             name="history"
             type="com.depromeet.fragraph.feature.report.model.HistoryUiModel" />
+
+        <import type="android.view.View"/>
     </data>
 
-    <FrameLayout
-        android:id="@+id/fl_history_item"
-        android:layout_width="@dimen/history_card_width"
-        android:layout_height="@dimen/history_card_height">
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
 
         <FrameLayout
-            android:id="@+id/fl_history_back"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:id="@+id/fl_history_empty_item"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{history.existed ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintDimensionRatio="27: 35">
 
-            <include layout="@layout/view_history_back"
+            <include layout="@layout/view_history_empty"
                 bind:history="@{history}"/>
         </FrameLayout>
 
         <FrameLayout
-            android:id="@+id/fl_history_front"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <include layout="@layout/view_history_front"
-                bind:history="@{history}"/>
+            android:id="@+id/fl_history_item"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{history.existed ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintDimensionRatio="27: 35">
+
+            <FrameLayout
+                android:id="@+id/fl_history_back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <include layout="@layout/view_history_back"
+                    bind:history="@{history}"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_history_front"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <include layout="@layout/view_history_front"
+                    bind:history="@{history}"/>
+            </FrameLayout>
+
         </FrameLayout>
 
-    </FrameLayout>
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0.38"
+            android:background="#000000"
+            app:bind_history_alpha_anim="@{history.isCenter() ? View.INVISIBLE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

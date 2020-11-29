@@ -5,14 +5,21 @@ import android.animation.AnimatorSet
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.fragraph.R
 import com.depromeet.fragraph.base.ui.IRecyclerViewAdapter
+import com.depromeet.fragraph.core.ext.FRAGRAPH_HISTORY_FORMAT
+import com.depromeet.fragraph.core.ext.miliSecondsToStringFormat
 import com.depromeet.fragraph.databinding.ItemHistoryBinding
 import com.depromeet.fragraph.feature.report.model.HistoryUiModel
+import timber.log.Timber
 
 class HistoryRecyclerViewAdapter(
-    val scale: Float,
+    private val lifecycleOwner: LifecycleOwner,
+    private val scale: Float,
+    private val firstScrollCallback: (position: Int) -> Unit
 ): RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder>(), IRecyclerViewAdapter<HistoryUiModel> {
 
     private val historyList = mutableListOf<HistoryUiModel>()
@@ -26,24 +33,39 @@ class HistoryRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(historyList[position])
+//        Timber.d("position: ${holder.bindingAdapterPosition}")
+        holder.bind(historyList[position], lifecycleOwner)
     }
 
     override fun getItemCount(): Int = historyList.size
 
     override fun setItems(data: List<HistoryUiModel>) {
-        historyList.clear()
-        historyList.addAll(data)
-        notifyDataSetChanged()
+        if (historyList.size == 0) {
+            historyList.clear()
+            historyList.addAll(data)
+            notifyDataSetChanged()
+            val position = historyList.indexOfFirst {
+                it.createdAt.miliSecondsToStringFormat(FRAGRAPH_HISTORY_FORMAT) == System.currentTimeMillis().miliSecondsToStringFormat(FRAGRAPH_HISTORY_FORMAT)
+            }
+            firstScrollCallback(position)
+        } else {
+            historyList.clear()
+            historyList.addAll(data)
+            notifyDataSetChanged()
+        }
     }
 
-    class ViewHolder(val binding: ItemHistoryBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun changeCenterValue(position: Int, isCenter: Boolean) {
+        historyList[position].changeCenterPosition(isCenter)
+    }
 
-        var history: HistoryUiModel? = null
+    class ViewHolder(
+        val binding: ItemHistoryBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(history: HistoryUiModel) {
-            this.history = history
+        fun bind(history: HistoryUiModel, lifecycleOwner: LifecycleOwner) {
             binding.history = history
+            binding.lifecycleOwner = lifecycleOwner
 
             val mSetRightIn: AnimatorSet = AnimatorInflater.loadAnimator(itemView.context, R.animator.hisotry_flip_right_in) as AnimatorSet
             val mSetRightOut: AnimatorSet = AnimatorInflater.loadAnimator(itemView.context, R.animator.hisotry_flip_right_out) as AnimatorSet

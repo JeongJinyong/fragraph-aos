@@ -22,6 +22,7 @@ fun IncenseTitle.backgroundResourceId(): Int {
         IncenseTitle.SANDALWOOD -> R.drawable.incense_sandalwood_background
         IncenseTitle.ORANGE -> R.drawable.incense_orange_background
         IncenseTitle.EUCALYPTUS -> R.drawable.incense_eucalyptus_background
+        IncenseTitle.EMPTY -> R.drawable.incense_empty_background
         else -> R.drawable.default_history_background
     }
 }
