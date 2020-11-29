@@ -8,6 +8,7 @@
     <dimen name="space_large">20dp</dimen>
     <dimen name="space_x_large">24dp</dimen>
     <dimen name="space_xx_large">28dp</dimen>
+    <dimen name="space_xxx_large">32dp</dimen>
 
     <!--  report  -->
     <dimen name="report_chart_extra_bottom">3dp</dimen>

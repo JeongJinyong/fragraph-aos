@@ -198,12 +198,11 @@
 
         <Button
             android:id="@+id/btn_start_recommendation"
-            android:text="+"
-            android:textSize="30dp"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:background="@drawable/btn_bg_floating_recommendation"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginEnd="@dimen/space_large"
-            android:layout_marginBottom="@dimen/space_large"
+            android:layout_marginBottom="@dimen/space_xxx_large"
             android:onClick="@{() -> vm.startRecommendation()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
