@@ -1,10 +1,9 @@
-package com.depromeet.fragraph.feature.report.adapter
+package com.depromeet.fragraph.feature.report.adapter.recyclerview
 
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.fragraph.core.ext.dpToPx
-import timber.log.Timber
 
 class HistoryRecyclerViewDecoration: RecyclerView.ItemDecoration() {
 

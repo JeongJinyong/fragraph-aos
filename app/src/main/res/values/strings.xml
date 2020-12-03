@@ -21,4 +21,8 @@
     <string name="keyword_toast_more_than_three">키워드는 3개까지 선택 가능합니다.</string>
     <string name="keyword_toast_less_than_three">키워드가 부족합니다.</string>
     <string name="keyword_amount">%s/3</string>
+
+    <!--  incense select view  -->
+    <string name="incense_select_title">오늘의 향을 선택해주세요.</string>
+    <string name="incense_select_description">원하는 향을 선택하시면 \n어울리는 음악을 추천해드려요!</string>
 </resources>

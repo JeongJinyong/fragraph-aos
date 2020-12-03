@@ -11,11 +11,17 @@ import com.depromeet.fragraph.domain.model.Category
 import com.depromeet.fragraph.domain.model.Keyword
 import com.depromeet.fragraph.domain.model.Music
 import com.depromeet.fragraph.domain.model.Video
+import com.depromeet.fragraph.domain.model.enums.IncenseTitle
 import com.depromeet.fragraph.feature.recommendation.incense_select.model.IncenseItemUiModel
+import timber.log.Timber
 
 class IncenseSelectViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    private val _backClickEvent = MutableLiveData<Event<Unit>>()
+    val backClickEvent: LiveData<Event<Unit>>
+        get() = _backClickEvent
 
     private val _openMeditationEvent = MutableLiveData<Event<Unit>>()
     val openMeditationEvent: LiveData<Event<Unit>>
@@ -55,16 +61,24 @@ class IncenseSelectViewModel @ViewModelInject constructor(
         )
 
         _incenses.value = listOf(
-            IncenseItemUiModel(3, "라벤더", "주성분은 아세트산리날릴, 리날올, 피넨, 리모넨, 게라니올, 시네올 등이다. 이는 신경을 안정시켜주고 스트레스 해소 및 불면증 예방에 탁월한 효과가 있다.", "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/lavendar.png", categories[0], video, music, feelings),
-            IncenseItemUiModel(4, "페퍼민트", "기침, 감기, 천식, 알레르기 및 결핵 등 호흡기계에 건강상 효능을 제공, 기억력 증진 및 스트레스 완화 효과가 있을 수 있습니다.", "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/mint.png", categories[1], video, music, feelings),
-            IncenseItemUiModel(5, "유칼립투스", "근육통 안화효과, 다피가료움증 개선, 호흡기 건강에 도움을 줍니다.", "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/Eucalyptus.png", categories[2], video, music, feelings),
-            IncenseItemUiModel(6, "스위트 오렌지", "림프 흐름을 자극하여 부은 조직의 치료를 돕고, 셀룰라이트 처치에도 사용됩니다. 건성 피부, 염증이 있는 피부, 여드름 성향의 피부를 진정시키는 데 유용합니다. 또한 재생성이 있어 노화 피부와 거칠고 굳어진 피부치료에 사용하면 좋습니다.", "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/orange.png", categories[3], video, music, feelings),
-            IncenseItemUiModel(7, "샌들우드", "심장기능을 강화하고 혈액순환을 촉진, 마음을 진정시키는 효과가 뛰어납니다.", "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/sandalwood.png", categories[4], video, music, feelings),
+            IncenseItemUiModel(3, IncenseTitle.LAVENDER, "주성분은 아세트산리날릴, 리날올, 피넨, 리모넨, 게라니올, 시네올 등이다. 이는 신경을 안정시켜주고 스트레스 해소 및 불면증 예방에 탁월한 효과가 있다.", "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/lavendar.png", categories[0], video, music, feelings, MutableLiveData(false), MutableLiveData(false)),
+            IncenseItemUiModel(4, IncenseTitle.PEPPERMINT, "기침, 감기, 천식, 알레르기 및 결핵 등 호흡기계에 건강상 효능을 제공, 기억력 증진 및 스트레스 완화 효과가 있을 수 있습니다.", "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/mint.png", categories[1], video, music, feelings, MutableLiveData(false), MutableLiveData(false)),
+            IncenseItemUiModel(5, IncenseTitle.EUCALYPTUS, "근육통 안화효과, 다피가료움증 개선, 호흡기 건강에 도움을 줍니다.", "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/Eucalyptus.png", categories[2], video, music, feelings, MutableLiveData(false), MutableLiveData(false)),
+            IncenseItemUiModel(6, IncenseTitle.ORANGE, "림프 흐름을 자극하여 부은 조직의 치료를 돕고, 셀룰라이트 처치에도 사용됩니다. 건성 피부, 염증이 있는 피부, 여드름 성향의 피부를 진정시키는 데 유용합니다. 또한 재생성이 있어 노화 피부와 거칠고 굳어진 피부치료에 사용하면 좋습니다.", "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/orange.png", categories[3], video, music, feelings, MutableLiveData(false), MutableLiveData(false)),
+            IncenseItemUiModel(7, IncenseTitle.SANDALWOOD, "심장기능을 강화하고 혈액순환을 촉진, 마음을 진정시키는 효과가 뛰어납니다.", "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/sandalwood.png", categories[4], video, music, feelings, MutableLiveData(false), MutableLiveData(false)),
         )
+    }
+
+    fun onPlaytimeClick() {
+        Timber.tag(TAG).d("playtimeClick!!!!")
     }
 
     fun onMeditationStart() {
         _openMeditationEvent.postValue(Event(Unit))
+    }
+
+    fun onBackClick() {
+        _backClickEvent.postValue(Event(Unit))
     }
 
     companion object {

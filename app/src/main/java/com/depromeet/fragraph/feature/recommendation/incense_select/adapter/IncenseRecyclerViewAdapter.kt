@@ -11,7 +11,8 @@ import com.depromeet.fragraph.databinding.ItemIncenseBinding
 import com.depromeet.fragraph.feature.recommendation.incense_select.model.IncenseItemUiModel
 
 class IncenseRecyclerViewAdapter(
-    private val lifecycleOwner: LifecycleOwner
+    private val lifecycleOwner: LifecycleOwner,
+    private val itemSetCallback: () -> Unit,
 ): RecyclerView.Adapter<IncenseRecyclerViewAdapter.ViewHolder>(),
     IRecyclerViewAdapter<IncenseItemUiModel> {
 
@@ -33,6 +34,11 @@ class IncenseRecyclerViewAdapter(
         incenseList.clear()
         incenseList.addAll(data)
         notifyDataSetChanged()
+        itemSetCallback()
+    }
+
+    fun changeCenterValue(position: Int, isCenter: Boolean) {
+        incenseList[position].changeCenterPosition(isCenter)
     }
 
     class ViewHolder(
@@ -40,12 +46,9 @@ class IncenseRecyclerViewAdapter(
         private val lifecycleOwner: LifecycleOwner
     ): RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            binding.lifecycleOwner = lifecycleOwner
-        }
-
         fun bind(incense: IncenseItemUiModel) {
             binding.incense = incense
+            binding.lifecycleOwner = lifecycleOwner
         }
     }
 }

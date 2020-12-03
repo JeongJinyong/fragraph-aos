@@ -14,77 +14,185 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_feeling_title"
-            android:text="오늘의 향을 추천드려요."
-            android:textSize="24sp"
-            android:textColor="#1C1C1C"
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_incense_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_small"
-            android:layout_marginStart="@dimen/space_x_large"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/header_size"
+            />
+
+        <ImageView
+            android:id="@+id/iv_incense_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_back"
+            android:layout_marginStart="@dimen/space_xx_large"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/gl_incense_header"
+            app:layout_constraintHorizontal_bias="0"
+            />
+
+        <FrameLayout
+            android:layout_width="72dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> vm.onBackClick()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/gl_incense_header"
             app:layout_constraintHorizontal_bias="0"
             />
 
         <TextView
-            android:id="@+id/tv_feeling_description"
-            android:text="원하는 향을 한가지 선택하세요."
-            android:textSize="14sp"
-            android:textColor="#212121"
+            android:id="@+id/tv_incense_select_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:firstBaselineToTopHeight="0dp"
+            android:text="@string/incense_select_title"
+            android:textColor="@color/colorBlackGray_1"
+            android:textSize="24sp"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            android:layout_marginStart="@dimen/space_large"
             android:layout_marginTop="@dimen/space_x_small"
-            android:layout_marginStart="@dimen/space_x_large"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_feeling_title"
             app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/gl_incense_header" />
+
+        <TextView
+            android:id="@+id/tv_incense_select_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/incense_select_description"
+            android:textColor="@color/colorBlackGray_1"
+            android:textSize="14sp"
+            android:fontFamily="@font/spoqa_han_sans_regular"
+            android:lineSpacingExtra="0sp"
+            android:layout_marginStart="@dimen/space_large"
+            android:layout_marginTop="@dimen/space_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_incense_select_title" />
+
+        <me.relex.circleindicator.CircleIndicator2
+            android:id="@+id/indicator_incenses_recommendation"
+            android:layout_width="wrap_content"
+            android:layout_height="4dp"
+            android:layout_marginTop="@dimen/space_large"
+            android:layout_marginStart="@dimen/space_large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_incense_select_description"
+            app:flow_horizontalBias="0"
+            app:ci_width="2dp"
+            app:ci_height="2dp"
+            app:ci_margin="3dp"
+            app:ci_drawable="@drawable/bg_incense_select_indicator"
             />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_incenses"
+            android:id="@+id/rv_incenses_recommendation"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/space_small"
+            android:layout_marginBottom="@dimen/space_xxx_large"
+            android:clipToPadding="false"
+            android:clipChildren="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_feeling_description"
-            app:layout_constraintVertical_bias="0"
-            app:bind_items="@{vm.incenses}"/>
+            app:layout_constraintTop_toBottomOf="@+id/indicator_incenses_recommendation"
+            app:layout_constraintBottom_toTopOf="@+id/fl_time_select_container"
+            app:bind_items="@{vm.incenses}"
+            tools:listitem="@layout/item_incense"
+            />
 
-        <Button
-            android:id="@+id/btn_time_select"
-            android:text="@{String.valueOf(vm.playtime)}"
-            android:textSize="16sp"
-            android:textColor="#212121"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:background="@drawable/btn_keyword_non_selected"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fl_time_select_container"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="@dimen/space_xx_large"
+            android:layout_marginStart="@dimen/space_large"
+            android:layout_marginEnd="@dimen/space_x_small"
+            android:layout_marginBottom="@dimen/space_xxx_large"
+            android:background="@drawable/btn_incense_playtime"
+            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintEnd_toStartOf="@+id/btn_start_meditation"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_incenses"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
-            tools:text="300"
-            />
+            app:layout_constraintVertical_bias="1"
+            >
+
+            <ImageView
+                android:id="@+id/btn_time_select_icon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_16_white"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_time_select"
+                app:layout_constraintVertical_bias="0.5"
+                tools:text="05 : 00"/>
+
+            <TextView
+                android:id="@+id/btn_time_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="05: 00"
+                android:textColor="@color/colorBlackGray_1"
+                android:textSize="16sp"
+                android:fontFamily="@font/spoqa_han_sans_bold"
+                android:layout_marginStart="@dimen/space_x_small"
+                app:bind_incense_select_playtime="@{vm.playtime}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_time_select_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                tools:text="05 : 00"/>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:onClick="@{() -> vm.onPlaytimeClick()}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/btn_start_meditation"
-            android:text="시작하기"
-            android:textSize="18sp"
-            android:textColor="#FCFCFC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:background="#212121"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:includeFontPadding="false"
+            android:text="PLAY"
+            android:textColor="@color/colorOrange"
+            android:textSize="16sp"
+            android:fontFamily="@font/gilroy_extra_bold"
+            android:layout_marginTop="@dimen/space_xx_large"
+            android:layout_marginEnd="@dimen/space_large"
+            android:layout_marginBottom="@dimen/space_xxx_large"
+            android:background="@drawable/btn_keyword_selected"
             android:onClick="@{() -> vm.onMeditationStart()}"
-            app:layout_constraintStart_toEndOf="@+id/btn_time_select"
+            app:layout_constraintStart_toEndOf="@+id/fl_time_select_container"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_incenses"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintVertical_bias="1"
             />
 
 

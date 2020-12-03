@@ -1,4 +1,4 @@
-package com.depromeet.fragraph.feature.report.adapter
+package com.depromeet.fragraph.feature.recommendation.incense_select.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,7 +8,7 @@ import com.depromeet.fragraph.core.ext.dpToPx
 import timber.log.Timber
 
 
-class HistoryRecyclerViewSnapHelper(
+class IncenseRecyclerViewSnapHelper(
     private val recyclerView: RecyclerView
 ): PagerSnapHelper() {
 
@@ -23,16 +23,8 @@ class HistoryRecyclerViewSnapHelper(
             return super.calculateDistanceToFinalSnap(layoutManager, targetView)
         }
 
-        val targetCenter = targetView.left + targetView.context.dpToPx(26f).toInt() + targetView.width / 2
-        val distance: Int = targetCenter - recyclerView.width / 2
-//        Timber.d("margin: ${targetView.context.dpToPx(20f)}")
-//        Timber.d("targetView.left: ${targetView.left}") // 가운데 일때의 left 마진
-//        Timber.d("targetView.width: ${targetView.width}") // holder 의 width
-//        Timber.d("recyclerView.width: ${recyclerView.width}") // recyclerview width
-//
-//        Timber.d("targetCenter: ${targetCenter}") // targetCenter
-//        Timber.d("distance: ${distance}") // distance
-
+        val targetCenter = targetView.left + targetView.width / 2
+        val distance: Int = targetCenter - (targetView.context.dpToPx(20f).toInt() + targetView.width / 2)
         return intArrayOf(distance, 0) // [Horizontal, Vertical] 로 리턴한다.
     }
 }

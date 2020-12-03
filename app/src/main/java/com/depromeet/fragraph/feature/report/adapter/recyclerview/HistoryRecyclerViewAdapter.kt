@@ -1,4 +1,4 @@
-package com.depromeet.fragraph.feature.report.adapter
+package com.depromeet.fragraph.feature.report.adapter.recyclerview
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.fragraph.R
 import com.depromeet.fragraph.base.ui.IRecyclerViewAdapter
@@ -14,7 +13,6 @@ import com.depromeet.fragraph.core.ext.FRAGRAPH_HISTORY_FORMAT
 import com.depromeet.fragraph.core.ext.miliSecondsToStringFormat
 import com.depromeet.fragraph.databinding.ItemHistoryBinding
 import com.depromeet.fragraph.feature.report.model.HistoryUiModel
-import timber.log.Timber
 
 class HistoryRecyclerViewAdapter(
     private val lifecycleOwner: LifecycleOwner,

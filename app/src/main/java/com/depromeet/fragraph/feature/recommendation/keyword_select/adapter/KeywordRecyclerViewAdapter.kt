@@ -9,7 +9,6 @@ import com.depromeet.fragraph.R
 import com.depromeet.fragraph.base.ui.IRecyclerViewAdapter
 import com.depromeet.fragraph.databinding.ItemKeywordBinding
 import com.depromeet.fragraph.feature.recommendation.keyword_select.model.KeywordUiModel
-import timber.log.Timber
 
 class KeywordRecyclerViewAdapter(
     private val lifecycleOwner: LifecycleOwner,

@@ -15,106 +15,150 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/iv_incense"
-            android:layout_width="260dp"
-            android:layout_height="340dp"
+            android:id="@+id/iv_incense_select"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
             android:src="@drawable/default_history_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tv_incense_title"
             app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintDimensionRatio="27: 35"
             app:image_from_url="@{incense.image}"
             tools:src="@drawable/default_history_background" />
+
+        <FrameLayout
+            android:id="@+id/fl_incense_content_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0.6"
+            android:background="#000000"
+            app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
+            app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
+            app:layout_constraintTop_toTopOf="@+id/iv_incense_select"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_incense_select"
+            />
+
+        <TextView
+            android:id="@+id/tv_incense_detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@{incense.content}"
+            android:textSize="16sp"
+            android:textColor="@color/colorBlackGray_1"
+            android:fontFamily="@font/spoqa_han_sans_regular"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/space_xxx_large"
+            android:layout_marginEnd="@dimen/space_xxx_large"
+            app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
+            app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
+            app:layout_constraintTop_toTopOf="@+id/iv_incense_select"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_incense_select"
+            tools:text="훈연향 계열로 바디감이 좋으며 혈액순환을 도우며, 영적치유, 살균 효능이 있습니다." />
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{incense.isTouched() ? View.VISIBLE : View.INVISIBLE}"
+            app:constraint_referenced_ids="fl_incense_content_container,tv_incense_detail" />
+
+        <ImageView
+            android:layout_width="@dimen/space_x_large"
+            android:layout_height="@dimen/space_x_large"
+            android:src="@drawable/btn_incense_cotent_show"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:onClick="@{() -> incense.changeTouchState()}"
+            app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
+            app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
+            app:layout_constraintTop_toTopOf="@+id/iv_incense_select"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_incense_select"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0"
+            />
 
         <TextView
             android:id="@+id/tv_incense_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{incense.title}"
+            android:includeFontPadding="false"
             android:textSize="28sp"
-            android:textColor="#212121"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="18dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_incense"
+            android:textColor="@color/colorBlackGray_1"
+            android:fontFamily="@font/gilroy_extra_bold"
+            android:layout_marginTop="@dimen/space_x_small"
+            app:bind_incense_title_text_normal="@{incense.title}"
+            app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
+            app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
+            app:layout_constraintBottom_toTopOf="@+id/view_incese_line_title"
             app:layout_constraintHorizontal_bias="0"
-            tools:text="라벤더" />
-
-        <TextView
-            android:id="@+id/tv_incense_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{incense.category.title}"
-            android:textSize="14sp"
-            android:textColor="#212121"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_incense_title"
-            app:layout_constraintHorizontal_bias="0"
-            tools:text="숙면, 신경안정" />
-
-        <com.depromeet.fragraph.core.ui.VerticalTextView
-            android:id="@+id/vertical_view_feeling_first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{incense.keywords.get(0).name}"
-            app:layout_constraintStart_toEndOf="@+id/iv_incense"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            tools:text="피곤한 하루" />
-
-        <com.depromeet.fragraph.core.ui.VerticalTextView
-            android:id="@+id/vertical_view_feeling_second"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="@{incense.keywords.size() > 1 ? View.VISIBLE : View.GONE}"
-            android:text="@{incense.keywords.size() > 1 ? incense.keywords.get(1).name : @string/empty}"
-            android:layout_marginTop="4dp"
-            app:layout_constraintStart_toEndOf="@+id/iv_incense"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vertical_view_feeling_first"
-            app:layout_constraintHorizontal_bias="0"
-            tools:text="피곤한 하루" />
-
-        <com.depromeet.fragraph.core.ui.VerticalTextView
-            android:id="@+id/vertical_view_feeling_third"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="@{incense.keywords.size() > 2 ? View.VISIBLE : View.GONE}"
-            android:text="@{incense.keywords.size() > 2 ? incense.keywords.get(2).name : @string/empty}"
-            android:layout_marginTop="4dp"
-            app:layout_constraintStart_toEndOf="@+id/iv_incense"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vertical_view_feeling_second"
-            app:layout_constraintHorizontal_bias="0"
-            tools:text="피곤한 하루" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier_incense_feeling"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:barrierDirection="end"
-            app:constraint_referenced_ids="vertical_view_feeling_first,vertical_view_feeling_second,vertical_view_feeling_third"/>
+            app:layout_constraintVertical_bias="1"
+            tools:text="Lavender" />
 
         <View
-            android:id="@+id/view_feeling_end"
-            android:layout_width="3dp"
-            android:layout_height="300dp"
-            android:layout_marginStart="@dimen/space_s_large"
-            android:background="#000000"
-            app:layout_constraintStart_toEndOf="@+id/barrier_incense_feeling"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/view_incese_line_title"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#A6A6A6"
+            android:layout_marginTop="@dimen/space_x_small"
+            app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
+            app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
+            app:layout_constraintBottom_toTopOf="@+id/tv_incense_effect"
+            app:layout_constraintVertical_bias="1"
             />
 
+        <TextView
+            android:id="@+id/tv_incense_effect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textSize="14sp"
+            android:textColor="@color/colorBlackGray_1"
+            android:fontFamily="@font/spoqa_han_sans_regular"
+            android:layout_marginTop="@dimen/space_x_small"
+            app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
+            app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
+            app:layout_constraintBottom_toTopOf="@+id/tv_incense_keywords"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="1"
+            app:bind_incense_title_text_effect="@{incense.title}"
+            tools:text="숙면, 신경안정" />
+
+        <TextView
+            android:id="@+id/tv_incense_keywords"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textSize="12sp"
+            android:textColor="@color/colorBlackGray_3"
+            android:fontFamily="@font/spoqa_han_sans_regular"
+            android:layout_marginTop="@dimen/space_x_small"
+            app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
+            app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="1"
+            app:bind_incense_select_keywords="@{incense.keywords}"
+            tools:text="#키워드1 #키워드2 #키워드3"
+            />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0.38"
+            android:background="#000000"
+            app:bind_visible_alpha_anim="@{incense.isCenter() ? View.INVISIBLE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
+            app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
