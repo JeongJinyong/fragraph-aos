@@ -14,6 +14,7 @@ import com.depromeet.fragraph.feature.report.adapter.recyclerview.*
 import com.depromeet.fragraph.feature.report.viewmodel.ReportViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 
 // Todo 이미지 있다면 클릭시 확대 애니메이션 적용 필요
 // Todo 알파값 애니메이션 변경 필요
@@ -44,9 +45,9 @@ class ReportFragment: Fragment(R.layout.fragment_report) {
             layoutManager = linearLayoutManager
             addItemDecoration(HistoryRecyclerViewDecoration())
             addOnScrollListener(HistoryRecyclerViewScrollListener(linearLayoutManager, historyAdapter, 2))
-
             val snapHelper = HistoryRecyclerViewSnapHelper(this)
             snapHelper.attachToRecyclerView(this)
+            OverScrollDecoratorHelper.setUpOverScroll(this, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL)
         }
 
         reportViewModel.openRecommendationEvent.observe(viewLifecycleOwner, EventObserver {

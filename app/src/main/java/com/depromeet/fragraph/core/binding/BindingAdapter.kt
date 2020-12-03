@@ -64,7 +64,7 @@ fun TextView.bindIncenseTitleTextEffect(value: IncenseTitle) {
 @BindingAdapter("bind_visible_alpha_anim")
 fun FrameLayout.bindHistoryAlphaAnim(visibility: Int) {
     val transition = Fade()
-    transition.duration = 300
+    transition.duration = 200
     transition.addTarget(this)
     TransitionManager.beginDelayedTransition(this.parent as ViewGroup, transition)
     this.visibility = if (visibility == View.VISIBLE) View.VISIBLE else View.GONE

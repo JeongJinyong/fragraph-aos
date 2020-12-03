@@ -67,24 +67,35 @@ class ReportViewModel @ViewModelInject constructor(
                     Timber.tag(SignInFragment.TAG).e("히스토리 가져오는 중 오류 발생")
                 }
                 .map { histories->
+
+                    val centerPosition = histories.indexOfFirst {
+                        it.createdAt.miliSecondsToStringFormat(FRAGRAPH_HISTORY_FORMAT) == System.currentTimeMillis().miliSecondsToStringFormat(FRAGRAPH_HISTORY_FORMAT)
+                    }.let {
+                        if (it < 0) 0 else it
+                    }
+
                     histories.filter { it.keywords.size > 2 }
-                        .map {
-                            HistoryUiModel(it.id, it.createdAt, "${it.playTime/60}분 재생", it.incense.title, it.memo,
-                                it.keywords[0].name, it.keywords[1].name, it.keywords[2].name,
+                        .mapIndexed { index, history ->
+                            HistoryUiModel(history.id, history.createdAt, "${history.playTime/60}분 재생", history.incense.title, history.memo,
+                                history.keywords[0].name, history.keywords[1].name, history.keywords[2].name,
                                 isExisted = true, isBack = false,
-                                isCenter = MutableLiveData(it.createdAt.miliSecondsToStringFormat(
-                                    FRAGRAPH_HISTORY_FORMAT
-                                ) == System.currentTimeMillis().miliSecondsToStringFormat(
-                                    FRAGRAPH_HISTORY_FORMAT
-                                )))
+                                isCenter = MutableLiveData(index == centerPosition))
                         }
                 }
                 .map {
                     val historyUiModels = mutableListOf<HistoryUiModel>()
+                    var nowDay = System.currentTimeMillis().miliSecondsToDay().toInt()
                     for( i in 1 until (getLastDayOfMonth().toInt() + 1)) {
                         it.firstOrNull { history -> history.createdAt.miliSecondsToDay().toInt() == i }?.let {history ->
                             historyUiModels.add(history)
-                        } ?: run { historyUiModels.add(getEmptyUiModel(getMiliSecondsForDate(i))) }
+                        } ?: run {
+                            if (nowDay == i) {
+                                historyUiModels.add(getEmptyUiModel(getMiliSecondsForDate(i), true))
+                                nowDay = -1
+                            } else {
+                                historyUiModels.add(getEmptyUiModel(getMiliSecondsForDate(i), false))
+                            }
+                        }
                     }
                     historyUiModels
                 }

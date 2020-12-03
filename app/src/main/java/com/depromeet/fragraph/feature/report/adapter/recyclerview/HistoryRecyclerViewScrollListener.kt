@@ -26,7 +26,6 @@ class HistoryRecyclerViewScrollListener(
 
             // 첫번째 것이 보이는 경우
             if (lastPosition - firstPosition == 1) {
-                Timber.d("adsfasdfdf")
                 // 새로 생기는 부분 보여줌
                 historyAdapter.changeCenterValue(firstPosition - 1, isCenter = false)
                 historyAdapter.changeCenterValue(firstPosition, isCenter = true)
@@ -55,7 +54,6 @@ class HistoryRecyclerViewScrollListener(
 
             // (마지막 경우)
             if (firstPosition == itemCount -2 && lastPosition == itemCount -1) {
-                Timber.d("adsfasdfdf")
                 // 마지막을 보여준다. (앞을 가린다)
                 historyAdapter.changeCenterValue(firstPosition, isCenter = false)
                 historyAdapter.changeCenterValue(lastPosition, isCenter = true)

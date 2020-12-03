@@ -26,7 +26,6 @@ class IncenseRecyclerViewScrollListener(
 
             // 첫번째 것이 보이는 경우
             if (lastPosition - firstPosition == 1) {
-                Timber.d("adsfasdfdf")
                 // 새로 생기는 부분 보여줌
                 incenseAdapter.changeCenterValue(firstPosition - 1, isCenter = false)
                 incenseAdapter.changeCenterValue(firstPosition, isCenter = true)

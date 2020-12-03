@@ -30,6 +30,7 @@ class IncenseRecyclerViewAdapter(
 
     override fun getItemCount(): Int = incenseList.size
 
+    // 얘는 set 이 한번만 일어난다 !!! (혹은 리프레시만 일어남)
     override fun setItems(data: List<IncenseItemUiModel>) {
         incenseList.clear()
         incenseList.addAll(data)

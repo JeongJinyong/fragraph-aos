@@ -165,11 +165,10 @@ dependencies {
     def kakao_version = "2.0.2"
     implementation "com.kakao.sdk:v2-user:$kakao_version"
 
-    // indicator
+    // recyclerview 관련
     implementation 'me.relex:circleindicator:2.1.4'
-
-    // recyclerview animation
     implementation 'jp.wasabeef:recyclerview-animators:4.0.1'
+    implementation 'me.everything:overscroll-decor-android:1.1.0'
 
 
     // Test

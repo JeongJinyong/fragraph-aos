@@ -22,9 +22,9 @@ data class HistoryUiModel(
     }
 }
 
-fun getEmptyUiModel(createdAt: Long) = HistoryUiModel(
+fun getEmptyUiModel(createdAt: Long, isCenter: Boolean) = HistoryUiModel(
     0, createdAt, "0", IncenseTitle.EMPTY,
     Memo(0, "", "", null), "", "", "",
     isExisted = false, isBack = false,
-    isCenter = MutableLiveData(false),
+    isCenter = MutableLiveData(isCenter),
 )
