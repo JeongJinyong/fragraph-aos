@@ -5,7 +5,9 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.depromeet.fragraph.R
+import com.depromeet.fragraph.core.event.EventObserver
 import com.depromeet.fragraph.core.player.Player
 import com.depromeet.fragraph.databinding.FragmentMeditationBinding
 import com.depromeet.fragraph.feature.meditation.viewmodel.MeditationViewModel
@@ -30,12 +32,16 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
                 lifecycleOwner = this@MeditationFragment
             }
 
-        meditationViewModel.musicUrl.observe(viewLifecycleOwner) {url ->
-            player.setPlayer(url) {
+        meditationViewModel.meditation.observe(viewLifecycleOwner) {meditation ->
+            player.setPlayer(meditation.music.url) {
                 meditationViewModel.initPlayTime(player.duration(), player.remainingTime()) // ms 로 체크됨
                 startPlayer()
             }
         }
+
+        meditationViewModel.backEvent.observe(viewLifecycleOwner, EventObserver {
+            findNavController().popBackStack()
+        })
     }
 
     private fun startPlayer() {

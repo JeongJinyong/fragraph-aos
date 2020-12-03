@@ -17,9 +17,10 @@ import com.depromeet.fragraph.feature.recommendation.incense_select.adapter.Ince
 import com.depromeet.fragraph.feature.recommendation.incense_select.adapter.IncenseRecyclerViewSnapHelper
 import com.depromeet.fragraph.feature.recommendation.incense_select.viewmodel.IncenseSelectViewModel
 import com.depromeet.fragraph.feature.recommendation.incense_select.viewmodel.PlaytimePickerViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
-
+@AndroidEntryPoint
 class IncenseSelectFragment: Fragment(R.layout.fragment_incense_select) {
 
     private val incenseSelectViewModel: IncenseSelectViewModel by viewModels()
@@ -44,11 +45,14 @@ class IncenseSelectFragment: Fragment(R.layout.fragment_incense_select) {
                 mainBinding.indicatorIncensesRecommendation.attachToRecyclerView(this, snapHelper)
             }
             val linearLayoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+            val scrollListener = IncenseRecyclerViewScrollListener(linearLayoutManager, incenseAdapter, 2) {
+                incenseSelectViewModel.changeSelectedIncense(it)
+            }
 
             adapter = incenseAdapter
             layoutManager = linearLayoutManager
             addItemDecoration(IncenseRecyclerViewDecoration())
-            addOnScrollListener(IncenseRecyclerViewScrollListener(linearLayoutManager, incenseAdapter, 2))
+            addOnScrollListener(scrollListener)
             snapHelper.attachToRecyclerView(this)
         }
 

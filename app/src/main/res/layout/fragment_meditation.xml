@@ -118,7 +118,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="48dp"
-            android:text="@{vm.incense}"
             android:textSize="56sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -126,7 +125,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
-            tools:text="라벤더"
+            app:bind_incense_title_meditation="@{vm.incenseTitle}"
+            tools:text="Lavender"
             />
         
         <ProgressBar

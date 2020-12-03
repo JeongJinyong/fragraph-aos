@@ -9,6 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.multibindings.IntoSet
+import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
@@ -26,6 +27,7 @@ object AppModule {
         return KakaoInitializer()
     }
 
+    @Singleton
     @Provides
     fun providePlayer(): Player {
         return Player()

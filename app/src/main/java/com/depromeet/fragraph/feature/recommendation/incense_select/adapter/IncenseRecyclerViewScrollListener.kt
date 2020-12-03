@@ -7,7 +7,8 @@ import timber.log.Timber
 class IncenseRecyclerViewScrollListener(
     private val layoutManager: LinearLayoutManager,
     private val incenseAdapter: IncenseRecyclerViewAdapter,
-    private val visibleCount: Int
+    private val visibleCount: Int,
+    private val showPositionCallback: (position: Int) -> Unit
 ): RecyclerView.OnScrollListener() {
     override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
         val firstPosition = layoutManager.findFirstVisibleItemPosition()
@@ -19,6 +20,7 @@ class IncenseRecyclerViewScrollListener(
             // 첫번째를 보여준다. (뒤를 가린다)
             incenseAdapter.changeCenterValue(firstPosition, isCenter = true)
             incenseAdapter.changeCenterValue(lastPosition, isCenter = false)
+            showPositionCallback(0)
             return
         }
 
@@ -30,14 +32,15 @@ class IncenseRecyclerViewScrollListener(
                 incenseAdapter.changeCenterValue(firstPosition - 1, isCenter = false)
                 incenseAdapter.changeCenterValue(firstPosition, isCenter = true)
                 incenseAdapter.changeCenterValue(lastPosition, isCenter = false)
+                showPositionCallback(firstPosition)
                 return
             }
 
             // 마지막인 경우
             if (firstPosition == lastPosition) {
-
                 incenseAdapter.changeCenterValue(firstPosition, isCenter = false)
                 incenseAdapter.changeCenterValue(lastPosition, isCenter = true)
+                showPositionCallback(lastPosition)
                 return
             }
         }
@@ -49,6 +52,7 @@ class IncenseRecyclerViewScrollListener(
                 incenseAdapter.changeCenterValue(firstPosition, isCenter = false)
                 incenseAdapter.changeCenterValue(firstPosition + 1, isCenter = true)
                 incenseAdapter.changeCenterValue(lastPosition, isCenter = false)
+                showPositionCallback(firstPosition + 1)
                 return
             }
 
@@ -57,6 +61,7 @@ class IncenseRecyclerViewScrollListener(
                 // 마지막을 보여준다. (앞을 가린다)
                 incenseAdapter.changeCenterValue(firstPosition, isCenter = false)
                 incenseAdapter.changeCenterValue(lastPosition, isCenter = true)
+                showPositionCallback(lastPosition)
                 return
             }
 

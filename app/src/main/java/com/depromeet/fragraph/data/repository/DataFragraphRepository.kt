@@ -4,21 +4,21 @@ import android.content.Context
 import com.depromeet.fragraph.data.api.FragraphApi
 import com.depromeet.fragraph.domain.model.*
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
-import com.depromeet.fragraph.domain.repository.HistoryRepository
-import com.depromeet.fragraph.domain.repository.IncenseRepository
-import com.depromeet.fragraph.domain.repository.KeywordRepository
-import com.depromeet.fragraph.domain.repository.ReportRepository
+import com.depromeet.fragraph.domain.repository.*
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import timber.log.Timber
 import javax.inject.Inject
 
 class DataFragraphRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val fragraphApi: FragraphApi,
-) : IncenseRepository, KeywordRepository, ReportRepository, HistoryRepository {
+) : IncenseRepository, KeywordRepository, ReportRepository, HistoryRepository,
+    MeditationRepository {
 
     val selectedKeywords = mutableListOf<Keyword>()
+    private var meditation: Meditation? = null
 
     override fun getIncenses(): Flow<List<Incense>> {
         return flow {
@@ -92,6 +92,22 @@ class DataFragraphRepository @Inject constructor(
 
             emit(histories)
         }
+    }
+
+    override fun saveHistories(keyword: List<Keyword>, incense: Incense, playtime: Int): Flow<Int> {
+        return flow {
+            emit(10)
+        }
+    }
+
+    override fun setMeditation(meditation: Meditation) {
+        Timber.d("set meditation, ${meditation.historyId}")
+        this.meditation = meditation
+    }
+
+    override fun getMeditation(): Meditation? {
+        Timber.d("get meditation, ${this.meditation.toString()}")
+        return this.meditation
     }
 
     companion object {

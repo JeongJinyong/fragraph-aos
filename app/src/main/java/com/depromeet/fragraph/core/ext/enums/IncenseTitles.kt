@@ -26,6 +26,17 @@ fun IncenseTitle.toEffect(): String {
     }
 }
 
+fun IncenseTitle.toMeditationTitle(): String {
+    return when(this) {
+        IncenseTitle.LAVENDER -> "Lavender"
+        IncenseTitle.PEPPERMINT -> "Pepper\nmint"
+        IncenseTitle.SANDALWOOD -> "Sandal\nwood"
+        IncenseTitle.ORANGE -> "Orange"
+        IncenseTitle.EUCALYPTUS -> "Eucalyptus"
+        else -> "기타 효과"
+    }
+}
+
 fun IncenseTitle.backgroundResourceId(): Int {
     return when(this) {
         IncenseTitle.LAVENDER -> R.drawable.incense_lavender_background

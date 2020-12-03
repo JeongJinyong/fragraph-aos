@@ -1,10 +1,7 @@
 package com.depromeet.fragraph.feature.recommendation.incense_select.model
 
 import androidx.lifecycle.MutableLiveData
-import com.depromeet.fragraph.domain.model.Category
-import com.depromeet.fragraph.domain.model.Keyword
-import com.depromeet.fragraph.domain.model.Music
-import com.depromeet.fragraph.domain.model.Video
+import com.depromeet.fragraph.domain.model.*
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
 
 data class IncenseItemUiModel(
@@ -28,4 +25,6 @@ data class IncenseItemUiModel(
     fun changeCenterPosition(isCenter: Boolean) {
         this.isCenter.value = isCenter
     }
+
+    fun toIncense() = Incense(this.id, this.title, this.content, this.image)
 }

@@ -2,22 +2,30 @@ package com.depromeet.fragraph.feature.recommendation.incense_select.viewmodel
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.depromeet.fragraph.core.event.Event
-import com.depromeet.fragraph.domain.model.Category
-import com.depromeet.fragraph.domain.model.Keyword
-import com.depromeet.fragraph.domain.model.Music
-import com.depromeet.fragraph.domain.model.Video
+import com.depromeet.fragraph.domain.model.*
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
+import com.depromeet.fragraph.domain.repository.HistoryRepository
+import com.depromeet.fragraph.domain.repository.IncenseRepository
+import com.depromeet.fragraph.domain.repository.MeditationRepository
 import com.depromeet.fragraph.feature.recommendation.incense_select.model.IncenseItemUiModel
+import com.depromeet.fragraph.feature.signin.SignInFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class IncenseSelectViewModel @ViewModelInject constructor(
+    private val incenseRepository: IncenseRepository,
+    private val meditationRepository: MeditationRepository,
+    private val historyRepository: HistoryRepository,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    lateinit var selectedIncenseUiModel: IncenseItemUiModel
 
     private val _backClickEvent = MutableLiveData<Event<Unit>>()
     val backClickEvent: LiveData<Event<Unit>>
@@ -50,6 +58,7 @@ class IncenseSelectViewModel @ViewModelInject constructor(
 
         val music = Music(
             1,
+            "Close your eyes and feel it",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/music/music_1.mp3"
         )
 
@@ -64,13 +73,15 @@ class IncenseSelectViewModel @ViewModelInject constructor(
             Keyword(3, "잠 못드는 밤", 0.3f),
         )
 
-        _incenses.value = listOf(
+        val incenseList = listOf(
             IncenseItemUiModel(3, IncenseTitle.LAVENDER, "주성분은 아세트산리날릴, 리날올, 피넨, 리모넨, 게라니올, 시네올 등이다. 이는 신경을 안정시켜주고 스트레스 해소 및 불면증 예방에 탁월한 효과가 있다.", "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/lavendar.png", categories[0], video, music, feelings, MutableLiveData(false), MutableLiveData(true)),
             IncenseItemUiModel(4, IncenseTitle.PEPPERMINT, "기침, 감기, 천식, 알레르기 및 결핵 등 호흡기계에 건강상 효능을 제공, 기억력 증진 및 스트레스 완화 효과가 있을 수 있습니다.", "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/mint.png", categories[1], video, music, feelings, MutableLiveData(false), MutableLiveData(false)),
             IncenseItemUiModel(5, IncenseTitle.EUCALYPTUS, "근육통 안화효과, 다피가료움증 개선, 호흡기 건강에 도움을 줍니다.", "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/Eucalyptus.png", categories[2], video, music, feelings, MutableLiveData(false), MutableLiveData(false)),
             IncenseItemUiModel(6, IncenseTitle.ORANGE, "림프 흐름을 자극하여 부은 조직의 치료를 돕고, 셀룰라이트 처치에도 사용됩니다. 건성 피부, 염증이 있는 피부, 여드름 성향의 피부를 진정시키는 데 유용합니다. 또한 재생성이 있어 노화 피부와 거칠고 굳어진 피부치료에 사용하면 좋습니다.", "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/orange.png", categories[3], video, music, feelings, MutableLiveData(false), MutableLiveData(false)),
             IncenseItemUiModel(7, IncenseTitle.SANDALWOOD, "심장기능을 강화하고 혈액순환을 촉진, 마음을 진정시키는 효과가 뛰어납니다.", "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/sandalwood.png", categories[4], video, music, feelings, MutableLiveData(false), MutableLiveData(false)),
         )
+        _incenses.value = incenseList
+        selectedIncenseUiModel = incenseList[0]
     }
 
     fun setPlaytime(playtime: Int) {
@@ -86,8 +97,31 @@ class IncenseSelectViewModel @ViewModelInject constructor(
         _playtimePickerVisible.postValue(false)
     }
 
+    fun changeSelectedIncense(position: Int) {
+        selectedIncenseUiModel = incenses.value!![position]
+    }
+
     fun onMeditationStart() {
-        _openMeditationEvent.postValue(Event(Unit))
+        viewModelScope.launch(Dispatchers.IO) {
+            historyRepository.saveHistories(
+                selectedIncenseUiModel.keywords,
+                selectedIncenseUiModel.toIncense(),
+                playtime.value!!
+            ).catch {
+                Timber.tag(TAG).e("명상 시작 시 에러 발생 !!!!")
+            }.map { id ->
+                Meditation(
+                    id, playtime.value!!,
+                    System.currentTimeMillis(),
+                    selectedIncenseUiModel.toIncense(),
+                    selectedIncenseUiModel.music,
+                    selectedIncenseUiModel.video
+                )
+            }.collect {
+                meditationRepository.setMeditation(it)
+                _openMeditationEvent.postValue(Event(Unit))
+            }
+        }
     }
 
     fun onBackClick() {
