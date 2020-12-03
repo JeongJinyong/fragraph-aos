@@ -170,6 +170,9 @@ dependencies {
     implementation 'jp.wasabeef:recyclerview-animators:4.0.1'
     implementation 'me.everything:overscroll-decor-android:1.1.0'
 
+    // number picker
+    implementation 'com.shawnlin:number-picker:2.4.11'
+
 
     // Test
     testImplementation 'junit:junit:4.12'

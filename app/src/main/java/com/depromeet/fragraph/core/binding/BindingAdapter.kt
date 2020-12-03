@@ -19,6 +19,7 @@ import com.depromeet.fragraph.base.ui.IRecyclerViewAdapter
 import com.depromeet.fragraph.core.ext.enums.toEffect
 import com.depromeet.fragraph.core.ext.enums.toNormal
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
+import com.shawnlin.numberpicker.NumberPicker
 
 @BindingAdapter("bind_items")
 fun <T> RecyclerView.setItems(items: List<T>) {
@@ -70,3 +71,7 @@ fun FrameLayout.bindHistoryAlphaAnim(visibility: Int) {
     this.visibility = if (visibility == View.VISIBLE) View.VISIBLE else View.GONE
 }
 
+@BindingAdapter("bind_number_picker_valueChangeListener")
+fun NumberPicker.bindPlaytimeValueChangeListener(onValueChangedListener: NumberPicker.OnValueChangeListener) {
+    this.setOnValueChangedListener(onValueChangedListener)
+}

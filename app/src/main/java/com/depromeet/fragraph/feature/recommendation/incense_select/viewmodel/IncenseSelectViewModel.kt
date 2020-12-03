@@ -27,6 +27,10 @@ class IncenseSelectViewModel @ViewModelInject constructor(
     val openMeditationEvent: LiveData<Event<Unit>>
         get() = _openMeditationEvent
 
+    private val _playtimePickerVisible = MutableLiveData(false)
+    val playtimePickerVisible: LiveData<Boolean>
+        get() = _playtimePickerVisible
+
     private val _playtime = MutableLiveData(0)
     val playtime: LiveData<Int>
         get() = _playtime
@@ -69,8 +73,17 @@ class IncenseSelectViewModel @ViewModelInject constructor(
         )
     }
 
+    fun setPlaytime(playtime: Int) {
+        _playtime.value = playtime
+        _playtimePickerVisible.postValue(false)
+    }
+
     fun onPlaytimeClick() {
-        Timber.tag(TAG).d("playtimeClick!!!!")
+        _playtimePickerVisible.postValue(true)
+    }
+
+    fun onPlaytimeBackgroundClick() {
+        _playtimePickerVisible.postValue(false)
     }
 
     fun onMeditationStart() {

@@ -10,29 +10,38 @@ import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.fragraph.R
 import com.depromeet.fragraph.core.event.EventObserver
 import com.depromeet.fragraph.databinding.FragmentIncenseSelectBinding
+import com.depromeet.fragraph.databinding.ViewIncensePlaytimePickerBinding
 import com.depromeet.fragraph.feature.recommendation.incense_select.adapter.IncenseRecyclerViewAdapter
 import com.depromeet.fragraph.feature.recommendation.incense_select.adapter.IncenseRecyclerViewDecoration
 import com.depromeet.fragraph.feature.recommendation.incense_select.adapter.IncenseRecyclerViewScrollListener
 import com.depromeet.fragraph.feature.recommendation.incense_select.adapter.IncenseRecyclerViewSnapHelper
 import com.depromeet.fragraph.feature.recommendation.incense_select.viewmodel.IncenseSelectViewModel
-import com.depromeet.fragraph.feature.report.adapter.recyclerview.HistoryRecyclerViewScrollListener
+import com.depromeet.fragraph.feature.recommendation.incense_select.viewmodel.PlaytimePickerViewModel
+import timber.log.Timber
 
 
 class IncenseSelectFragment: Fragment(R.layout.fragment_incense_select) {
 
     private val incenseSelectViewModel: IncenseSelectViewModel by viewModels()
 
+    private val playtimePickerViewModel: PlaytimePickerViewModel by viewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val binding = FragmentIncenseSelectBinding.bind(view)
+        val mainBinding = FragmentIncenseSelectBinding.bind(view)
             .apply {
                 vm = incenseSelectViewModel
                 lifecycleOwner = this@IncenseSelectFragment
             }
 
-        binding.rvIncensesRecommendation.apply {
+        mainBinding.viewIncensePlaytimePicker.apply {
+            vm = playtimePickerViewModel
+            lifecycleOwner = this@IncenseSelectFragment
+        }
+
+        mainBinding.rvIncensesRecommendation.apply {
             val snapHelper = IncenseRecyclerViewSnapHelper(this)
             val incenseAdapter = IncenseRecyclerViewAdapter(viewLifecycleOwner) {
-                binding.indicatorIncensesRecommendation.attachToRecyclerView(this, snapHelper)
+                mainBinding.indicatorIncensesRecommendation.attachToRecyclerView(this, snapHelper)
             }
             val linearLayoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
 
@@ -49,6 +58,10 @@ class IncenseSelectFragment: Fragment(R.layout.fragment_incense_select) {
 
         incenseSelectViewModel.openMeditationEvent.observe(viewLifecycleOwner, EventObserver {
             goMeditation()
+        })
+
+        playtimePickerViewModel.playtimePickEvent.observe(viewLifecycleOwner, EventObserver {
+            incenseSelectViewModel.setPlaytime(it)
         })
     }
 

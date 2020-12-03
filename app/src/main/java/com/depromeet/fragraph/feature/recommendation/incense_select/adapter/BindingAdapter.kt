@@ -3,6 +3,7 @@ package com.depromeet.fragraph.feature.recommendation.incense_select.adapter
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.depromeet.fragraph.domain.model.Keyword
+import com.shawnlin.numberpicker.NumberPicker
 
 @BindingAdapter("bind_incense_select_keywords")
 fun TextView.bindIncenseSelectKeywords(keywords: List<Keyword>) {
