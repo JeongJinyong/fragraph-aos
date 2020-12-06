@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+        <variable
+            name="vm"
+            type="com.depromeet.fragraph.core.ui.viewmodel.select_dialog.SelectDialogViewModel" />
+        <import type="android.view.View"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhiteGray_6"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/tv_select_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlackGray_1"
+            android:textSize="20sp"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="0sp"
+            android:layout_marginStart="@dimen/space_large"
+            android:layout_marginTop="@dimen/space_large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTop="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:bind_select_dialog_title="@{vm.selectDialogType}"
+            tools:text="작성 중인 메모가 있습니다."
+            />
+
+        <TextView
+            android:id="@+id/tv_select_dialog_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlackGray_3"
+            android:textSize="16sp"
+            android:fontFamily="@font/spoqa_han_sans_regular"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="0sp"
+            android:layout_marginStart="@dimen/space_large"
+            android:layout_marginEnd="@dimen/space_x_small"
+            android:layout_marginTop="@dimen/space_median"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_select_dialog_title"
+            app:layout_constraintBottom_toTop="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:bind_select_dialog_description="@{vm.selectDialogType}"
+            tools:text="세션을 저장하지 않고 종료 하시겠어요?"
+            />
+
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_select_dialog_top"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tv_select_dialog_title,tv_select_dialog_description"/>
+
+        <TextView
+            android:id="@+id/tv_memo_complete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorOrange"
+            android:textSize="16sp"
+            android:fontFamily="@font/spoqa_han_sans_regular"
+            android:lineSpacingExtra="0sp"
+            android:includeFontPadding="false"
+            android:layout_marginEnd="@dimen/space_s_large"
+            android:layout_marginBottom="@dimen/space_s_large"
+            android:layout_marginTop="38dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/barrier_select_dialog_top"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:bind_select_dialog_right="@{vm.selectDialogType}"
+            tools:text="확인"
+            />
+
+        <FrameLayout
+            android:id="@+id/fl_memo_complete_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="14dp"
+            android:onClick="@{() -> vm.onClickRight()}"
+            app:layout_constraintStart_toEndOf="@+id/tv_memo_delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/barrier_select_dialog_top"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintVertical_bias="1"
+            />
+
+        <TextView
+            android:id="@+id/tv_memo_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorOrange"
+            android:textSize="16sp"
+            android:fontFamily="@font/spoqa_han_sans_regular"
+            android:lineSpacingExtra="0sp"
+            android:includeFontPadding="false"
+            android:layout_marginEnd="48dp"
+            android:layout_marginBottom="@dimen/space_s_large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_memo_complete"
+            app:layout_constraintTop_toTopOf="@+id/barrier_select_dialog_top"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintVertical_bias="1"
+            app:bind_select_dialog_left="@{vm.selectDialogType}"
+            tools:text="취소"
+            />
+
+        <FrameLayout
+            android:id="@+id/fl_memo_delete_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> vm.onClickLeft()}"
+            android:layout_marginTop="14dp"
+            app:layout_constraintStart_toEndOf="@+id/fl_memo_space_left_container"
+            app:layout_constraintEnd_toStartOf="@+id/fl_memo_complete_container"
+            app:layout_constraintTop_toTopOf="@+id/barrier_select_dialog_top"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintVertical_bias="1"
+            />
+
+        <FrameLayout
+            android:id="@+id/fl_memo_space_left_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_memo_delete"
+            app:layout_constraintTop_toTopOf="@+id/barrier_select_dialog_top"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintVertical_bias="1"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

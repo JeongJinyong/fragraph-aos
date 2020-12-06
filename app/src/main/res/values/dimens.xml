@@ -18,4 +18,9 @@
 
     <dimen name="history_card_width">270dp</dimen>
     <dimen name="history_card_height">350dp</dimen>
+
+    <dimen name="memo_header_size">52dp</dimen>
+    <dimen name="memo_footer_size">52dp</dimen>
+    <dimen name="memo_top_margin">70dp</dimen>
+    <dimen name="memo_bottom_margin">300dp</dimen>
 </resources>

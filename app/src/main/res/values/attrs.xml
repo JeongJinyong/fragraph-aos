@@ -10,4 +10,19 @@
         <attr name="tags" format="reference" />
         <attr name="memo" format="reference|string" />
     </declare-styleable>
+
+
+    <declare-styleable name="BlurLayout">
+        <attr name="blk_downscaleFactor" format="float" />
+        <attr name="blk_blurRadius" format="integer" />
+        <attr name="blk_fps" format="integer" />
+        <attr name="blk_cornerRadius" format="dimension" />
+        <attr name="blk_alpha" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="TextOutLineView">
+        <attr name="text_stroke" format="boolean"/>
+        <attr name="text_stroke_width" format="float"/>
+        <attr name="text_stroke_color" format="color"/>
+    </declare-styleable>
 </resources>

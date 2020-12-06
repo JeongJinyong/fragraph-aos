@@ -4,6 +4,11 @@
 
     <!--  common  -->
     <string name="month_format">%s월</string>
+    <string name="cancel">취소</string>
+    <string name="confirm">확인</string>
+    <string name="delete">삭제</string>
+    <string name="save">저장</string>
+    <string name="unknown">알 수 없음</string>
 
     <!--  report view  -->
     <string name="report_description_prefix">지금까지 총</string>
@@ -25,4 +30,22 @@
     <!--  incense select view  -->
     <string name="incense_select_title">오늘의 향을 선택해주세요.</string>
     <string name="incense_select_description">원하는 향을 선택하시면 \n어울리는 음악을 추천해드려요!</string>
+
+    <!--  memo dialog  -->
+    <string name="memo_content_length">%s/180</string>
+    <string name="memo_no_title">제목</string>
+    <string name="memo_no_content_history">이 날엔 무슨일이 있었나요?</string>
+
+    <string name="memo_save_success">저장 완료</string>
+    <string name="memo_save_failure">메모 저장 실패</string>
+    <string name="memo_delete_success">메모 삭제 완료</string>
+    <string name="memo_delete_failure">메모 삭제 실패</string>
+
+    <!--  select dialog  -->
+    <string name="memo_on_writing_title">작성 중인 메모가 있습니다.</string>
+    <string name="memo_on_writing_description">메모를 저장하고 나갈까요?</string>
+    <string name="session_out_title">나가기</string>
+    <string name="session_out_description">세션을 저장하지 않고 종료하시겠어요?</string>
+    <string name="session_finish_title">세션종료</string>
+    <string name="session_finish_description">오늘도 편안한 향상 시간이 되셨나요?\n세션을 저장하고 끝마치고 싶다면 확인을 선택해주세요.</string>
 </resources>
