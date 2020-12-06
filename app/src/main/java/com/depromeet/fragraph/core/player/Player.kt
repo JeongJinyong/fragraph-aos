@@ -29,6 +29,7 @@ class Player {
         }
 
         this.maxTime = maxTime
+        this.flowTime = 0
         Timber.d("init MediaPlayer")
         mediaPlayer = MediaPlayer().apply {
             this.setOnPreparedListener(preparedListener)
@@ -74,7 +75,7 @@ class Player {
         return mediaPlayer?.duration ?: run { 0 }
     }
 
-    private fun remainingTime(): Int {
+    fun remainingTime(): Int {
         return if(maxTime - flowTime > 0) maxTime - flowTime else 0
     }
 

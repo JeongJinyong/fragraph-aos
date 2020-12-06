@@ -15,11 +15,10 @@ import com.depromeet.fragraph.databinding.ItemHistoryBinding
 import com.depromeet.fragraph.feature.report.model.HistoryUiModel
 
 class HistoryRecyclerViewAdapter(
-    private val lifecycleOwner: LifecycleOwner,
+    private var lifecycleOwner: LifecycleOwner,
     private val scale: Float,
     private val firstScrollCallback: (position: Int) -> Unit
 ): RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder>(), IRecyclerViewAdapter<HistoryUiModel> {
-
     private val historyList = mutableListOf<HistoryUiModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -51,6 +50,10 @@ class HistoryRecyclerViewAdapter(
             historyList.addAll(data)
             notifyDataSetChanged()
         }
+    }
+
+    fun setLifeCycleOwner(lifecycleOwner: LifecycleOwner) {
+        this.lifecycleOwner = lifecycleOwner
     }
 
     fun changeCenterValue(position: Int, isCenter: Boolean) {

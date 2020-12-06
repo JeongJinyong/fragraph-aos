@@ -220,13 +220,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
+            android:text="@{vm.musicTitle}"
             android:textColor="#00ffffff"
             android:textSize="56sp"
             android:fontFamily="@font/gilroy_extra_bold"
             android:lineSpacingExtra="0sp"
             android:layout_marginStart="@dimen/space_large"
             app:text_stroke="true"
-            app:text_stroke_width="10"
+            app:text_stroke_width_dp="2"
             app:text_stroke_color="@color/colorWhiteGray_1"
             app:layout_constraintStart_toEndOf="@+id/pb_music_duration"
             app:layout_constraintEnd_toEndOf="parent"
@@ -234,7 +235,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
-            app:bind_incense_title_meditation="@{vm.incenseTitle}"
             tools:text="Lavender"/>
 
         <Button
@@ -268,6 +268,7 @@
             app:layout_constraintVertical_bias="1"
             app:bind_dual_memo_dialog_visibility="@{vm.memoDialogVisible}"
             app:bind_dual_select_dialog_visibility="@{vm.selectDialogVisible}"
+            tools:visibility="gone"
             >
 
             <FrameLayout
@@ -294,7 +295,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:visibility="gone"
                 />
 
             <include layout="@layout/view_select_dialog"

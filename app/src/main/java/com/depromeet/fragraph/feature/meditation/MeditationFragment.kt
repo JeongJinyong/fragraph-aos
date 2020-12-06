@@ -6,10 +6,12 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.depromeet.fragraph.R
+import com.depromeet.fragraph.base.SharedViewModel
 import com.depromeet.fragraph.core.event.EventObserver
 import com.depromeet.fragraph.core.ext.dpToPx
 import com.depromeet.fragraph.core.ext.toast
@@ -35,6 +37,8 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
     private val memoViewModel: MemoViewModel by viewModels()
 
     private val selectDialogViewModel: SelectDialogViewModel by viewModels()
+
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     @Inject
     lateinit var player: Player
@@ -95,20 +99,23 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
 
         meditationViewModel.onMemoBackgroundClickEvent.observe(viewLifecycleOwner, EventObserver {
             inputMethodManager.hideSoftInputFromWindow(memoBinding.etMemoContent.windowToken, 0)
-            when(it) {
-                SelectDialogType.HIDE_DIALOG -> {
-                    Blurry.delete(binding.fragmentMeditationContainer)
-                    meditationViewModel.closeDialog()
-                }
-                else -> {
-                    meditationViewModel.openDialog(memoVisibility = false, selectDialogVisibility = true)
-                    selectDialogViewModel.setDialogType(it)
+            Timber.d("check!!!: ${player.remainingTime()}")
+            if (player.remainingTime() > 0) {
+                when (it) {
+                    SelectDialogType.HIDE_DIALOG -> {
+                        Blurry.delete(binding.fragmentMeditationContainer)
+                        meditationViewModel.closeDialog()
+                    }
+                    else -> {
+                        meditationViewModel.openDialog(memoVisibility = false, selectDialogVisibility = true)
+                        selectDialogViewModel.setDialogType(it)
+                    }
                 }
             }
         })
 
         memoViewModel.memoToastMessageEvent.observe(viewLifecycleOwner, EventObserver {
-            requireContext().toast(it)
+            sharedViewModel.showToastMessage(it)
         })
 
         memoViewModel.memoCloseEvent.observe(viewLifecycleOwner, EventObserver {

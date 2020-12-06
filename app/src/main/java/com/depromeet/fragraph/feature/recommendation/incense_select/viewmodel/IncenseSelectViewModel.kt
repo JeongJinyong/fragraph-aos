@@ -107,7 +107,7 @@ class IncenseSelectViewModel @ViewModelInject constructor(
     }
 
     fun onMeditationStart() {
-        if (playtime.value!! < 0) {
+        if (playtime.value!! <= 0) {
             _incenseSelectToastMessageEvent.postValue(Event(R.string.incense_select_playtime_less_than_0))
         } else {
             viewModelScope.launch(Dispatchers.IO) {

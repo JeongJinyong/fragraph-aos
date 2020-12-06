@@ -3,15 +3,15 @@ package com.depromeet.fragraph.feature.recommendation.incense_select
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.fragraph.R
+import com.depromeet.fragraph.base.SharedViewModel
 import com.depromeet.fragraph.core.event.EventObserver
-import com.depromeet.fragraph.core.ext.toast
 import com.depromeet.fragraph.databinding.FragmentIncenseSelectBinding
-import com.depromeet.fragraph.databinding.ViewIncensePlaytimePickerBinding
 import com.depromeet.fragraph.feature.recommendation.incense_select.adapter.IncenseRecyclerViewAdapter
 import com.depromeet.fragraph.feature.recommendation.incense_select.adapter.IncenseRecyclerViewDecoration
 import com.depromeet.fragraph.feature.recommendation.incense_select.adapter.IncenseRecyclerViewScrollListener
@@ -19,7 +19,6 @@ import com.depromeet.fragraph.feature.recommendation.incense_select.adapter.Ince
 import com.depromeet.fragraph.feature.recommendation.incense_select.viewmodel.IncenseSelectViewModel
 import com.depromeet.fragraph.feature.recommendation.incense_select.viewmodel.PlaytimePickerViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class IncenseSelectFragment: Fragment(R.layout.fragment_incense_select) {
@@ -27,6 +26,8 @@ class IncenseSelectFragment: Fragment(R.layout.fragment_incense_select) {
     private val incenseSelectViewModel: IncenseSelectViewModel by viewModels()
 
     private val playtimePickerViewModel: PlaytimePickerViewModel by viewModels()
+
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val mainBinding = FragmentIncenseSelectBinding.bind(view)
@@ -58,7 +59,7 @@ class IncenseSelectFragment: Fragment(R.layout.fragment_incense_select) {
         }
 
         incenseSelectViewModel.incenseSelectToastMessageEvent.observe(viewLifecycleOwner, EventObserver {
-            requireContext().toast(it)
+            sharedViewModel.showToastMessage(it)
         })
 
         incenseSelectViewModel.backClickEvent.observe(viewLifecycleOwner, EventObserver {

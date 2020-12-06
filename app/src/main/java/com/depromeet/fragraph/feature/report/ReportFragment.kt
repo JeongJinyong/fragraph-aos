@@ -31,7 +31,6 @@ class ReportFragment: Fragment(R.layout.fragment_report) {
                 lifecycleOwner = this@ReportFragment
             }
 
-
         // animation test
         val distance = 80000
         val scale: Float = resources.displayMetrics.density * distance
@@ -40,7 +39,6 @@ class ReportFragment: Fragment(R.layout.fragment_report) {
             binding.rvHistories.scrollToPosition(position)
         }
         binding.rvHistories.apply {
-//            adapter = historyAdapter
             adapter = historyAdapter
             layoutManager = linearLayoutManager
             addItemDecoration(HistoryRecyclerViewDecoration())
@@ -49,6 +47,8 @@ class ReportFragment: Fragment(R.layout.fragment_report) {
             snapHelper.attachToRecyclerView(this)
             OverScrollDecoratorHelper.setUpOverScroll(this, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL)
         }
+
+        reportViewModel.refreshData()
 
         reportViewModel.openRecommendationEvent.observe(viewLifecycleOwner, EventObserver {
             goKeywordSelect()

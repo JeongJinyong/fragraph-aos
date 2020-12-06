@@ -22,7 +22,7 @@
 
     <declare-styleable name="TextOutLineView">
         <attr name="text_stroke" format="boolean"/>
-        <attr name="text_stroke_width" format="float"/>
+        <attr name="text_stroke_width_dp" format="float"/>
         <attr name="text_stroke_color" format="color"/>
     </declare-styleable>
 </resources>

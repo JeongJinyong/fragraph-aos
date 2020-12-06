@@ -3,9 +3,11 @@ package com.depromeet.fragraph.feature.recommendation.keyword_select
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.depromeet.fragraph.R
+import com.depromeet.fragraph.base.SharedViewModel
 import com.depromeet.fragraph.core.event.EventObserver
 import com.depromeet.fragraph.core.ext.toast
 import com.depromeet.fragraph.databinding.FragmentKeywordSelectBinding
@@ -20,6 +22,8 @@ import timber.log.Timber
 class KeywordSelectFragment: Fragment(R.layout.fragment_keyword_select) {
 
     private val keywordSelectViewModel: KeywordSelectViewModel by viewModels()
+
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = FragmentKeywordSelectBinding.bind(view)
@@ -36,7 +40,7 @@ class KeywordSelectFragment: Fragment(R.layout.fragment_keyword_select) {
         }
 
         keywordSelectViewModel.keywordToastMessageEvent.observe(viewLifecycleOwner, EventObserver {
-            requireContext().toast(it)
+            sharedViewModel.showToastMessage(it)
         })
 
         keywordSelectViewModel.openIncenseSelectEvent.observe(viewLifecycleOwner, EventObserver {

@@ -98,7 +98,7 @@ class DataFragraphRepository @Inject constructor(
 
     override fun saveHistories(keyword: List<Keyword>, incense: Incense, playtime: Int): Flow<Int> {
         return flow {
-            emit(10)
+            emit((Math.random() * 100).toInt())
         }
     }
 

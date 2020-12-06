@@ -20,6 +20,8 @@ class MeditationViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    private var isFinished = false
+
     private val _exitEvent = MutableLiveData<Event<Unit>>()
     val exitEvent: LiveData<Event<Unit>>
         get() = _exitEvent
@@ -138,10 +140,8 @@ class MeditationViewModel @ViewModelInject constructor(
         meditation.value?.let {
             // 메모 dialog 가 올라가 있다면 select 를 보여줌
             if (_memoDialogVisible.value!!) {
-                openDialog(memoVisibility = false, selectDialogVisibility = true)
                 _onMemoBackgroundClickEvent.value = Event(SelectDialogType.MEMO_ON_WRITING)
             } else {
-                closeDialog()
                 _onMemoBackgroundClickEvent.value = Event(SelectDialogType.HIDE_DIALOG)
             }
         }

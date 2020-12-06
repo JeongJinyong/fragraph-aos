@@ -41,9 +41,9 @@ class ReportViewModel @ViewModelInject constructor(
     val histories: MutableLiveData<List<HistoryUiModel>>
         get() = _histories
 
-    init {
+    fun refreshData() {
         getReport()
-        getHistories(System.currentTimeMillis().miliSecondsToMonth(), addAfter = true)
+        getHistories(System.currentTimeMillis().miliSecondsToMonth(), addAfter = true, isRefresh = true)
     }
 
     private fun getReport() {
@@ -60,7 +60,7 @@ class ReportViewModel @ViewModelInject constructor(
         }
     }
 
-    fun getHistories(month: String, addAfter: Boolean) {
+    fun getHistories(month: String, addAfter: Boolean, isRefresh: Boolean = false) {
         viewModelScope.launch(Dispatchers.IO) {
             historyRepository.getHistories(month)
                 .catch {
@@ -101,12 +101,18 @@ class ReportViewModel @ViewModelInject constructor(
                 }
                 .map {
                     val newHistories = mutableListOf<HistoryUiModel>()
-                    if (addAfter) {
-                        newHistories.addAll(histories.value!!)
-                        newHistories.addAll(it)
-                    } else {
-                        newHistories.addAll(it)
-                        newHistories.addAll(histories.value!!)
+                    when {
+                        isRefresh -> {
+                            newHistories.addAll(it)
+                        }
+                        addAfter -> {
+                            newHistories.addAll(histories.value!!)
+                            newHistories.addAll(it)
+                        }
+                        else -> {
+                            newHistories.addAll(it)
+                            newHistories.addAll(histories.value!!)
+                        }
                     }
                     newHistories
                 }

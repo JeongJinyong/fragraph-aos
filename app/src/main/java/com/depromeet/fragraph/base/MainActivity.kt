@@ -1,7 +1,10 @@
 package com.depromeet.fragraph.base
 
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -14,13 +17,19 @@ import com.depromeet.fragraph.core.ext.authSharedPreferences
 import com.depromeet.fragraph.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val sharedViewModel: SharedViewModel by viewModels()
 
+    @Inject
+    lateinit var toast: Toast
+
     lateinit var binding: ActivityMainBinding
+    lateinit var toastView: View
+    lateinit var toastTextView: TextView
 
     private val navController: NavController by lazy {
         Navigation.findNavController(this, R.id.root_nav_host_fragment)
@@ -43,6 +52,17 @@ class MainActivity : AppCompatActivity() {
             R.layout.activity_main
         )
         initNavigation()
+
+        toastView = layoutInflater.inflate(R.layout.view_toast, findViewById(R.id.fl_toast_container))
+        toastTextView = toastView.findViewById(R.id.tv_toast_message)
+
+        sharedViewModel.showToastMessageEvent.observe(this, EventObserver {stringRes ->
+            if (stringRes != R.string.app_name) {
+                toastTextView.text = resources.getString(stringRes)
+                toast.view = toastView
+                toast.show()
+            }
+        })
     }
 
     private fun initNavigation() {
