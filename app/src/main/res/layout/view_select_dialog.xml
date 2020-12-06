@@ -8,7 +8,7 @@
     <data>
         <variable
             name="vm"
-            type="com.depromeet.fragraph.core.ui.viewmodel.select_dialog.SelectDialogViewModel" />
+            type="com.depromeet.fragraph.core.ui.select_dialog.SelectDialogViewModel" />
         <import type="android.view.View"/>
     </data>
 
@@ -33,7 +33,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTop="parent"
             app:layout_constraintHorizontal_bias="0"
             app:bind_select_dialog_title="@{vm.selectDialogType}"
             tools:text="작성 중인 메모가 있습니다."
@@ -54,7 +53,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_select_dialog_title"
-            app:layout_constraintBottom_toTop="parent"
             app:layout_constraintHorizontal_bias="0"
             app:bind_select_dialog_description="@{vm.selectDialogType}"
             tools:text="세션을 저장하지 않고 종료 하시겠어요?"
@@ -85,6 +83,7 @@
             app:layout_constraintTop_toTopOf="@+id/barrier_select_dialog_top"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintVertical_bias="1"
             app:bind_select_dialog_right="@{vm.selectDialogType}"
             tools:text="확인"
             />

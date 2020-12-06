@@ -20,7 +20,7 @@ fun IncenseTitle.toEffect(): String {
         IncenseTitle.LAVENDER -> "불면증과 우울증 완화"
         IncenseTitle.PEPPERMINT -> "집중력 향상"
         IncenseTitle.SANDALWOOD -> "마음의 안정과 평온"
-        IncenseTitle.ORANGE -> "기쁨과 활력"
+        IncenseTitle.ORANGE -> "기쁨과 활력, 기분전환"
         IncenseTitle.EUCALYPTUS -> "스트레스 해소"
         else -> "기타 효과"
     }

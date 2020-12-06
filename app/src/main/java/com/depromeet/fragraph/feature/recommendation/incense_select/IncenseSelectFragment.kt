@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.fragraph.R
 import com.depromeet.fragraph.core.event.EventObserver
+import com.depromeet.fragraph.core.ext.toast
 import com.depromeet.fragraph.databinding.FragmentIncenseSelectBinding
 import com.depromeet.fragraph.databinding.ViewIncensePlaytimePickerBinding
 import com.depromeet.fragraph.feature.recommendation.incense_select.adapter.IncenseRecyclerViewAdapter
@@ -55,6 +56,10 @@ class IncenseSelectFragment: Fragment(R.layout.fragment_incense_select) {
             addOnScrollListener(scrollListener)
             snapHelper.attachToRecyclerView(this)
         }
+
+        incenseSelectViewModel.incenseSelectToastMessageEvent.observe(viewLifecycleOwner, EventObserver {
+            requireContext().toast(it)
+        })
 
         incenseSelectViewModel.backClickEvent.observe(viewLifecycleOwner, EventObserver {
             findNavController().popBackStack()

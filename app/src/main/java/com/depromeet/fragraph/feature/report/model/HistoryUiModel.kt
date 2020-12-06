@@ -9,7 +9,7 @@ data class HistoryUiModel(
     val createdAt: Long,
     val playTime: String,
     val incenseTitle: IncenseTitle,
-    val memo: Memo,
+    val memo: Memo?,
     val keywordFirst: String,
     val keywordSecond: String,
     val keywordThird: String,

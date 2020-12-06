@@ -19,6 +19,7 @@ class DataFragraphRepository @Inject constructor(
 
     val selectedKeywords = mutableListOf<Keyword>()
     private var meditation: Meditation? = null
+    private var memoCached: Memo? = null
 
     override fun getIncenses(): Flow<List<Incense>> {
         return flow {
@@ -87,7 +88,8 @@ class DataFragraphRepository @Inject constructor(
                 History(9, (Math.random() * 1000).toInt(), incenses[(Math.random() * 5).toInt()], memos[(Math.random() * 5).toInt()], 1607810730578, listOf(keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()])),
                 History(10, (Math.random() * 1000).toInt(), incenses[(Math.random() * 5).toInt()], memos[(Math.random() * 5).toInt()], 1607875530578, listOf(keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()])),
                 History(11, (Math.random() * 1000).toInt(), incenses[(Math.random() * 5).toInt()], memos[(Math.random() * 5).toInt()], 1607961930578, listOf(keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()])),
-                History(12, (Math.random() * 1000).toInt(), incenses[(Math.random() * 5).toInt()], memos[(Math.random() * 5).toInt()], 1609203930578, listOf(keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()])),
+                History(12, (Math.random() * 1000).toInt(), incenses[(Math.random() * 5).toInt()], memos[(Math.random() * 5).toInt()], 1608261930578, listOf(keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()])),
+                History(13, (Math.random() * 1000).toInt(), incenses[(Math.random() * 5).toInt()], null, 1609203930578, listOf(keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()], keywords[(Math.random() * 49).toInt()])),
             )
 
             emit(histories)
@@ -97,6 +99,44 @@ class DataFragraphRepository @Inject constructor(
     override fun saveHistories(keyword: List<Keyword>, incense: Incense, playtime: Int): Flow<Int> {
         return flow {
             emit(10)
+        }
+    }
+
+    override fun deleteHistory(historyId: Int): Flow<Boolean> {
+        return flow {
+            emit(true)
+        }
+    }
+
+    override fun saveMemo(historyId: Int, title: String, contents: String): Flow<Int> {
+        return flow {
+
+            memoCached = Memo(1, title, contents, null)
+            emit(1)
+        }
+    }
+
+    override fun getMemo(memoId: Int): Flow<Memo> {
+        return flow {
+            memoCached?.let { emit(it) } ?: kotlin.run {
+
+                // Todo api 에서 memo 를 가져옴
+                emit(Memo(1, "abcdefgsasdfdef", "이거 메모 임시임", null))
+            }
+        }
+    }
+
+    override fun updateMemo(historyId: Int, memo: Memo): Flow<Int> {
+        return flow {
+            memoCached = Memo(memo.id, memo.title, memo.content, null)
+            emit(memo.id)
+        }
+    }
+
+    override fun deleteMemo(historyId: Int, memoId: Int): Flow<Int> {
+        return flow {
+            memoCached = null
+            emit(memoId)
         }
     }
 

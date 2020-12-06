@@ -1,4 +1,4 @@
-package com.depromeet.fragraph.core.ui.viewmodel.select_dialog
+package com.depromeet.fragraph.core.ui.select_dialog
 
 import android.view.View
 import android.widget.TextView
@@ -35,7 +35,7 @@ fun TextView.bindSelectDialogDescription(type: SelectDialogType) {
 @BindingAdapter("bind_select_dialog_right")
 fun TextView.bindSelectDialogRightBtn(type: SelectDialogType) {
     this.text = when (type) {
-        SelectDialogType.MEMO_ON_WRITING -> resources.getString(R.string.save)
+        SelectDialogType.MEMO_ON_WRITING -> resources.getString(R.string.back)
         SelectDialogType.SESSION_OUT -> resources.getString(R.string.confirm)
         SelectDialogType.SESSION_FINISH -> resources.getString(R.string.confirm)
         else -> resources.getString(R.string.unknown)
@@ -45,7 +45,7 @@ fun TextView.bindSelectDialogRightBtn(type: SelectDialogType) {
 @BindingAdapter("bind_select_dialog_left")
 fun TextView.bindSelectDialogLeftBtn(type: SelectDialogType) {
     this.text = when (type) {
-        SelectDialogType.MEMO_ON_WRITING -> resources.getString(R.string.delete)
+        SelectDialogType.MEMO_ON_WRITING -> resources.getString(R.string.out)
         SelectDialogType.SESSION_OUT -> resources.getString(R.string.cancel)
         SelectDialogType.SESSION_FINISH -> resources.getString(R.string.cancel)
         else -> resources.getString(R.string.unknown)

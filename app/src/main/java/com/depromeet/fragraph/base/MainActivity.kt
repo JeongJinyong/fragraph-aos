@@ -1,24 +1,18 @@
 package com.depromeet.fragraph.base
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
-import androidx.core.content.edit
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.ui.AppBarConfiguration
 import com.depromeet.fragraph.R
 import com.depromeet.fragraph.core.KEY_AUTH_TOKEN
+import com.depromeet.fragraph.core.event.EventObserver
 import com.depromeet.fragraph.core.ext.authSharedPreferences
 import com.depromeet.fragraph.databinding.ActivityMainBinding
-import com.depromeet.fragraph.feature.signin.viewmodel.SignInViewModel
-import com.depromeet.fragraph.feature.splash.viewmodel.SplashViewModel
-import com.kakao.sdk.auth.LoginClient
-import com.kakao.sdk.auth.model.OAuthToken
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -26,15 +20,14 @@ class MainActivity : AppCompatActivity() {
 
     private val sharedViewModel: SharedViewModel by viewModels()
 
-    private val binding: ActivityMainBinding by lazy {
-        DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_main
-        )
-    }
+    lateinit var binding: ActivityMainBinding
 
     private val navController: NavController by lazy {
         Navigation.findNavController(this, R.id.root_nav_host_fragment)
+    }
+
+    private val inputMethodManager: InputMethodManager by lazy {
+        getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +38,10 @@ class MainActivity : AppCompatActivity() {
         Timber.tag(TAG).i("token: ${this.authSharedPreferences().getString(KEY_AUTH_TOKEN, null)}")
 //        this.authSharedPreferences().edit().clear().commit();
 
-        binding
+        binding = DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_main
+        )
         initNavigation()
     }
 

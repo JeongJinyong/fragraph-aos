@@ -1,5 +1,9 @@
 package com.depromeet.fragraph.base.di
 
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import com.depromeet.fragraph.base.initializer.AppInitializer
 import com.depromeet.fragraph.base.initializer.KakaoInitializer
 import com.depromeet.fragraph.base.initializer.TimberInitializer
@@ -8,6 +12,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.multibindings.IntoSet
 import javax.inject.Singleton
 
@@ -31,5 +36,13 @@ object AppModule {
     @Provides
     fun providePlayer(): Player {
         return Player()
+    }
+
+    @Singleton
+    @Provides
+    fun provideInputManager(
+        @ApplicationContext context: Context
+    ): InputMethodManager {
+        return getSystemService(context, InputMethodManager::class.java) as InputMethodManager
     }
 }

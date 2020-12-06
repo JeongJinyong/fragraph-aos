@@ -16,8 +16,11 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.depromeet.fragraph.base.GlideApp
 import com.depromeet.fragraph.base.ui.IRecyclerViewAdapter
+import com.depromeet.fragraph.core.ext.FRAGRAPH_HISTORY_FORMAT
+import com.depromeet.fragraph.core.ext.JUST_DAY
 import com.depromeet.fragraph.core.ext.enums.toEffect
 import com.depromeet.fragraph.core.ext.enums.toNormal
+import com.depromeet.fragraph.core.ext.miliSecondsToStringFormat
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
 import com.shawnlin.numberpicker.NumberPicker
 
@@ -74,4 +77,11 @@ fun FrameLayout.bindHistoryAlphaAnim(visibility: Int) {
 @BindingAdapter("bind_number_picker_valueChangeListener")
 fun NumberPicker.bindPlaytimeValueChangeListener(onValueChangedListener: NumberPicker.OnValueChangeListener) {
     this.setOnValueChangedListener(onValueChangedListener)
+}
+
+@BindingAdapter("bind_history_date")
+fun TextView.bindHistoryDate(value: Long) {
+    this.text = "${value.miliSecondsToStringFormat(FRAGRAPH_HISTORY_FORMAT)}. ${value.miliSecondsToStringFormat(
+        JUST_DAY
+    )}요일"
 }

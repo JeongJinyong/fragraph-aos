@@ -1,4 +1,4 @@
-package com.depromeet.fragraph.core.ui.viewmodel.select_dialog
+package com.depromeet.fragraph.core.ui.select_dialog
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.depromeet.fragraph.R
 import com.depromeet.fragraph.core.event.Event
 
 class SelectDialogViewModel @ViewModelInject constructor(

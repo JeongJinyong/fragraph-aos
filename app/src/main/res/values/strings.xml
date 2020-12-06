@@ -9,6 +9,8 @@
     <string name="delete">삭제</string>
     <string name="save">저장</string>
     <string name="unknown">알 수 없음</string>
+    <string name="back">돌아가기</string>
+    <string name="out">나가기</string>
 
     <!--  report view  -->
     <string name="report_description_prefix">지금까지 총</string>
@@ -30,6 +32,7 @@
     <!--  incense select view  -->
     <string name="incense_select_title">오늘의 향을 선택해주세요.</string>
     <string name="incense_select_description">원하는 향을 선택하시면 \n어울리는 음악을 추천해드려요!</string>
+    <string name="incense_select_playtime_less_than_0">시간을 0초 이상 선택해주세요</string>
 
     <!--  memo dialog  -->
     <string name="memo_content_length">%s/180</string>

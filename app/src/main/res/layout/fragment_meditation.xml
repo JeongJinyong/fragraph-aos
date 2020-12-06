@@ -9,11 +9,14 @@
         <variable
             name="vm"
             type="com.depromeet.fragraph.feature.meditation.viewmodel.MeditationViewModel" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_meditation_container"
+        >
 
         <ImageView
             android:id="@+id/iv_meditation_bg"
@@ -28,12 +31,12 @@
             tools:src="@drawable/default_history_background"/>
 
         <ImageView
-            android:id="@+id/iv_exit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:id="@+id/iv_meditation_exit"
+            android:layout_width="@dimen/space_x_large"
+            android:layout_height="@dimen/space_x_large"
+            android:layout_marginTop="@dimen/space_large"
+            android:layout_marginEnd="@dimen/space_large"
+            android:src="@drawable/close"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -42,46 +45,113 @@
             app:layout_constraintVertical_bias="0"
             />
 
+        <FrameLayout
+            android:id="@+id/fl_meditation_exit_container"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:onClick="@{() -> vm.onExitClick()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintVertical_bias="0"
+            />
+
+        <ImageView
+            android:id="@+id/iv_playing_motion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/playing"
+            android:layout_marginTop="70dp"
+            android:layout_marginEnd="@dimen/space_large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintVertical_bias="0"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_meditation_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@{vm.date}"
+            android:textColor="@color/colorWhiteGray_6"
+            android:textSize="14sp"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            android:lineSpacingExtra="0sp"
+            android:layout_marginStart="@dimen/space_large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_playing_motion"
+            app:layout_constraintBottom_toTopOf="@+id/tv_meditation_day"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="2020. 11. 22"
+            />
+
         <TextView
             android:id="@+id/tv_meditation_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="42dp"
-            android:text="Mon 19"
+            android:includeFontPadding="false"
+            android:text="@{vm.day}"
+            android:textColor="@color/colorWhiteGray_6"
+            android:textSize="14sp"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            android:lineSpacingExtra="0sp"
+            android:layout_marginStart="@dimen/space_large"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_exit"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_meditation_date"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_playing_motion"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintVertical_bias="0"
-            tools:text="Mon 19"
+            tools:text="일요일"
             />
 
-        <TextView
-            android:id="@+id/tv_meditation_month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:text="October"
+        <ProgressBar
+            android:id="@+id/pb_music_duration"
+            android:layout_width="6dp"
+            android:layout_height="0dp"
+            android:rotation="0"
+            android:layout_marginStart="@dimen/space_large"
+            android:layout_marginTop="@dimen/space_xx_large"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_meditation_day"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_playing_motion"
+            app:layout_constraintBottom_toTopOf="@+id/pb_music_bottom"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
-            tools:text="October"
+            app:bind_total_value="@{vm.totalPlaytime}"
+            app:bind_progress_value="@{vm.remainingTime}"
+            style="@style/Widget.AppCompat.ProgressBar.Vertical"
+            />
+
+        <View
+            android:id="@+id/pb_music_bottom"
+            android:layout_width="2dp"
+            android:layout_height="120dp"
+            android:background="@color/colorWhiteGray_6"
+            app:layout_constraintStart_toStartOf="@+id/pb_music_duration"
+            app:layout_constraintEnd_toEndOf="@+id/pb_music_duration"
+            app:layout_constraintTop_toBottomOf="@+id/pb_music_duration"
+            app:layout_constraintBottom_toBottomOf="parent"
+
             />
 
         <LinearLayout
             android:id="@+id/ll_meditation_playtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="30dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/space_large"
+            android:layout_marginTop="@dimen/space_xx_large"
+            app:layout_constraintStart_toEndOf="@+id/pb_music_duration"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_meditation_month"
+            app:layout_constraintTop_toBottomOf="@+id/iv_playing_motion"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
@@ -91,8 +161,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{vm.remainingTimeMin}"
+                android:textColor="@color/colorWhiteGray_6"
                 android:textSize="56sp"
-                tools:text="05"
+                android:fontFamily="@font/gilroy_extra_bold"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="0sp"
+                tools:text="09"
                 />
 
             <TextView
@@ -100,7 +174,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" : "
+                android:textColor="@color/colorWhiteGray_6"
                 android:textSize="56sp"
+                android:fontFamily="@font/gilroy_extra_bold"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="0sp"
                 />
 
             <TextView
@@ -108,7 +186,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{vm.remainingTimeSeconds}"
+                android:textColor="@color/colorWhiteGray_6"
                 android:textSize="56sp"
+                android:fontFamily="@font/gilroy_extra_bold"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="0sp"
                 tools:text="14"
                 />
         </LinearLayout>
@@ -117,9 +199,13 @@
             android:id="@+id/tv_meditation_incense"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
+            android:includeFontPadding="false"
+            android:textColor="@color/colorWhiteGray_6"
             android:textSize="56sp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:fontFamily="@font/gilroy_extra_bold"
+            android:lineSpacingExtra="0sp"
+            android:layout_marginStart="@dimen/space_large"
+            app:layout_constraintStart_toEndOf="@+id/pb_music_duration"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ll_meditation_playtime"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -128,25 +214,104 @@
             app:bind_incense_title_meditation="@{vm.incenseTitle}"
             tools:text="Lavender"
             />
-        
-        <ProgressBar
-            android:id="@+id/pb_music_duration"
-            android:layout_width="20dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="30dp"
-            android:rotation="180"
-            app:layout_constraintStart_toStartOf="parent"
+
+        <com.depromeet.fragraph.core.ui.TextOutLineView
+            android:id="@+id/tv_meditation_incense2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textColor="#00ffffff"
+            android:textSize="56sp"
+            android:fontFamily="@font/gilroy_extra_bold"
+            android:lineSpacingExtra="0sp"
+            android:layout_marginStart="@dimen/space_large"
+            app:text_stroke="true"
+            app:text_stroke_width="10"
+            app:text_stroke_color="@color/colorWhiteGray_1"
+            app:layout_constraintStart_toEndOf="@+id/pb_music_duration"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_meditation_month"
+            app:layout_constraintTop_toBottomOf="@+id/tv_meditation_incense"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
-            app:bind_total_value="@{vm.totalPlaytime}"
-            app:bind_progress_value="@{vm.remainingTime}"
-            style="@style/Widget.AppCompat.ProgressBar.Vertical"
+            app:layout_constraintVertical_bias="0"
+            app:bind_incense_title_meditation="@{vm.incenseTitle}"
+            tools:text="Lavender"/>
+
+        <Button
+            android:id="@+id/btn_meditation_memo"
+            android:background="@drawable/btn_bg_floating_memo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="@dimen/space_large"
+            android:layout_marginBottom="@dimen/space_xxx_large"
+            android:onClick="@{() -> vm.onWritingMemoClick()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1"
+            app:layout_constraintHorizontal_bias="1"
             />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fl_meditation_memo_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:elevation="10dp"
+            android:background="#3D000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1"
+            app:bind_dual_memo_dialog_visibility="@{vm.memoDialogVisible}"
+            app:bind_dual_select_dialog_visibility="@{vm.selectDialogVisible}"
+            >
 
+            <FrameLayout
+                android:id="@+id/iv_memo_blur"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:onClick="@{() -> vm.onDialogBackgroundClick()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <include layout="@layout/view_memo_dialog"
+                android:id="@+id/view_memo_dialog"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="@{vm.memoDialogVisible ? View.VISIBLE : View.GONE}"
+                android:layout_marginStart="@dimen/space_xx_large"
+                android:layout_marginEnd="@dimen/space_xx_large"
+                android:layout_marginTop="@dimen/memo_top_margin"
+                android:layout_marginBottom="@dimen/memo_bottom_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:visibility="gone"
+                />
+
+            <include layout="@layout/view_select_dialog"
+                android:id="@+id/view_select_dialog"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="@{vm.selectDialogVisible ? View.VISIBLE : View.GONE}"
+                android:layout_marginStart="@dimen/space_xx_large"
+                android:layout_marginEnd="@dimen/space_xx_large"
+                android:layout_marginBottom="50dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -3,6 +3,7 @@ package com.depromeet.fragraph.feature.recommendation.incense_select.viewmodel
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.depromeet.fragraph.R
 import com.depromeet.fragraph.core.event.Event
 import com.depromeet.fragraph.domain.model.*
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
@@ -26,6 +27,10 @@ class IncenseSelectViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     lateinit var selectedIncenseUiModel: IncenseItemUiModel
+
+    private val _incenseSelectToastMessageEvent = MutableLiveData<Event<Int>>()
+    val incenseSelectToastMessageEvent: LiveData<Event<Int>>
+        get() = _incenseSelectToastMessageEvent
 
     private val _backClickEvent = MutableLiveData<Event<Unit>>()
     val backClickEvent: LiveData<Event<Unit>>
@@ -102,24 +107,28 @@ class IncenseSelectViewModel @ViewModelInject constructor(
     }
 
     fun onMeditationStart() {
-        viewModelScope.launch(Dispatchers.IO) {
-            historyRepository.saveHistories(
-                selectedIncenseUiModel.keywords,
-                selectedIncenseUiModel.toIncense(),
-                playtime.value!!
-            ).catch {
-                Timber.tag(TAG).e("명상 시작 시 에러 발생 !!!!")
-            }.map { id ->
-                Meditation(
-                    id, playtime.value!!,
-                    System.currentTimeMillis(),
+        if (playtime.value!! < 0) {
+            _incenseSelectToastMessageEvent.postValue(Event(R.string.incense_select_playtime_less_than_0))
+        } else {
+            viewModelScope.launch(Dispatchers.IO) {
+                historyRepository.saveHistories(
+                    selectedIncenseUiModel.keywords,
                     selectedIncenseUiModel.toIncense(),
-                    selectedIncenseUiModel.music,
-                    selectedIncenseUiModel.video
-                )
-            }.collect {
-                meditationRepository.setMeditation(it)
-                _openMeditationEvent.postValue(Event(Unit))
+                    playtime.value!!
+                ).catch {
+                    Timber.tag(TAG).e("명상 시작 시 에러 발생 !!!!")
+                }.map { id ->
+                    Meditation(
+                        id, playtime.value!!,
+                        System.currentTimeMillis(),
+                        selectedIncenseUiModel.toIncense(),
+                        selectedIncenseUiModel.music,
+                        selectedIncenseUiModel.video
+                    )
+                }.collect {
+                    meditationRepository.setMeditation(it)
+                    _openMeditationEvent.postValue(Event(Unit))
+                }
             }
         }
     }

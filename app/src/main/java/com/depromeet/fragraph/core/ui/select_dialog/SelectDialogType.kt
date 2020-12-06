@@ -1,4 +1,4 @@
-package com.depromeet.fragraph.core.ui.viewmodel.select_dialog
+package com.depromeet.fragraph.core.ui.select_dialog
 
 
 const val HIDE_FLAG = -1

@@ -29,13 +29,6 @@ fun ReportChartView.setBarData(incenses: List<IncenseTitle>, playCounts: List<Fl
     invalidate()
 }
 
-@BindingAdapter("bind_history_date")
-fun TextView.bindHistoryDate(value: Long) {
-    this.text = "${value.miliSecondsToStringFormat(FRAGRAPH_HISTORY_FORMAT)}. ${value.miliSecondsToStringFormat(
-        JUST_DAY
-    )}요일"
-}
-
 @BindingAdapter("bind_history_background")
 fun ImageView.bindHistoryBackground(value: IncenseTitle) {
     GlideApp.with(this.context)

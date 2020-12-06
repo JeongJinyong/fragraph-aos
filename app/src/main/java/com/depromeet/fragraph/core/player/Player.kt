@@ -11,16 +11,25 @@ import timber.log.Timber
 
 class Player {
 
-    private var runFlag = false;
+    private var runFlag = false
+
+    private var maxTime = 0
+    private var flowTime = 0
 
     private var mediaPlayer: MediaPlayer? = null
 
-    fun setPlayer(url: String, preparedListener: MediaPlayer.OnPreparedListener) {
+    fun setPlayer(
+        url: String,
+        maxTime: Int,
+        preparedListener: MediaPlayer.OnPreparedListener
+    ) {
         if (mediaPlayer != null) {
             mediaPlayer!!.release()
             mediaPlayer = null
         }
 
+        this.maxTime = maxTime
+        Timber.d("init MediaPlayer")
         mediaPlayer = MediaPlayer().apply {
             this.setOnPreparedListener(preparedListener)
             setAudioAttributes(
@@ -28,6 +37,12 @@ class Player {
                     .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                     .build()
             )
+            setOnCompletionListener {
+                if (this@Player.remainingTime() > 0) {
+                    it.seekTo(0)
+                    it.start()
+                }
+            }
             setDataSource(url)
             prepareAsync() // might take long! (for buffering, etc)
         }
@@ -59,16 +74,17 @@ class Player {
         return mediaPlayer?.duration ?: run { 0 }
     }
 
-    fun remainingTime(): Int {
-        return mediaPlayer?.let { it.duration - it.currentPosition } ?: run { 0 }
+    private fun remainingTime(): Int {
+        return if(maxTime - flowTime > 0) maxTime - flowTime else 0
     }
 
     fun remainingTimeFlow(): Flow<Int> = flow {
         while (this@Player.remainingTime() > 0 && runFlag) {
             delay(1000)
+            flowTime += 1000
             emit(this@Player.remainingTime())
         }
-
+        emit(0)
     }.flowOn(Dispatchers.IO)
 
     fun releasePlayer() {
