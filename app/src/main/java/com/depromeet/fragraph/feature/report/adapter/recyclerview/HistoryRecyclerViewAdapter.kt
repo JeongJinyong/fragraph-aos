@@ -10,13 +10,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.fragraph.R
 import com.depromeet.fragraph.base.ui.IRecyclerViewAdapter
 import com.depromeet.fragraph.core.ext.FRAGRAPH_HISTORY_FORMAT
+import com.depromeet.fragraph.core.ext.miliSecondsToDay
 import com.depromeet.fragraph.core.ext.miliSecondsToStringFormat
 import com.depromeet.fragraph.databinding.ItemHistoryBinding
 import com.depromeet.fragraph.feature.report.model.HistoryUiModel
+import timber.log.Timber
+import java.time.LocalDate
 
 class HistoryRecyclerViewAdapter(
     private var lifecycleOwner: LifecycleOwner,
     private val scale: Float,
+    private var positionLocaleDay: Int,
     private val firstScrollCallback: (position: Int) -> Unit
 ): RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder>(), IRecyclerViewAdapter<HistoryUiModel> {
     private val historyList = mutableListOf<HistoryUiModel>()
@@ -37,19 +41,19 @@ class HistoryRecyclerViewAdapter(
     override fun getItemCount(): Int = historyList.size
 
     override fun setItems(data: List<HistoryUiModel>) {
-        if (historyList.size == 0) {
-            historyList.clear()
-            historyList.addAll(data)
-            notifyDataSetChanged()
-            val position = historyList.indexOfFirst {
-                it.createdAt.miliSecondsToStringFormat(FRAGRAPH_HISTORY_FORMAT) == System.currentTimeMillis().miliSecondsToStringFormat(FRAGRAPH_HISTORY_FORMAT)
-            }
-            firstScrollCallback(position)
-        } else {
-            historyList.clear()
-            historyList.addAll(data)
-            notifyDataSetChanged()
+        historyList.clear()
+        historyList.addAll(data)
+        notifyDataSetChanged()
+        val position = historyList.indexOfFirst {
+            Timber.d("day: ${it.createdAt.miliSecondsToDay().toInt()}")
+            Timber.d("scroll day: ${positionLocaleDay.toString()}")
+            it.createdAt.miliSecondsToDay().toInt() == positionLocaleDay
         }
+        firstScrollCallback(position)
+    }
+
+    fun setLocaleDay(day: Int) {
+        this.positionLocaleDay = day
     }
 
     fun setLifeCycleOwner(lifecycleOwner: LifecycleOwner) {

@@ -10,32 +10,62 @@ import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.fragraph.R
 import com.depromeet.fragraph.core.event.EventObserver
 import com.depromeet.fragraph.databinding.FragmentReportBinding
-import com.depromeet.fragraph.feature.report.adapter.recyclerview.*
+import com.depromeet.fragraph.databinding.ViewHistoryCalendarBinding
+import com.depromeet.fragraph.feature.report.adapter.recyclerview.HistoryRecyclerViewAdapter
+import com.depromeet.fragraph.feature.report.adapter.recyclerview.HistoryRecyclerViewDecoration
+import com.depromeet.fragraph.feature.report.adapter.recyclerview.HistoryRecyclerViewScrollListener
+import com.depromeet.fragraph.feature.report.adapter.recyclerview.HistoryRecyclerViewSnapHelper
+import com.depromeet.fragraph.feature.report.view.calendar.DayViewCalendarContainer
 import com.depromeet.fragraph.feature.report.viewmodel.ReportViewModel
+import com.kizitonwose.calendarview.model.CalendarDay
+import com.kizitonwose.calendarview.model.DayOwner
+import com.kizitonwose.calendarview.ui.DayBinder
 import dagger.hilt.android.AndroidEntryPoint
-import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
+import java.time.LocalDate
+import java.time.YearMonth
+import java.time.format.DateTimeFormatter
+import java.time.temporal.WeekFields
+import java.util.*
 
-// Todo 이미지 있다면 클릭시 확대 애니메이션 적용 필요
-// Todo 알파값 애니메이션 변경 필요
+// Todo 안되있는 것 리스트
+
+// api 연동
+// 홈 화면에서 메모 클릭
+// 스크롤 잘 안되는 거
+// 향상을 더 하고싶은 경우
 
 @AndroidEntryPoint
 class ReportFragment: Fragment(R.layout.fragment_report) {
 
     private val reportViewModel: ReportViewModel by viewModels()
 
+    lateinit var binding: FragmentReportBinding
+
+    lateinit var historyAdapter: HistoryRecyclerViewAdapter
+
+    lateinit var historyCalenderBinding: ViewHistoryCalendarBinding
+    private val today = LocalDate.now()
+    private var year = LocalDate.now().year
+    private var month = LocalDate.now().month.value
+    private val monthTitleFormatter = DateTimeFormatter.ofPattern("MMMM")
+    private var selectedDate: LocalDate = LocalDate.now()
+    lateinit var selectedCalendarDay: CalendarDay
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val binding = FragmentReportBinding.bind(view)
+        binding = FragmentReportBinding.bind(view)
             .apply {
                 vm = reportViewModel
                 lifecycleOwner = this@ReportFragment
             }
 
+        historyCalenderBinding = binding.viewReportHistoryCalender
+
         // animation test
         val distance = 80000
         val scale: Float = resources.displayMetrics.density * distance
         val linearLayoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-        val historyAdapter = HistoryRecyclerViewAdapter(viewLifecycleOwner, scale) {position ->
+        historyAdapter = HistoryRecyclerViewAdapter(viewLifecycleOwner, scale, today.dayOfMonth) {position ->
             binding.rvHistories.scrollToPosition(position)
         }
         binding.rvHistories.apply {
@@ -48,11 +78,77 @@ class ReportFragment: Fragment(R.layout.fragment_report) {
             OverScrollDecoratorHelper.setUpOverScroll(this, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL)
         }
 
+        initCalender()
+
         reportViewModel.refreshData()
 
         reportViewModel.openRecommendationEvent.observe(viewLifecycleOwner, EventObserver {
             goKeywordSelect()
         })
+    }
+
+    private fun initCalender() {
+
+        // setup
+        val currentMonth = YearMonth.now()
+        val startMonth = currentMonth.minusMonths(10)
+        val endMonth = currentMonth.plusMonths(10)
+        val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
+        historyCalenderBinding.calendarViewHistory.setup(startMonth, endMonth, firstDayOfWeek)
+        historyCalenderBinding.calendarViewHistory.scrollToMonth(currentMonth)
+
+        // day binding
+        historyCalenderBinding.calendarViewHistory.dayBinder = object : DayBinder<DayViewCalendarContainer> {
+            // Called only when a new container is needed.
+            override fun create(view: View) = DayViewCalendarContainer(view) {clickDay->
+                historyAdapter.setLocaleDay(clickDay.day)
+                reportViewModel.onCalendarClick(year, month, clickDay.day)
+                selectedDate = clickDay.date
+                historyCalenderBinding.calendarViewHistory.notifyDayChanged(clickDay)
+                historyCalenderBinding.calendarViewHistory.notifyDayChanged(selectedCalendarDay)
+            }
+
+            // Called every time we need to reuse a container.
+            override fun bind(container: DayViewCalendarContainer, day: CalendarDay) {
+                container.day = day
+                val textView = container.textView
+                textView.text = day.date.dayOfMonth.toString()
+                if (day.owner == DayOwner.THIS_MONTH) {
+                    when {
+                        selectedDate == day.date -> {
+                            selectedCalendarDay = day
+                            textView.setTextColor(requireContext().getColor(R.color.colorOrange))
+                            textView.setBackgroundResource(R.drawable.bg_history_calender_select)
+                        }
+                        today == day.date -> {
+                            textView.setTextColor(requireContext().getColor(R.color.colorBlackGray_1))
+                            textView.setBackgroundResource(R.drawable.bg_history_calender_today)
+                        }
+                        else -> {
+                            textView.setTextColor(requireContext().getColor(R.color.colorBlackGray_1))
+                            textView.background = null
+                        }
+                    }
+                } else {
+                    textView.setTextColor(requireContext().getColor(R.color.colorBlackGray_3))
+                    textView.background = null
+                }
+
+                if (day.owner == DayOwner.THIS_MONTH) {
+                    container.textView.setTextColor(requireContext().getColor(R.color.colorBlackGray_1))
+                } else {
+                    container.textView.setTextColor(requireContext().getColor(R.color.colorBlackGray_3))
+                }
+            }
+        }
+
+        // scroll listener
+        historyCalenderBinding.calendarViewHistory.monthScrollListener = {
+            historyCalenderBinding.tvHistoryCalenderYear.text = it.yearMonth.year.toString()
+            historyCalenderBinding.tvHistoryCalenderMonth.text = monthTitleFormatter.format(it.yearMonth)
+            year = it.yearMonth.year
+            month = it.yearMonth.month.value
+        }
     }
 
     private fun goKeywordSelect() {

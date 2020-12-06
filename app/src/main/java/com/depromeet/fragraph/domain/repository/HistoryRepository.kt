@@ -7,7 +7,7 @@ import com.depromeet.fragraph.domain.model.Memo
 import kotlinx.coroutines.flow.Flow
 
 interface HistoryRepository {
-    fun getHistories(month: String): Flow<List<History>>
+    fun getHistories(year: Int, month: Int): Flow<List<History>>
     fun saveHistories(keyword: List<Keyword>, incense: Incense, playtime: Int): Flow<Int>
     fun deleteHistory(historyId: Int): Flow<Boolean>
 

@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.time.LocalDate
 
 class ReportViewModel @ViewModelInject constructor(
     private val reportRepository: ReportRepository,
@@ -33,6 +34,10 @@ class ReportViewModel @ViewModelInject constructor(
     val reportModel: MutableLiveData<ReportUiModel>
         get() = _reportModel
 
+    private val _historyCalendarVisible = MutableLiveData(false)
+    val historyCalendarVisible: LiveData<Boolean>
+        get() = _historyCalendarVisible
+
     private val _month = MutableLiveData(System.currentTimeMillis().miliSecondsToMonth())
     val month: MutableLiveData<String>
         get() = _month
@@ -42,8 +47,9 @@ class ReportViewModel @ViewModelInject constructor(
         get() = _histories
 
     fun refreshData() {
+        val today = LocalDate.now()
         getReport()
-        getHistories(System.currentTimeMillis().miliSecondsToMonth(), addAfter = true, isRefresh = true)
+        getHistories(today.year, today.monthValue, today.dayOfMonth)
     }
 
     private fun getReport() {
@@ -60,16 +66,18 @@ class ReportViewModel @ViewModelInject constructor(
         }
     }
 
-    fun getHistories(month: String, addAfter: Boolean, isRefresh: Boolean = false) {
+    fun getHistories(year: Int, month: Int, day: Int) {
+        _month.postValue(month.toString())
+
         viewModelScope.launch(Dispatchers.IO) {
-            historyRepository.getHistories(month)
+            historyRepository.getHistories(year, month)
                 .catch {
                     Timber.tag(SignInFragment.TAG).e("히스토리 가져오는 중 오류 발생")
                 }
                 .map { histories->
 
                     val centerPosition = histories.indexOfFirst {
-                        it.createdAt.miliSecondsToStringFormat(FRAGRAPH_HISTORY_FORMAT) == System.currentTimeMillis().miliSecondsToStringFormat(FRAGRAPH_HISTORY_FORMAT)
+                        it.createdAt.miliSecondsToDay().toInt() == day
                     }.let {
                         if (it < 0) 0 else it
                     }
@@ -84,37 +92,18 @@ class ReportViewModel @ViewModelInject constructor(
                 }
                 .map {
                     val historyUiModels = mutableListOf<HistoryUiModel>()
-                    var nowDay = System.currentTimeMillis().miliSecondsToDay().toInt()
-                    for( i in 1 until (getLastDayOfMonth().toInt() + 1)) {
+                    for( i in 1 until (getLastDayOfMonth(year, month, day).toInt() + 1)) {
                         it.firstOrNull { history -> history.createdAt.miliSecondsToDay().toInt() == i }?.let {history ->
                             historyUiModels.add(history)
                         } ?: run {
-                            if (nowDay == i) {
-                                historyUiModels.add(getEmptyUiModel(getMiliSecondsForDate(i), true))
-                                nowDay = -1
+                            if (day == i) {
+                                historyUiModels.add(getEmptyUiModel(getMiliSeconds(year, month, i), true))
                             } else {
-                                historyUiModels.add(getEmptyUiModel(getMiliSecondsForDate(i), false))
+                                historyUiModels.add(getEmptyUiModel(getMiliSeconds(year, month, i), false))
                             }
                         }
                     }
                     historyUiModels
-                }
-                .map {
-                    val newHistories = mutableListOf<HistoryUiModel>()
-                    when {
-                        isRefresh -> {
-                            newHistories.addAll(it)
-                        }
-                        addAfter -> {
-                            newHistories.addAll(histories.value!!)
-                            newHistories.addAll(it)
-                        }
-                        else -> {
-                            newHistories.addAll(it)
-                            newHistories.addAll(histories.value!!)
-                        }
-                    }
-                    newHistories
                 }
                 .collect {
                     histories.postValue(it)
@@ -122,8 +111,18 @@ class ReportViewModel @ViewModelInject constructor(
         }
     }
 
+    fun onCalendarClick(year: Int, month: Int, day: Int) {
+        _historyCalendarVisible.postValue(false)
+        getHistories(year, month, day)
+    }
 
+    fun onHistoryCalendarBackgroundClick() {
+        _historyCalendarVisible.postValue(false)
+    }
 
+    fun openHistoryCalendar() {
+        _historyCalendarVisible.postValue(true)
+    }
 
     fun startRecommendation() {
         _openRecommendationEvent.postValue(Event(Unit))

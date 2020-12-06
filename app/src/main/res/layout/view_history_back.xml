@@ -58,6 +58,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/tv_history_incense_title"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintVertical_bias="0.5"
+            android:visibility="gone"
             tools:src="@drawable/feeling_bg"
             />
 

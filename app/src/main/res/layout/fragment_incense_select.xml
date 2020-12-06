@@ -188,7 +188,7 @@
             android:layout_marginTop="@dimen/space_xx_large"
             android:layout_marginEnd="@dimen/space_large"
             android:layout_marginBottom="@dimen/space_xxx_large"
-            android:background="@drawable/btn_keyword_selected"
+            android:background="@drawable/btn_bg_meditation_play"
             android:onClick="@{() -> vm.onMeditationStart()}"
             app:layout_constraintStart_toEndOf="@+id/fl_time_select_container"
             app:layout_constraintEnd_toEndOf="parent"
@@ -209,6 +209,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1"
+            tools:visibility="gone"
             >
 
             <FrameLayout

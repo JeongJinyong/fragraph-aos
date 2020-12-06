@@ -70,21 +70,16 @@ fun Int.miliSecondsToSeconds(timezone: String = SEOUL): String {
     return dateformater.format(Date(this.toLong()))
 }
 
-fun getLastDayOfMonth(timezone: String = SEOUL): String {
-    val currentTimes = System.currentTimeMillis()
-    val year = SimpleDateFormat(JUST_YEAR).format(currentTimes).toInt()
-    val month = SimpleDateFormat(JUST_MONTH).format(currentTimes).toInt()
-    val date = SimpleDateFormat(JUST_DATE).format(currentTimes).toInt()
+fun getLastDayOfMonth(year: Int, month: Int, day: Int, timezone: String = SEOUL): String {
     val cal = Calendar.getInstance()
-    cal.set(year, month - 1, date)
+    cal.set(year, month - 1, day)
     return cal.getActualMaximum(Calendar.DAY_OF_MONTH).toString()
 }
 
-fun getMiliSecondsForDate(date: Int, timezone: String = SEOUL): Long {
-    val currentTimes = System.currentTimeMillis()
-    val yearMonth = SimpleDateFormat(YEAR_MONTH).format(currentTimes)
-    val dateformater: DateFormat = SimpleDateFormat(YEAR_MONTH_DATE)
+fun getMiliSeconds(year: Int, month: Int, day: Int, timezone: String = SEOUL): Long {
+    val dateformater: DateFormat = SimpleDateFormat(YEAR_MONTH_DATE) // yyyy-MM-dd
     dateformater.timeZone = TimeZone.getTimeZone(timezone)
-    val curDate = if (date / 10 == 0) { "0${date}" } else { "${date}" }
-    return dateformater.parse("$yearMonth-$curDate").time
+    val curMonth = if (month / 10 == 0) { "0${month}" } else { "${month}" }
+    val curDate = if (day / 10 == 0) { "0${day}" } else { "${day}" }
+    return dateformater.parse("$year-$curMonth-$curDate").time
 }

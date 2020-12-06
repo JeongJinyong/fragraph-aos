@@ -36,23 +36,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintVertical_bias="0"
             app:layout_constraintHorizontal_bias="0"
+            tools:background="@drawable/btn_keyword_selected"
             >
 
             <TextView
                 android:id="@+id/tv_item_keyword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/spoqa_han_sans_regular"
-                android:layout_marginStart="16sp"
-                android:layout_marginTop="@dimen/space_x_small"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="@dimen/space_x_small"
                 android:text="@{keyword.name}"
                 android:textSize="16sp"
                 android:textColor="@{keyword.selected ? @color/colorOrange : @color/colorBlackGray_1}"
+                android:fontFamily="@font/spoqa_han_sans_regular"
                 android:includeFontPadding="false"
                 android:lineSpacingExtra="4sp"
-                tools:text="잠이 필요해" />
+                android:layout_marginStart="@dimen/space_median"
+                android:layout_marginTop="@dimen/space_x_small"
+                android:layout_marginEnd="@dimen/space_median"
+                android:layout_marginBottom="@dimen/space_x_small"
+                tools:text="잠이 필요해"
+                tools:textColor="@color/colorOrange"
+                />
 
         </FrameLayout>
 

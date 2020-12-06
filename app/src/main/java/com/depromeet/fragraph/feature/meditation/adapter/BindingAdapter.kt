@@ -9,7 +9,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.depromeet.fragraph.core.ext.enums.toMeditationTitle
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
-import com.depromeet.fragraph.feature.report.view.ReportChartView
 import jp.wasabeef.blurry.Blurry
 
 @BindingAdapter("bind_incense_title_meditation")

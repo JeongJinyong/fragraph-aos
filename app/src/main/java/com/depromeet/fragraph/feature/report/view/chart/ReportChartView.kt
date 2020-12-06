@@ -1,6 +1,5 @@
-package com.depromeet.fragraph.feature.report.view
+package com.depromeet.fragraph.feature.report.view.chart
 
-import ReportChartViewXAxisRenderer
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
