@@ -15,11 +15,13 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
 class ApiModule {
 
+    @Singleton
     @Provides
     fun provideGiftApi(
         okHttpClient: OkHttpClient,
@@ -34,6 +36,7 @@ class ApiModule {
             .build()
             .create(FragraphApi::class.java)
 
+    @Singleton
     @Provides
     fun provideConverterFactory(): Converter.Factory {
 //        val gson : Gson = GsonBuilder()
@@ -43,6 +46,7 @@ class ApiModule {
         return GsonConverterFactory.create()
     }
 
+    @Singleton
     @Provides
     fun provideOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
@@ -53,6 +57,7 @@ class ApiModule {
             .addInterceptor(authInterceptor)
             .build()
 
+    @Singleton
     @Provides
     fun provideLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply {
@@ -63,6 +68,7 @@ class ApiModule {
             }
         }
 
+    @Singleton
     @Provides
     fun providesAuthInterceptor(
         @ApplicationContext context: Context

@@ -45,8 +45,6 @@ class HistoryRecyclerViewAdapter(
         historyList.addAll(data)
         notifyDataSetChanged()
         val position = historyList.indexOfFirst {
-            Timber.d("day: ${it.createdAt.miliSecondsToDay().toInt()}")
-            Timber.d("scroll day: ${positionLocaleDay.toString()}")
             it.createdAt.miliSecondsToDay().toInt() == positionLocaleDay
         }
         firstScrollCallback(position)

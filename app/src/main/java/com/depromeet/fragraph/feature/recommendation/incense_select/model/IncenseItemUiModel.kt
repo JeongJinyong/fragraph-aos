@@ -26,5 +26,5 @@ data class IncenseItemUiModel(
         this.isCenter.value = isCenter
     }
 
-    fun toIncense() = Incense(this.id, this.title, this.content, this.image)
+    fun toIncense() = Incense(this.id, this.title, this.content, this.image, category)
 }

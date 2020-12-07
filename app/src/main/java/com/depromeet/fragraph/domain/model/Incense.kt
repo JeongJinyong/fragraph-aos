@@ -7,4 +7,5 @@ data class Incense(
     val title: IncenseTitle,
     val content: String,
     val image: String,
+    val category: Category,
 )

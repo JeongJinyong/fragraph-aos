@@ -4,4 +4,5 @@ data class Keyword(
     val id : Int,
     val name: String,
     val weight: Float,
+    val category: Category,
 )

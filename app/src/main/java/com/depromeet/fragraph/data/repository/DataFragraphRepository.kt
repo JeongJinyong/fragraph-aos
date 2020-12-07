@@ -2,50 +2,60 @@ package com.depromeet.fragraph.data.repository
 
 import android.content.Context
 import com.depromeet.fragraph.data.api.FragraphApi
+import com.depromeet.fragraph.data.local.LocalData
 import com.depromeet.fragraph.domain.model.*
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
 import com.depromeet.fragraph.domain.repository.*
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import timber.log.Timber
 import javax.inject.Inject
 
 class DataFragraphRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val fragraphApi: FragraphApi,
+    private val localData: LocalData,
 ) : IncenseRepository, KeywordRepository, ReportRepository, HistoryRepository,
     MeditationRepository {
 
-    val selectedKeywords = mutableListOf<Keyword>()
-    private var meditation: Meditation? = null
-    private var memoCached: Memo? = null
-
     override fun getIncenses(): Flow<List<Incense>> {
         return flow {
-            fragraphApi.getIncenses().data?.let {incenseData ->
-                val incenses = incenseData.incenses
-                    .map { Incense(it.id, it.title, it.detail, "") }
-                emit(incenses)
-            }
+                emit(localData.incenses)
         }
     }
 
     override fun getRecommendationIncenses(): Flow<List<Recommendation>> {
         return flow {
-
+            // Todo 추후 Api 연동 필요
+            val recommendations = localData.selectedKeywords.groupBy {
+                it.category.id
+            }.map {
+                val index = localData.incenses.indexOfFirst { incense -> it.key == incense.category.id }
+                val incense = localData.incenses[index]
+                val music = localData.musics[index]
+                val video = localData.videos[index]
+                Recommendation(incense, it.value, music, video)
+            }
+            emit(recommendations)
         }
     }
 
     override fun getRandomKeywords(): Flow<List<Keyword>> {
         return flow{
-            emit(keywords.shuffled().subList(0, 21))
+            // Todo 추후에 api 연동 필요
+            val keywords = mutableListOf<Keyword>()
+            keywords.addAll(localData.sandalwoodsKeywords.shuffled().subList(0, 5))
+            keywords.addAll(localData.peppermintKeywords.shuffled().subList(0, 5))
+            keywords.addAll(localData.lavenderKeywords.shuffled().subList(0, 5))
+            keywords.addAll(localData.orangeKeywords.shuffled().subList(0, 5))
+            keywords.addAll(localData.eucalyptusKeywords.shuffled().subList(0, 5))
+            emit(keywords.shuffled())
         }
     }
 
     override fun saveSelectKeywords(keywords: List<Keyword>) {
-        selectedKeywords.clear()
-        selectedKeywords.addAll(keywords)
+        localData.selectedKeywords.clear()
+        localData.selectedKeywords.addAll(keywords)
     }
 
     override fun getReport(): Flow<Report> {
@@ -60,13 +70,13 @@ class DataFragraphRepository @Inject constructor(
         return flow {
 
             if (year == 2020 && month == 12) {
-                val incenses = listOf(
-                    Incense(1, IncenseTitle.LAVENDER, "어쩌구 저쩌구", "이미지라네"),
-                    Incense(2, IncenseTitle.PEPPERMINT, "어쩌구 저쩌구", "이미지라네"),
-                    Incense(3, IncenseTitle.SANDALWOOD, "어쩌구 저쩌구", "이미지라네"),
-                    Incense(4, IncenseTitle.ORANGE, "어쩌구 저쩌구", "이미지라네"),
-                    Incense(5, IncenseTitle.EUCALYPTUS, "어쩌구 저쩌구", "이미지라네"),
-                )
+                val incenses = localData.incenses
+                val keywords = mutableListOf<Keyword>()
+                keywords.addAll(localData.sandalwoodsKeywords)
+                keywords.addAll(localData.peppermintKeywords)
+                keywords.addAll(localData.lavenderKeywords)
+                keywords.addAll(localData.orangeKeywords)
+                keywords.addAll(localData.eucalyptusKeywords)
                 val memos = listOf(
                     Memo(
                         1,
@@ -293,14 +303,14 @@ class DataFragraphRepository @Inject constructor(
     override fun saveMemo(historyId: Int, title: String, contents: String): Flow<Int> {
         return flow {
 
-            memoCached = Memo(1, title, contents, null)
+            localData.memoCached = Memo(1, title, contents, null)
             emit(1)
         }
     }
 
     override fun getMemo(memoId: Int): Flow<Memo> {
         return flow {
-            memoCached?.let { emit(it) } ?: kotlin.run {
+            localData.memoCached?.let { emit(it) } ?: kotlin.run {
 
                 // Todo api 에서 memo 를 가져옴
                 emit(Memo(1, "abcdefgsasdfdef", "이거 메모 임시임", null))
@@ -310,79 +320,23 @@ class DataFragraphRepository @Inject constructor(
 
     override fun updateMemo(historyId: Int, memo: Memo): Flow<Int> {
         return flow {
-            memoCached = Memo(memo.id, memo.title, memo.content, null)
+            localData.memoCached = Memo(memo.id, memo.title, memo.content, null)
             emit(memo.id)
         }
     }
 
     override fun deleteMemo(historyId: Int, memoId: Int): Flow<Int> {
         return flow {
-            memoCached = null
+            localData.memoCached = null
             emit(memoId)
         }
     }
 
     override fun setMeditation(meditation: Meditation) {
-        Timber.d("set meditation, ${meditation.historyId}")
-        this.meditation = meditation
+        localData.meditation = meditation
     }
 
     override fun getMeditation(): Meditation? {
-        Timber.d("get meditation, ${this.meditation.toString()}")
-        return this.meditation
-    }
-
-    companion object {
-        val keywords = listOf(
-            Keyword(1, "잠 못드는 밤", 0.3f),
-            Keyword(2, "우울해", 0.4f),
-            Keyword(3, "잠이 안와", 0.8f),
-            Keyword(4, "힘든 하루", 0.2f),
-            Keyword(5, "스트레스", 0.5f),
-            Keyword(6, "마음대로 되지 않는 하루", 0.3f),
-            Keyword(7, "멀리 떠나고 싶은", 0.4f),
-            Keyword(8, "토닥토닥", 0.1f),
-            Keyword(9, "머리가 복잡해", 0.6f),
-            Keyword(10, "집중이 필요한", 0.8f),
-            Keyword(11, "상쾌해", 0.2f),
-            Keyword(12, "불안불안", 0.3f),
-            Keyword(13, "망치면 어떡하지", 0.2f),
-            Keyword(14, "상쾌해 지고싶은", 0.5f),
-            Keyword(15, "민초단", 0.6f),
-            Keyword(16, "주변이 왜 이렇게 시끄럽지?", 0.1f),
-            Keyword(17, "아직 할 일이 남은", 0.4f),
-            Keyword(18, "공부할 타이밍", 0.6f),
-            Keyword(19, "우울해", 0.7f),
-            Keyword(20, "사랑하고 싶어", 0.6f),
-            Keyword(21, "머리가 지끈거리는", 0.5f),
-            Keyword(22, "목이 칼칼해", 0.4f),
-            Keyword(23, "혈압 상승!!", 0.3f),
-            Keyword(24, "분노조절장애", 0.5f),
-            Keyword(25, "머리가 띵!", 0.6f),
-            Keyword(26, "고단한", 0.7f),
-            Keyword(27, "허탈한", 0.8f),
-            Keyword(28, "으슬으슬", 0.2f),
-            Keyword(29, "솟아라 엔돌핀이여!", 0.3f),
-            Keyword(30, "정신적 스트레스", 0.4f),
-            Keyword(31, "활기찬 하루", 0.6f),
-            Keyword(32, "신나는", 0.7f),
-            Keyword(33, "기운없는", 0.8f),
-            Keyword(34, "지친 하루 끝에서", 0.8f),
-            Keyword(35, "시체가 되고 싶어", 0.3f),
-            Keyword(36, "아무것도 하기 싫어", 0.8f),
-            Keyword(37, "번아웃 증후군", 0.5f),
-            Keyword(38, "기분전환이 필요해", 0.7f),
-            Keyword(39, "하늘을 날아갈 것 같은", 0.3f),
-            Keyword(40, "설레는", 0.1f),
-            Keyword(41, "웃음이 나오는", 0.7f),
-            Keyword(42, "색다른 것을 하고 싶은", 0.6f),
-            Keyword(43, "안정이 필요한", 0.8f),
-            Keyword(44, "꿀꿀한", 0.3f),
-            Keyword(45, "하루의 마무리", 0.5f),
-            Keyword(46, "마음이 뒤숭숭해", 0.1f),
-            Keyword(47, "생각이 생각을 불러오는", 0.4f),
-            Keyword(48, "너무 신이나", 0.3f),
-            Keyword(49, "명상이 필요한", 0.2f),
-        )
+        return localData.meditation
     }
 }

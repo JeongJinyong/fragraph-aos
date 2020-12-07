@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class KeywordSelectViewModel @ViewModelInject constructor(
     private val keywordRepository: KeywordRepository,
@@ -52,7 +53,7 @@ class KeywordSelectViewModel @ViewModelInject constructor(
             keywordRepository.getRandomKeywords()
                 .map {
                     it.map {keyword ->
-                        KeywordUiModel(keyword.id, keyword.name, keyword.weight, MutableLiveData(false))
+                        KeywordUiModel(keyword.id, keyword.name, keyword.weight, keyword.category, MutableLiveData(false))
                     }
                 }
                 .collect {
@@ -65,7 +66,7 @@ class KeywordSelectViewModel @ViewModelInject constructor(
         if (_selectedKeywordsSize.value == 3) {
             val selectedKeywords = keywords.value!!
                 .filter { it.selected.value!! ?: false }
-                .map { Keyword(it.id, it.name, it.weight) }
+                .map { Keyword(it.id, it.name, it.weight, it.category) }
             keywordRepository.saveSelectKeywords(selectedKeywords)
             _openIncenseSelectEvent.postValue(Event(Unit))
         } else {
