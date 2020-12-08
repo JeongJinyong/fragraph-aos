@@ -15,6 +15,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -23,16 +24,16 @@ class ApiModule {
 
     @Singleton
     @Provides
-    fun provideGiftApi(
+    fun provideFragraphApi(
         okHttpClient: OkHttpClient,
         converter: Converter.Factory
     ): FragraphApi =
         Retrofit.Builder()
             .baseUrl(apiEndpoint())
             .client(okHttpClient)
-            .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .addConverterFactory(converter)
             .addConverterFactory(EnumConverterFactory())
+            .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .build()
             .create(FragraphApi::class.java)
 
@@ -55,6 +56,7 @@ class ApiModule {
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(authInterceptor)
+            .connectTimeout(5L, TimeUnit.SECONDS)
             .build()
 
     @Singleton

@@ -4,6 +4,7 @@ import android.content.Context
 import com.depromeet.fragraph.core.ext.getBodyOrThrow
 import com.depromeet.fragraph.data.api.FragraphApi
 import com.depromeet.fragraph.data.api.request.UpdateMyInfoRequest
+import com.depromeet.fragraph.data.local.LocalData
 import com.depromeet.fragraph.domain.model.User
 import com.depromeet.fragraph.domain.repository.UserRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -15,14 +16,13 @@ import javax.inject.Inject
 
 class DataUserRepository @Inject constructor(
     @ApplicationContext private val context: Context,
+    private val localData: LocalData,
     private val fragraphApi: FragraphApi,
 ) : UserRepository {
 
-    var myInfo: User? = null
-
     override fun getMyInfo(): Flow<User> {
         return flow {
-            myInfo?.let { user ->
+            localData.myInfo?.let { user ->
                 emit(user)
             } ?: kotlin.run {
                 fragraphApi.getMyInfo().getBodyOrThrow()?.let { userData ->
@@ -32,7 +32,7 @@ class DataUserRepository @Inject constructor(
                         userData.data.profileUrl,
                         userData.data.provider,
                     ).apply {
-                        myInfo = this
+                        localData.myInfo = this
                     }
                     emit(user)
                 }
@@ -49,7 +49,7 @@ class DataUserRepository @Inject constructor(
                     it.profileUrl,
                     it.provider,
                 ).apply {
-                    myInfo = this
+                    localData.myInfo = this
                 }
                 emit(user)
             }

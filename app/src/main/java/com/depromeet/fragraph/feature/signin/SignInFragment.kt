@@ -19,6 +19,7 @@ import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import java.util.*
 
 @AndroidEntryPoint
 class SignInFragment : Fragment(R.layout.fragment_sign_in) {
@@ -38,7 +39,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
             }
 
         signInViewModel.kakaoOpened.observe(viewLifecycleOwner, EventObserver { event ->
-            val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+            val callbackWeb: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
                     Timber.tag(TAG).e(error, "로그인 실패")
                     requireContext().toast("로그인 실패")
@@ -47,14 +48,24 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                 }
             }
 
+            val callbackApp: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+                if (error != null) {
+                    Timber.tag(TAG).e(error, "로그인 실패")
+                    if (error.message == "KakaoTalk is installed but not connected to Kakao account.") {
+                        LoginClient.instance.loginWithKakaoAccount(requireContext(), callback = callbackWeb)
+                    } else {
+                        requireContext().toast("로그인 실패")
+                    }
+                } else if (token != null) {
+                    signInViewModel.signInByKakao(token.accessToken)
+                }
+            }
+
             // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
             if (LoginClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
-                LoginClient.instance.loginWithKakaoTalk(requireContext(), callback = callback)
+                LoginClient.instance.loginWithKakaoTalk(requireContext(), callback = callbackApp)
             } else {
-                LoginClient.instance.loginWithKakaoAccount(
-                    requireContext(),
-                    callback = callback
-                )
+                LoginClient.instance.loginWithKakaoAccount(requireContext(), callback = callbackWeb)
             }
         })
 

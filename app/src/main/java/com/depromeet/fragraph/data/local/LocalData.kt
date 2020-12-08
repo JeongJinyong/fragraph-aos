@@ -5,6 +5,7 @@ import com.depromeet.fragraph.domain.model.enums.IncenseTitle
 
 class LocalData {
 
+    var myInfo: User? = null
     val selectedKeywords = mutableListOf<Keyword>()
     var meditation: Meditation? = null
     var memoCached: Memo? = null

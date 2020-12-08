@@ -1,14 +1,18 @@
 package com.depromeet.fragraph.data.repository
 
 import android.content.Context
+import com.depromeet.fragraph.core.ext.getBodyOrThrow
 import com.depromeet.fragraph.data.api.FragraphApi
 import com.depromeet.fragraph.data.local.LocalData
 import com.depromeet.fragraph.domain.model.*
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
 import com.depromeet.fragraph.domain.repository.*
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import timber.log.Timber
 import javax.inject.Inject
 
 class DataFragraphRepository @Inject constructor(
@@ -60,10 +64,21 @@ class DataFragraphRepository @Inject constructor(
 
     override fun getReport(): Flow<Report> {
         return flow {
-            val titles = listOf(IncenseTitle.LAVENDER, IncenseTitle.PEPPERMINT, IncenseTitle.SANDALWOOD, IncenseTitle.ORANGE, IncenseTitle.EUCALYPTUS)
-            val values = listOf(7f, 4f, 8f, 5f, 10f)
-            emit(Report(titles, values))
-        }
+
+            fragraphApi.getReports().getBodyOrThrow()?.let { reportsData ->
+                val reportsMap = mutableMapOf(
+                    Pair(IncenseTitle.LAVENDER, 0f),
+                    Pair(IncenseTitle.PEPPERMINT, 0f),
+                    Pair(IncenseTitle.SANDALWOOD, 0f),
+                    Pair(IncenseTitle.ORANGE, 0f),
+                    Pair(IncenseTitle.EUCALYPTUS, 0f),
+                )
+                reportsData.data.values
+                    .map { reportsMap.put(it.name, it.count.toFloat()) }
+//            val values = listOf(7f, 4f, 8f, 5f, 10f)
+                emit(Report(reportsMap.keys.toList(), reportsMap.values.toList()))
+            }
+        }.flowOn(Dispatchers.IO)
     }
 
     override fun getHistories(year: Int, month: Int): Flow<List<History>> {

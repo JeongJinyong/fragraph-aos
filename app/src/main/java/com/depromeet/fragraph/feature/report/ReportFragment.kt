@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.depromeet.fragraph.R
 import com.depromeet.fragraph.core.event.EventObserver
 import com.depromeet.fragraph.databinding.FragmentReportBinding
@@ -64,18 +65,32 @@ class ReportFragment: Fragment(R.layout.fragment_report) {
         // animation test
         val distance = 80000
         val scale: Float = resources.displayMetrics.density * distance
-        val linearLayoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-        historyAdapter = HistoryRecyclerViewAdapter(viewLifecycleOwner, scale, today.dayOfMonth) {position ->
+        val linearLayoutManager = LinearLayoutManager(
+            requireContext(),
+            RecyclerView.HORIZONTAL,
+            false
+        )
+        historyAdapter = HistoryRecyclerViewAdapter(viewLifecycleOwner, scale, today.dayOfMonth) { position ->
             binding.rvHistories.scrollToPosition(position)
-        }
+        } //.registerAdapterDataObserver(historyAdapter.HistoryRecyclerViewDataObserver())
+
         binding.rvHistories.apply {
             adapter = historyAdapter
             layoutManager = linearLayoutManager
             addItemDecoration(HistoryRecyclerViewDecoration())
-            addOnScrollListener(HistoryRecyclerViewScrollListener(linearLayoutManager, historyAdapter, 2))
+            addOnScrollListener(
+                HistoryRecyclerViewScrollListener(
+                    linearLayoutManager,
+                    historyAdapter,
+                    2
+                )
+            )
             val snapHelper = HistoryRecyclerViewSnapHelper(this)
             snapHelper.attachToRecyclerView(this)
-            OverScrollDecoratorHelper.setUpOverScroll(this, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL)
+            OverScrollDecoratorHelper.setUpOverScroll(
+                this,
+                OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL
+            )
         }
 
         initCalender()
@@ -100,7 +115,7 @@ class ReportFragment: Fragment(R.layout.fragment_report) {
         // day binding
         historyCalenderBinding.calendarViewHistory.dayBinder = object : DayBinder<DayViewCalendarContainer> {
             // Called only when a new container is needed.
-            override fun create(view: View) = DayViewCalendarContainer(view) {clickDay->
+            override fun create(view: View) = DayViewCalendarContainer(view) { clickDay->
                 historyAdapter.setLocaleDay(clickDay.day)
                 reportViewModel.onCalendarClick(year, month, clickDay.day)
                 selectedDate = clickDay.date

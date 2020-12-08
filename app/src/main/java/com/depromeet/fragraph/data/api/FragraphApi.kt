@@ -30,9 +30,12 @@ interface FragraphApi {
     suspend fun getIncenses(): GetIncensesApiResponse
 
     @GET("/api/v1/recommendations")
-    suspend fun getIncenses(
+    suspend fun getRecommendations(
         @Query("tag") tagIds: List<Int>
     ): GetRecommendationApiResponse
+
+    @GET("/api/v1/reports")
+    suspend fun getReports(): FragraphNetworkResponse<GetReportsApiResponse, ErrorResponse>
 
     @POST("/api/v1/histories")
     suspend fun postHistory(

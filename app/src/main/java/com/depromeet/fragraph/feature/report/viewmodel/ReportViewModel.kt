@@ -4,14 +4,16 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.depromeet.fragraph.core.event.Event
-import com.depromeet.fragraph.core.ext.*
+import com.depromeet.fragraph.core.ext.getLastDayOfMonth
+import com.depromeet.fragraph.core.ext.getMiliSeconds
+import com.depromeet.fragraph.core.ext.miliSecondsToDay
+import com.depromeet.fragraph.core.ext.miliSecondsToMonth
 import com.depromeet.fragraph.domain.repository.HistoryRepository
 import com.depromeet.fragraph.domain.repository.ReportRepository
 import com.depromeet.fragraph.feature.report.model.HistoryUiModel
 import com.depromeet.fragraph.feature.report.model.ReportUiModel
 import com.depromeet.fragraph.feature.report.model.getDefaultReportUiModel
 import com.depromeet.fragraph.feature.report.model.getEmptyUiModel
-import com.depromeet.fragraph.feature.signin.SignInFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -55,8 +57,8 @@ class ReportViewModel @ViewModelInject constructor(
     private fun getReport() {
         viewModelScope.launch(Dispatchers.IO) {
             reportRepository.getReport()
-                .catch {
-                    Timber.tag(SignInFragment.TAG).e("레포트 가져오는 중 오류 발생")
+                .catch {e->
+                    Timber.tag(TAG).e(e,"레포트 가져오는 중 오류 발생")
                 }
                 .map {
                     val playCount = it.counts.reduce { acc, count -> acc + count }
@@ -72,7 +74,7 @@ class ReportViewModel @ViewModelInject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             historyRepository.getHistories(year, month)
                 .catch {
-                    Timber.tag(SignInFragment.TAG).e("히스토리 가져오는 중 오류 발생")
+                    Timber.tag(TAG).e("히스토리 가져오는 중 오류 발생")
                 }
                 .map { histories->
 
@@ -126,5 +128,9 @@ class ReportViewModel @ViewModelInject constructor(
 
     fun startRecommendation() {
         _openRecommendationEvent.postValue(Event(Unit))
+    }
+
+    companion object {
+        const val TAG = "ReportViewModel"
     }
 }

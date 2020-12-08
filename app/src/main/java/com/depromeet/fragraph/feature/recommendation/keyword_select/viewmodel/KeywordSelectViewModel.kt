@@ -65,7 +65,7 @@ class KeywordSelectViewModel @ViewModelInject constructor(
     fun onRecommendClick() {
         if (_selectedKeywordsSize.value == 3) {
             val selectedKeywords = keywords.value!!
-                .filter { it.selected.value!! ?: false }
+                .filter { it.selected.value ?: false }
                 .map { Keyword(it.id, it.name, it.weight, it.category) }
             keywordRepository.saveSelectKeywords(selectedKeywords)
             _openIncenseSelectEvent.postValue(Event(Unit))

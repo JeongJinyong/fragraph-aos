@@ -9,13 +9,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.fragraph.R
 import com.depromeet.fragraph.base.ui.IRecyclerViewAdapter
-import com.depromeet.fragraph.core.ext.FRAGRAPH_HISTORY_FORMAT
 import com.depromeet.fragraph.core.ext.miliSecondsToDay
-import com.depromeet.fragraph.core.ext.miliSecondsToStringFormat
 import com.depromeet.fragraph.databinding.ItemHistoryBinding
 import com.depromeet.fragraph.feature.report.model.HistoryUiModel
-import timber.log.Timber
-import java.time.LocalDate
 
 class HistoryRecyclerViewAdapter(
     private var lifecycleOwner: LifecycleOwner,
@@ -27,7 +23,12 @@ class HistoryRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding: ItemHistoryBinding = DataBindingUtil.inflate(inflater, R.layout.item_history, parent, false)
+        val binding: ItemHistoryBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.item_history,
+            parent,
+            false
+        )
         binding.flHistoryFront.cameraDistance = scale
         binding.flHistoryBack.cameraDistance = scale
         return ViewHolder(binding)
@@ -44,10 +45,6 @@ class HistoryRecyclerViewAdapter(
         historyList.clear()
         historyList.addAll(data)
         notifyDataSetChanged()
-        val position = historyList.indexOfFirst {
-            it.createdAt.miliSecondsToDay().toInt() == positionLocaleDay
-        }
-        firstScrollCallback(position)
     }
 
     fun setLocaleDay(day: Int) {
@@ -62,6 +59,15 @@ class HistoryRecyclerViewAdapter(
         historyList[position].changeCenterPosition(isCenter)
     }
 
+    inner class HistoryRecyclerViewDataObserver: RecyclerView.AdapterDataObserver() {
+        override fun onChanged() {
+            val position = historyList.indexOfFirst {
+                it.createdAt.miliSecondsToDay().toInt() == positionLocaleDay
+            }
+            firstScrollCallback(position)
+        }
+    }
+
     class ViewHolder(
         val binding: ItemHistoryBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -70,10 +76,22 @@ class HistoryRecyclerViewAdapter(
             binding.history = history
             binding.lifecycleOwner = lifecycleOwner
 
-            val mSetRightIn: AnimatorSet = AnimatorInflater.loadAnimator(itemView.context, R.animator.hisotry_flip_right_in) as AnimatorSet
-            val mSetRightOut: AnimatorSet = AnimatorInflater.loadAnimator(itemView.context, R.animator.hisotry_flip_right_out) as AnimatorSet
-            val mSetLeftIn: AnimatorSet = AnimatorInflater.loadAnimator(itemView.context, R.animator.hisotry_flip_left_in) as AnimatorSet
-            val mSetLeftOut: AnimatorSet = AnimatorInflater.loadAnimator(itemView.context, R.animator.hisotry_flip_left_out) as AnimatorSet
+            val mSetRightIn: AnimatorSet = AnimatorInflater.loadAnimator(
+                itemView.context,
+                R.animator.hisotry_flip_right_in
+            ) as AnimatorSet
+            val mSetRightOut: AnimatorSet = AnimatorInflater.loadAnimator(
+                itemView.context,
+                R.animator.hisotry_flip_right_out
+            ) as AnimatorSet
+            val mSetLeftIn: AnimatorSet = AnimatorInflater.loadAnimator(
+                itemView.context,
+                R.animator.hisotry_flip_left_in
+            ) as AnimatorSet
+            val mSetLeftOut: AnimatorSet = AnimatorInflater.loadAnimator(
+                itemView.context,
+                R.animator.hisotry_flip_left_out
+            ) as AnimatorSet
 
             binding.flHistoryItem.setOnClickListener {
                 if (!history.isBack) {

@@ -24,6 +24,7 @@ internal class NetworkResponseCall<S : Any, E : Any>(
                 val error = response.errorBody()
 
                 if (response.isSuccessful) {
+                    Timber.d("success ${FragraphNetworkResponse.Success(body)}")
                     callback.onResponse(
                         this@NetworkResponseCall,
                         Response.success(FragraphNetworkResponse.Success(body))
