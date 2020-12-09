@@ -16,6 +16,7 @@ import com.depromeet.fragraph.feature.recommendation.keyword_select.viewmodel.Ke
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import timber.log.Timber
 
 @AndroidEntryPoint

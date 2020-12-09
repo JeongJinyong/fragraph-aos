@@ -3,6 +3,7 @@ package com.depromeet.fragraph.core.ext
 import timber.log.Timber
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 const val SEOUL = "Asia/Seoul"
@@ -70,14 +71,14 @@ fun Int.miliSecondsToSeconds(timezone: String = SEOUL): String {
     return dateformater.format(Date(this.toLong()))
 }
 
-fun getLastDayOfMonth(year: Int, month: Int, day: Int, timezone: String = SEOUL): String {
+fun getLastDayOfMonth(year: Int, month: Int, day: Int, timezone: String = SEOUL): Int {
     val cal = Calendar.getInstance()
     cal.set(year, month - 1, day)
-    return cal.getActualMaximum(Calendar.DAY_OF_MONTH).toString()
+    return cal.getActualMaximum(Calendar.DAY_OF_MONTH)
 }
 
 fun getMiliSeconds(year: Int, month: Int, day: Int, timezone: String = SEOUL): Long {
-    val dateformater: DateFormat = SimpleDateFormat(YEAR_MONTH_DATE) // yyyy-MM-dd
+    val dateformater: DateFormat = SimpleDateFormat(YEAR_MONTH_DATE)
     dateformater.timeZone = TimeZone.getTimeZone(timezone)
     val curMonth = if (month / 10 == 0) { "0${month}" } else { "${month}" }
     val curDate = if (day / 10 == 0) { "0${day}" } else { "${day}" }

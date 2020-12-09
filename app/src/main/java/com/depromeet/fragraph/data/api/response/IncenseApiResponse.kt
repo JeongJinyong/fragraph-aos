@@ -15,6 +15,8 @@ data class GetIncensesApiResponse(
 
 data class IncenseApiData(
     val id: Int,
-    val title: IncenseTitle,
+    val name: IncenseTitle,
+    val image: String,
     val detail: String,
+    val categoryId: String,
 )

@@ -15,6 +15,9 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.model.GradientColor
 
+// Todo 그래프 위 숫자 간격을 4~8 의 간격으로 띄울 것
+//
+
 class ReportChartView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ): BarChart(context, attrs, defStyleAttr) {

@@ -94,7 +94,7 @@ class ReportViewModel @ViewModelInject constructor(
                 }
                 .map {
                     val historyUiModels = mutableListOf<HistoryUiModel>()
-                    for( i in 1 until (getLastDayOfMonth(year, month, day).toInt() + 1)) {
+                    for( i in 1 until (getLastDayOfMonth(year, month, day) + 1)) {
                         it.firstOrNull { history -> history.createdAt.miliSecondsToDay().toInt() == i }?.let {history ->
                             historyUiModels.add(history)
                         } ?: run {

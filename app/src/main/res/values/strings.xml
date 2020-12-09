@@ -15,7 +15,7 @@
     <!--  report view  -->
     <string name="report_description_prefix">지금까지 총</string>
     <string name="report_description">&#160;%s번&#160;</string>
-    <string name="report_description_suffix">향상하였습니다.</string>
+    <string name="report_description_suffix">명상 하였습니다.</string>
     <string name="report_x_lavender">laven\nder&#160;&#160;</string>
     <string name="report_x_perppermint">perpper\nmint&#160;&#160;&#160;</string>
     <string name="report_x_sandalwood">sandal\nwood&#160;&#160;</string>

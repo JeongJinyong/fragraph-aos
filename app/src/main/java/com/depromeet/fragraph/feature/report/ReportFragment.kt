@@ -35,6 +35,10 @@ import java.util.*
 // 홈 화면에서 메모 클릭
 // 스크롤 잘 안되는 거
 // 향상을 더 하고싶은 경우
+// 캘린더가 앞 뒤만 패딩
+// 오늘 날짜만 폰트 칼라만 오렌지로
+// 클릭 한 날짜도 폰트 오렌지
+// 캘린더 좌측 정려
 
 @AndroidEntryPoint
 class ReportFragment: Fragment(R.layout.fragment_report) {
@@ -132,12 +136,12 @@ class ReportFragment: Fragment(R.layout.fragment_report) {
                     when {
                         selectedDate == day.date -> {
                             selectedCalendarDay = day
-                            textView.setTextColor(requireContext().getColor(R.color.colorOrange))
                             textView.setBackgroundResource(R.drawable.bg_history_calender_select)
+                            textView.setTextColor(requireContext().getColor(R.color.colorOrange))
                         }
                         today == day.date -> {
-                            textView.setTextColor(requireContext().getColor(R.color.colorBlackGray_1))
-                            textView.setBackgroundResource(R.drawable.bg_history_calender_today)
+                            textView.background = null
+                            textView.setTextColor(requireContext().getColor(R.color.colorOrange))
                         }
                         else -> {
                             textView.setTextColor(requireContext().getColor(R.color.colorBlackGray_1))

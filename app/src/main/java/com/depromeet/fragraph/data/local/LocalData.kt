@@ -23,35 +23,35 @@ class LocalData {
             1,
             IncenseTitle.SANDALWOOD,
             "심장기능을 강화하고 혈액순환을 촉진, 마음을 진정시키는 효과가 뛰어납니다.",
-            "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/sandalwood.png",
+            "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/image_sandalwood.png",
             categories[0]
         ),
         Incense(
             2,
             IncenseTitle.PEPPERMINT,
             "기침, 감기, 천식, 알레르기 및 결핵 등 호흡기계에 건강상 효능을 제공, 기억력 증진 및 스트레스 완화 효과가 있을 수 있습니다.",
-            "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/peppermint.png",
+            "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/image_peppermint.png",
             categories[1]
         ),
         Incense(
             3,
             IncenseTitle.LAVENDER,
             "주성분은 아세트산리날릴, 리날올, 피넨, 리모넨, 게라니올, 시네올 등이다. 이는 신경을 안정시켜주고 스트레스 해소 및 불면증 예방에 탁월한 효과가 있다.",
-            "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/lavendar.png",
+            "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/image_lavendar.png",
             categories[2]
         ),
         Incense(
             4,
             IncenseTitle.ORANGE,
             "림프 흐름을 자극하여 부은 조직의 치료를 돕고, 셀룰라이트 처치에도 사용됩니다. 건성 피부, 염증이 있는 피부, 여드름 성향의 피부를 진정시키는 데 유용합니다. 또한 재생성이 있어 노화 피부와 거칠고 굳어진 피부치료에 사용하면 좋습니다.",
-            "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/orange.png",
+            "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/image_orange.png",
             categories[3]
         ),
         Incense(
             5,
             IncenseTitle.EUCALYPTUS,
             "근육통 안화효과, 다피가료움증 개선, 호흡기 건강에 도움을 줍니다.",
-            "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/eucalyptus.png",
+            "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/image_eucalyptus.png",
             categories[4]
         ),
     )

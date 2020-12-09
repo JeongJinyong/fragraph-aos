@@ -43,7 +43,10 @@ interface FragraphApi {
     ): PostHistoryApiResponse
 
     @GET("/api/v1/histories")
-    suspend fun getHistories(): GetHistoriesApiResponse
+    suspend fun getHistories(
+        @Query("from") from: String?,
+        @Query("to") to: String?
+    ): FragraphNetworkResponse<GetHistoriesApiResponse,ErrorResponse>
 
     @DELETE("/api/v1/histories/{history_id}")
     suspend fun deleteHistory(

@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/example_1_bg"
+        android:background="@color/colorWhiteGray_6"
         android:clickable="true"
         android:focusable="true"
         android:orientation="vertical">
@@ -23,13 +23,8 @@
             android:orientation="horizontal"
             android:paddingTop="@dimen/space_large"
             android:paddingBottom="@dimen/space_large"
-            android:background="@color/example_1_bg_light">
+            android:background="@color/colorWhiteGray_5">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
 
             <TextView
                 android:id="@+id/tv_history_calender_year"
@@ -39,6 +34,7 @@
                 android:layout_marginStart="@dimen/space_large"
                 android:textColor="@color/colorBlackGray_1"
                 android:textSize="24sp"
+                android:fontFamily="@font/spoqa_han_sans_regular"
                 android:includeFontPadding="false"
                 android:lineSpacingExtra="0sp"
                 tools:text="2020" />
@@ -57,6 +53,13 @@
                 android:lineSpacingExtra="0sp"
                 tools:text="8월" />
 
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+
+
         </LinearLayout>
 
 
@@ -68,7 +71,7 @@
             android:paddingBottom="4dp"
             android:gravity="center"
             android:orientation="horizontal"
-            android:background="@color/example_1_bg_light"
+            android:background="@color/colorWhiteGray_5"
             tools:ignore="HardcodedText">
 
             <TextView
@@ -77,10 +80,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="SUN"
+                android:text="일"
                 android:textColor="@color/example_1_white_light"
-                android:fontFamily="@font/gilroy_extra_bold"
-                android:textSize="12sp"
+                android:fontFamily="@font/spoqa_han_sans_regular"
+                android:textSize="14sp"
                 android:includeFontPadding="false"
                 android:lineSpacingExtra="0sp"
                 />
@@ -91,10 +94,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="MON"
+                android:text="월"
                 android:textColor="@color/example_1_white_light"
-                android:fontFamily="@font/gilroy_extra_bold"
-                android:textSize="12sp"
+                android:fontFamily="@font/spoqa_han_sans_regular"
+                android:textSize="14sp"
                 android:includeFontPadding="false"
                 android:lineSpacingExtra="0sp"
                 />
@@ -105,9 +108,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="TUE"
+                android:text="화"
                 android:textColor="@color/example_1_white_light"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:includeFontPadding="false"
                 android:lineSpacingExtra="0sp"
                 />
@@ -118,10 +121,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="WED"
+                android:text="수"
                 android:textColor="@color/example_1_white_light"
-                android:fontFamily="@font/gilroy_extra_bold"
-                android:textSize="12sp"
+                android:fontFamily="@font/spoqa_han_sans_regular"
+                android:textSize="14sp"
                 android:includeFontPadding="false"
                 android:lineSpacingExtra="0sp"
                 />
@@ -132,10 +135,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="THU"
+                android:text="목"
                 android:textColor="@color/example_1_white_light"
-                android:fontFamily="@font/gilroy_extra_bold"
-                android:textSize="12sp"
+                android:fontFamily="@font/spoqa_han_sans_regular"
+                android:textSize="14sp"
                 android:includeFontPadding="false"
                 android:lineSpacingExtra="0sp"
                 />
@@ -146,10 +149,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="FRI"
+                android:text="금"
                 android:textColor="@color/example_1_white_light"
-                android:fontFamily="@font/gilroy_extra_bold"
-                android:textSize="12sp"
+                android:fontFamily="@font/spoqa_han_sans_regular"
+                android:textSize="14sp"
                 android:includeFontPadding="false"
                 android:lineSpacingExtra="0sp"
                 />
@@ -160,10 +163,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="SAT"
+                android:text="토"
                 android:textColor="@color/example_1_white_light"
-                android:fontFamily="@font/gilroy_extra_bold"
-                android:textSize="12sp"
+                android:fontFamily="@font/spoqa_han_sans_regular"
+                android:textSize="14sp"
                 android:includeFontPadding="false"
                 android:lineSpacingExtra="0sp"
                 />

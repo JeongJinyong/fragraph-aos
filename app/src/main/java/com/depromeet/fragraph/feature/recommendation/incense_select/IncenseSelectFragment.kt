@@ -20,6 +20,11 @@ import com.depromeet.fragraph.feature.recommendation.incense_select.viewmodel.In
 import com.depromeet.fragraph.feature.recommendation.incense_select.viewmodel.PlaytimePickerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+// Todo  alpha 처리를 에 전체 말고 폰트만 애니메이션 나오게 수정
+// Todo 디테일은 이미지 화면 탭시 보이고 손때면 안보이게
+// Todo #999999 로 time 이 엑티브 되지 않았으면 꺼지고 disabled
+// Todo timepicker 폰트 먹이기(gilory)
+
 @AndroidEntryPoint
 class IncenseSelectFragment: Fragment(R.layout.fragment_incense_select) {
 

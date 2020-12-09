@@ -28,6 +28,8 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+// Todo 옆에 이미지 돌아가게 수정
+//
 
 @AndroidEntryPoint
 class MeditationFragment: Fragment(R.layout.fragment_meditation) {
@@ -157,7 +159,7 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
             .radius(12)
             .sampling(8)
             .color(Color.argb(24, 0, 0, 0))
-            .animate(0)
+            .animate(200)
             .onto(binding.fragmentMeditationContainer)
     }
 

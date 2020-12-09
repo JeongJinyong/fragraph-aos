@@ -102,7 +102,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/space_large"
-            android:layout_marginTop="@dimen/space_xx_small"
             android:layout_marginEnd="@dimen/space_large"
             app:bind_items="@{vm.keywords}"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -47,8 +47,8 @@
 
         <ImageView
             android:id="@+id/iv_history_more"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/space_large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +56,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/tv_history_incense_title"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintVertical_bias="0.5"
-            android:src="@drawable/ic_baseline_more_horiz_24"
+            android:src="@drawable/ic_more_horizontal"
             />
 
         <View

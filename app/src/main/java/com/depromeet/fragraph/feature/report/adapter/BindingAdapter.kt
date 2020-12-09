@@ -14,7 +14,7 @@ import com.depromeet.fragraph.feature.report.view.chart.ReportChartView
 @BindingAdapter("bind_incense", "bind_bar_data", requireAll = true)
 fun ReportChartView.setBarData(incenses: List<IncenseTitle>, playCounts: List<Float>) {
     setDataAndStyle(incenses, playCounts)
-    animateY(1000)
+    animateY(400)
     invalidate()
 }
 

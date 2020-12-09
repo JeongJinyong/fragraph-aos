@@ -91,11 +91,11 @@
             app:np_formatter="%02d"
             app:np_textColor="#A6A6A6"
             app:np_textSize="16sp"
-            app:np_typeface="gilroy_extra_bold.ttf"
+            app:np_typeface="gilroy_extra_bold.otf"
             app:np_value="0"
             app:np_selectedTextColor="@color/colorBlackGray_1"
             app:np_selectedTextSize="20sp"
-            app:np_selectedTypeface="gilroy_extra_bold.ttf"
+            app:np_selectedTypeface="gilroy_extra_bold.otf"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tv_incense_playtime_picker_min"
             app:layout_constraintBottom_toBottomOf="@+id/gl_incense_playtime_picker_bottom"
@@ -167,7 +167,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_end="60dp"
+            app:layout_constraintGuide_end="40dp"
             />
 
         <View

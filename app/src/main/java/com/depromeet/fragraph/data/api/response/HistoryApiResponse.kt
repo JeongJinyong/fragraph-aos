@@ -15,8 +15,8 @@ data class GetHistoriesApiResponse(
     override val message: String,
     override val data: GetHistoriesData
 ) : ApiResponse<GetHistoriesApiResponse.GetHistoriesData> {
+
     data class GetHistoriesData(
-        val lastId: Int,
         val histories: List<HistoryApiData>,
     )
 }
@@ -33,4 +33,5 @@ data class HistoryApiData(
     val playTime: Int,
     val incense: IncenseApiData,
     val memos: List<MemoApiData>,
+    val tags: List<TagsApiData>,
 )
