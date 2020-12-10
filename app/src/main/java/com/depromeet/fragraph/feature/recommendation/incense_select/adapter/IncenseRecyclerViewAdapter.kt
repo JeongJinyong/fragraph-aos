@@ -1,6 +1,7 @@
 package com.depromeet.fragraph.feature.recommendation.incense_select.adapter
 
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner

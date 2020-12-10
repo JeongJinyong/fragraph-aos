@@ -45,6 +45,10 @@ class HistoryRecyclerViewAdapter(
         historyList.clear()
         historyList.addAll(data)
         notifyDataSetChanged()
+        val position = historyList.indexOfFirst {
+            it.createdAt.miliSecondsToDay().toInt() == positionLocaleDay
+        }
+        firstScrollCallback(position)
     }
 
     fun setLocaleDay(day: Int) {
@@ -57,15 +61,6 @@ class HistoryRecyclerViewAdapter(
 
     fun changeCenterValue(position: Int, isCenter: Boolean) {
         historyList[position].changeCenterPosition(isCenter)
-    }
-
-    inner class HistoryRecyclerViewDataObserver: RecyclerView.AdapterDataObserver() {
-        override fun onChanged() {
-            val position = historyList.indexOfFirst {
-                it.createdAt.miliSecondsToDay().toInt() == positionLocaleDay
-            }
-            firstScrollCallback(position)
-        }
     }
 
     class ViewHolder(

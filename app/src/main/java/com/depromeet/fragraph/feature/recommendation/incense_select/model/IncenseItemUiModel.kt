@@ -3,6 +3,7 @@ package com.depromeet.fragraph.feature.recommendation.incense_select.model
 import androidx.lifecycle.MutableLiveData
 import com.depromeet.fragraph.domain.model.*
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
+import timber.log.Timber
 
 data class IncenseItemUiModel(
     val id: Int,

@@ -22,7 +22,9 @@ import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_report.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
+import okhttp3.internal.notify
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -32,13 +34,9 @@ import java.util.*
 // Todo 안되있는 것 리스트
 
 // api 연동
-// 홈 화면에서 메모 클릭
-// 스크롤 잘 안되는 거
-// 향상을 더 하고싶은 경우
-// 캘린더가 앞 뒤만 패딩
-// 오늘 날짜만 폰트 칼라만 오렌지로
-// 클릭 한 날짜도 폰트 오렌지
-// 캘린더 좌측 정려
+// 홈 화면에서 메모 클릭 (나중)
+// 스크롤 잘 안되는 거 (나중)
+// 향상을 더 하고싶은 경우 (나중)
 
 @AndroidEntryPoint
 class ReportFragment: Fragment(R.layout.fragment_report) {
@@ -76,7 +74,7 @@ class ReportFragment: Fragment(R.layout.fragment_report) {
         )
         historyAdapter = HistoryRecyclerViewAdapter(viewLifecycleOwner, scale, today.dayOfMonth) { position ->
             binding.rvHistories.scrollToPosition(position)
-        } //.registerAdapterDataObserver(historyAdapter.HistoryRecyclerViewDataObserver())
+        }
 
         binding.rvHistories.apply {
             adapter = historyAdapter
@@ -151,12 +149,6 @@ class ReportFragment: Fragment(R.layout.fragment_report) {
                 } else {
                     textView.setTextColor(requireContext().getColor(R.color.colorBlackGray_3))
                     textView.background = null
-                }
-
-                if (day.owner == DayOwner.THIS_MONTH) {
-                    container.textView.setTextColor(requireContext().getColor(R.color.colorBlackGray_1))
-                } else {
-                    container.textView.setTextColor(requireContext().getColor(R.color.colorBlackGray_3))
                 }
             }
         }

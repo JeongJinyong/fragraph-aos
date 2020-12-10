@@ -3,6 +3,7 @@ package com.depromeet.fragraph.feature.meditation
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -27,9 +28,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
-
-// Todo 옆에 이미지 돌아가게 수정
-//
 
 @AndroidEntryPoint
 class MeditationFragment: Fragment(R.layout.fragment_meditation) {
@@ -58,6 +56,11 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
                 vm = meditationViewModel
                 lifecycleOwner = this@MeditationFragment
             }
+
+        with(binding.ivPlayingMotion) {
+            val rotation = AnimationUtils.loadAnimation(requireContext(), R.anim.rotate)
+            this.startAnimation(rotation)
+        }
 
         val memoBinding = binding.viewMemoDialog.apply {
             vm = memoViewModel

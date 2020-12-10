@@ -18,7 +18,6 @@ class HistoryRecyclerViewSnapHelper(
         val pos: Int = recyclerView.getChildAdapterPosition(targetView)
 
         // 첫번째면 그대로 가면 된다.
-        Timber.d("pos: $pos")
         if (pos == 0) {
             return super.calculateDistanceToFinalSnap(layoutManager, targetView)
         }

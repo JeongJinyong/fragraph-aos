@@ -13,22 +13,22 @@
         android:layout_marginEnd="@dimen/space_large"
         android:alpha="0.6"
         android:background="@color/colorOrange">
-
-        <TextView
-            android:id="@+id/tv_toast_message"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/colorBlackGray_1"
-            android:textSize="16sp"
-            android:fontFamily="@font/spoqa_han_sans_bold"
-            android:lineSpacingExtra="0sp"
-            android:includeFontPadding="false"
-            android:layout_marginTop="@dimen/toast_margin_top"
-            android:layout_marginBottom="@dimen/toast_margin_bottom"
-            tools:text="키워드가 부족합니다."
-            />
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_toast_message"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/colorBlackGray_1"
+        android:textSize="16sp"
+        android:fontFamily="@font/spoqa_han_sans_regular"
+        android:lineSpacingExtra="0sp"
+        android:includeFontPadding="false"
+        android:layout_marginTop="@dimen/toast_margin_top"
+        android:layout_marginBottom="@dimen/toast_margin_bottom"
+        tools:text="키워드가 부족합니다."
+        />
 
 </FrameLayout>

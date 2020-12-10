@@ -63,11 +63,12 @@ class IncenseSelectViewModel @ViewModelInject constructor(
                     Timber.d("recommendation 가져오는 중 에러")
                 }
                 .map {recList ->
-                    recList.map {
+                    recList.mapIndexed { index, recommendation ->
                         IncenseItemUiModel(
-                            it.incense.id, it.incense.title, it.incense.content, it.incense.image, it.incense.category,
-                            it.video, it.music, it.keyword,
-                            MutableLiveData(false), MutableLiveData(true)
+                            recommendation.incense.id, recommendation.incense.title, recommendation.incense.content,
+                            recommendation.incense.image, recommendation.incense.category,
+                            recommendation.video, recommendation.music, recommendation.keyword,
+                            MutableLiveData(false), MutableLiveData(index == 0)
                         )
                     }
                 }

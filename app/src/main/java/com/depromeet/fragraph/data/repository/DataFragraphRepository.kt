@@ -310,7 +310,11 @@ class DataFragraphRepository @Inject constructor(
                 ),
             )
 
-            emit(histories)
+            if (month == 12) {
+                emit(histories)
+            } else {
+                emit(listOf<History>())
+            }
         }
     }
 
