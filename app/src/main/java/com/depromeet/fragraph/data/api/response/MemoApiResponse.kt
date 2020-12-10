@@ -1,5 +1,7 @@
 package com.depromeet.fragraph.data.api.response
 
+import com.depromeet.fragraph.domain.model.Memo
+
 data class PostMemoResponse(
     override val code: String,
     override val message: String,
@@ -28,5 +30,10 @@ data class DeleteMemoResponse(
 
 data class MemoApiData(
     val id: Int,
+    val title: String,
     val detail: String,
-)
+) {
+    fun toMemo(image: String?): Memo {
+        return Memo(id, title, detail, image)
+    }
+}

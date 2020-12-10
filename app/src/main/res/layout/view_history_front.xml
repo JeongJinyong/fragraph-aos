@@ -8,6 +8,7 @@
         <variable
             name="history"
             type="com.depromeet.fragraph.feature.report.model.HistoryUiModel" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -96,14 +97,15 @@
             android:id="@+id/tv_keyword_second"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:includeFontPadding="false"
-            android:text="@{@string/history_keyword(history.keywordSecond)}"
+            android:visibility="@{history.keywordSecond != null ? View.VISIBLE : View.GONE}"
+            android:text="@{history.keywordSecond != null ? @string/history_keyword(history.keywordSecond): @string/unknown}"
             android:textSize="22sp"
             android:textColor="@color/colorWhiteGray_6"
             android:fontFamily="@font/spoqa_han_sans_bold"
             android:layout_marginStart="@dimen/space_large"
             android:layout_marginTop="@dimen/space_xx_small"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_keyword_first"
@@ -116,12 +118,13 @@
             android:id="@+id/tv_keyword_third"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:includeFontPadding="false"
-            android:text="@{@string/history_keyword(history.keywordThird)}"
+            android:visibility="@{history.keywordThird != null ? View.VISIBLE : View.GONE}"
+            android:text="@{history.keywordThird != null ? @string/history_keyword(history.keywordThird): @string/unknown}"
             android:textSize="22sp"
             android:textColor="@color/colorWhiteGray_6"
             android:fontFamily="@font/spoqa_han_sans_bold"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="0dp"
             android:layout_marginStart="@dimen/space_large"
             android:layout_marginTop="@dimen/space_xx_small"
             app:layout_constraintEnd_toEndOf="parent"

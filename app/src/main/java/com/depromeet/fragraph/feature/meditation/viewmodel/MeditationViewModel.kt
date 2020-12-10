@@ -105,8 +105,8 @@ class MeditationViewModel @ViewModelInject constructor(
     fun setRemainingTime(remainingTime: Int) {
         Timber.tag(TAG).d("set remaining time, remainingTime: $remainingTime")
         _remainingTime.postValue(remainingTime)
-        _remainingTimeMin.postValue(remainingTime.miliSecondsToMinutes())
-        _remainingTimeSeconds.postValue(remainingTime.miliSecondsToSeconds())
+        _remainingTimeMin.postValue(remainingTime.milliSecondsToMinutes())
+        _remainingTimeSeconds.postValue(remainingTime.milliSecondsToSeconds())
     }
 
     fun openDialog(memoVisibility: Boolean, selectDialogVisibility: Boolean) {

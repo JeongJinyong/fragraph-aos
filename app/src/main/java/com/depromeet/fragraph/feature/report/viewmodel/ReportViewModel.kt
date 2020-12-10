@@ -5,9 +5,9 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.depromeet.fragraph.core.event.Event
 import com.depromeet.fragraph.core.ext.getLastDayOfMonth
-import com.depromeet.fragraph.core.ext.getMiliSeconds
-import com.depromeet.fragraph.core.ext.miliSecondsToDay
-import com.depromeet.fragraph.core.ext.miliSecondsToMonth
+import com.depromeet.fragraph.core.ext.getMilliSeconds
+import com.depromeet.fragraph.core.ext.milliSecondsToDay
+import com.depromeet.fragraph.core.ext.milliSecondsToMonth
 import com.depromeet.fragraph.domain.repository.HistoryRepository
 import com.depromeet.fragraph.domain.repository.ReportRepository
 import com.depromeet.fragraph.feature.report.model.HistoryUiModel
@@ -40,7 +40,7 @@ class ReportViewModel @ViewModelInject constructor(
     val historyCalendarVisible: LiveData<Boolean>
         get() = _historyCalendarVisible
 
-    private val _month = MutableLiveData(System.currentTimeMillis().miliSecondsToMonth())
+    private val _month = MutableLiveData(System.currentTimeMillis().milliSecondsToMonth())
     val month: MutableLiveData<String>
         get() = _month
 
@@ -77,32 +77,36 @@ class ReportViewModel @ViewModelInject constructor(
                     Timber.tag(TAG).e("히스토리 가져오는 중 오류 발생")
                 }
                 .map { histories->
-
                     val centerPosition = histories.indexOfFirst {
-                        it.createdAt.miliSecondsToDay().toInt() == day
+                        it.createdAt.milliSecondsToDay().toInt() == day
                     }.let {
                         if (it < 0) 0 else it
                     }
 
-                    histories.filter { it.keywords.size > 2 }
+                    histories.filter { it.keywords.isNotEmpty()  }
                         .mapIndexed { index, history ->
                             HistoryUiModel(history.id, history.createdAt, "${history.playTime/60}분 재생", history.incense.title, history.memo,
-                                history.keywords[0].name, history.keywords[1].name, history.keywords[2].name,
-                                isExisted = true, isBack = false,
+                                history.keywords[0].name,
+                                if(history.keywords.size > 1) history.keywords[1].name else null,
+                                if(history.keywords.size > 2) history.keywords[2].name else null,
+                                isExisted = true,
+                                isBack = false,
                                 isCenter = MutableLiveData(index == centerPosition))
                         }
                 }
                 .map {
                     val historyUiModels = mutableListOf<HistoryUiModel>()
                     for( i in 1 until (getLastDayOfMonth(year, month, day) + 1)) {
-                        it.firstOrNull { history -> history.createdAt.miliSecondsToDay().toInt() == i }?.let {history ->
-                            historyUiModels.add(history)
-                        } ?: run {
+                        val addHistories = it.filter { history -> history.createdAt.milliSecondsToDay().toInt() == i }
+                        Timber.d("addHistories: $addHistories")
+                        if (addHistories.isEmpty()) {
                             if (day == i) {
-                                historyUiModels.add(getEmptyUiModel(getMiliSeconds(year, month, i), true))
+                                historyUiModels.add(getEmptyUiModel(getMilliSeconds(year, month, i), true))
                             } else {
-                                historyUiModels.add(getEmptyUiModel(getMiliSeconds(year, month, i), false))
+                                historyUiModels.add(getEmptyUiModel(getMilliSeconds(year, month, i), false))
                             }
+                        } else {
+                            historyUiModels.addAll(addHistories)
                         }
                     }
                     historyUiModels

@@ -9,7 +9,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.fragraph.R
 import com.depromeet.fragraph.base.ui.IRecyclerViewAdapter
-import com.depromeet.fragraph.core.ext.miliSecondsToDay
+import com.depromeet.fragraph.core.ext.milliSecondsToDay
 import com.depromeet.fragraph.databinding.ItemHistoryBinding
 import com.depromeet.fragraph.feature.report.model.HistoryUiModel
 
@@ -46,7 +46,7 @@ class HistoryRecyclerViewAdapter(
         historyList.addAll(data)
         notifyDataSetChanged()
         val position = historyList.indexOfFirst {
-            it.createdAt.miliSecondsToDay().toInt() == positionLocaleDay
+            it.createdAt.milliSecondsToDay().toInt() == positionLocaleDay
         }
         firstScrollCallback(position)
     }

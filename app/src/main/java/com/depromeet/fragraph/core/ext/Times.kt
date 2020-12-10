@@ -35,6 +35,12 @@ fun Date.toDatetimeISO8601(): String {
     return SimpleDateFormat(DF_ISO_8601).format(this)
 }
 
+fun String.toMilliseconds(format: String = DF_ISO_8601, timezone: String = SEOUL): Long {
+    val dateformater: DateFormat = SimpleDateFormat(format)
+    dateformater.timeZone = TimeZone.getTimeZone(timezone)
+    return dateformater.parse(this).time
+}
+
 fun String.toDatetimeSimpleISO8601(timezone: String = SEOUL): Date? {
     val dateformater: DateFormat = SimpleDateFormat(DF_SIMPLE_ISO_8601)
     dateformater.timeZone = TimeZone.getTimeZone(timezone)
@@ -47,25 +53,25 @@ fun Long.miliSecondsToStringFormat(format: String, timezone: String = SEOUL): St
     return dateformater.format(Date(this))
 }
 
-fun Long.miliSecondsToMonth(timezone: String = SEOUL): String {
+fun Long.milliSecondsToMonth(timezone: String = SEOUL): String {
     val dateformater: DateFormat = SimpleDateFormat(JUST_MONTH)
     dateformater.timeZone = TimeZone.getTimeZone(timezone)
     return dateformater.format(Date(this))
 }
 
-fun Long.miliSecondsToDay(timezone: String = SEOUL): String {
+fun Long.milliSecondsToDay(timezone: String = SEOUL): String {
     val dateformater: DateFormat = SimpleDateFormat(JUST_DATE)
     dateformater.timeZone = TimeZone.getTimeZone(timezone)
     return dateformater.format(Date(this))
 }
 
-fun Int.miliSecondsToMinutes(timezone: String = SEOUL): String {
+fun Int.milliSecondsToMinutes(timezone: String = SEOUL): String {
     val dateformater: DateFormat = SimpleDateFormat(JUST_MINUTES)
     dateformater.timeZone = TimeZone.getTimeZone(timezone)
     return dateformater.format(Date(this.toLong()))
 }
 
-fun Int.miliSecondsToSeconds(timezone: String = SEOUL): String {
+fun Int.milliSecondsToSeconds(timezone: String = SEOUL): String {
     val dateformater: DateFormat = SimpleDateFormat(JUST_SECONDS)
     dateformater.timeZone = TimeZone.getTimeZone(timezone)
     return dateformater.format(Date(this.toLong()))
@@ -77,7 +83,7 @@ fun getLastDayOfMonth(year: Int, month: Int, day: Int, timezone: String = SEOUL)
     return cal.getActualMaximum(Calendar.DAY_OF_MONTH)
 }
 
-fun getMiliSeconds(year: Int, month: Int, day: Int, timezone: String = SEOUL): Long {
+fun getMilliSeconds(year: Int, month: Int, day: Int, timezone: String = SEOUL): Long {
     val dateformater: DateFormat = SimpleDateFormat(YEAR_MONTH_DATE)
     dateformater.timeZone = TimeZone.getTimeZone(timezone)
     val curMonth = if (month / 10 == 0) { "0${month}" } else { "${month}" }

@@ -1,5 +1,7 @@
 package com.depromeet.fragraph.data.api.response
 
+import com.depromeet.fragraph.domain.model.Incense
+
 data class PostHistoryApiResponse(
     override val code: String,
     override val message: String,

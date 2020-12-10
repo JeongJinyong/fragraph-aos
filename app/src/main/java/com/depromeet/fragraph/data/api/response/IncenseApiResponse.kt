@@ -1,5 +1,7 @@
 package com.depromeet.fragraph.data.api.response
 
+import com.depromeet.fragraph.domain.model.Category
+import com.depromeet.fragraph.domain.model.Incense
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
 
 data class GetIncensesApiResponse(
@@ -18,5 +20,9 @@ data class IncenseApiData(
     val name: IncenseTitle,
     val image: String,
     val detail: String,
-    val categoryId: String,
-)
+    val categoryId: Int,
+) {
+    fun toIncense(category: Category): Incense {
+        return Incense(id, name, detail, image, category)
+    }
+}

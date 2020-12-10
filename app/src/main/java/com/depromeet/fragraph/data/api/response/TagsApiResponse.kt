@@ -1,5 +1,8 @@
 package com.depromeet.fragraph.data.api.response
 
+import com.depromeet.fragraph.domain.model.Category
+import com.depromeet.fragraph.domain.model.Keyword
+
 data class GetTagsApiResponse(
     override val code: String,
     override val message: String,
@@ -14,4 +17,8 @@ data class TagsApiData(
     val id: Int,
     val name: String,
     val weight: Float,
-)
+) {
+    fun toKeyword(category: Category): Keyword {
+        return Keyword(id, name, weight, category)
+    }
+}
