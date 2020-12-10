@@ -14,4 +14,8 @@
 .externalNativeBuild
 .cxx
 apikey.properties
+keystore.properties
 google-services.json
+fragraphkey.jks
+fragraph-release.apk
+output-metadata.json

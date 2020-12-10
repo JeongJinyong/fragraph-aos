@@ -15,6 +15,7 @@ import com.depromeet.fragraph.core.KEY_AUTH_TOKEN
 import com.depromeet.fragraph.core.event.EventObserver
 import com.depromeet.fragraph.core.ext.authSharedPreferences
 import com.depromeet.fragraph.databinding.ActivityMainBinding
+import com.kakao.sdk.common.util.Utility
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         // Fixme 삭제 !!
         // 만료된 sample 토큰: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiMiIsImlzcyI6ImFjY291bnRzLmRlcHJvbWVldC5jb20iLCJpYXQiOjE2MDM0MzgxMDYsImV4cCI6MTYwNDA0MjkwNn0.f_Kv78-NK9Ec1oQ2UYCgj3Me9I__M5XO5nTVEZpIQJE
-        Timber.tag(TAG).i("token: ${this.authSharedPreferences().getString(KEY_AUTH_TOKEN, null)}")
+//        Timber.tag(TAG).i("token: ${this.authSharedPreferences().getString(KEY_AUTH_TOKEN, null)}")
 //        this.authSharedPreferences().edit().clear().commit();
 
         binding = DataBindingUtil.setContentView(

@@ -10,6 +10,10 @@ def apikeyPropertiesFile = rootProject.file("apikey.properties")
 def apikeyProperties = new Properties()
 apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -26,6 +30,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
     buildTypes {
         debug {
             buildConfigField "String", "API_ENDPOINT", "\"https://691baee38c7c.ngrok.io/\""
@@ -35,8 +48,8 @@ android {
         }
 
         release {
-            buildConfigField "String", "API_ENDPOINT", "\"https://fragraph.kscory.com/\""
-
+            buildConfigField "String", "API_ENDPOINT", "\"https://fragraph.kscory.link/\""
+            signingConfig signingConfigs.release
             resValue "string", "kakao_sdk_app_key", apikeyProperties['KAKAO_SDK_APP_KEY']
             resValue "string", "kakao_sdk_data_schema", apikeyProperties['KAKAO_SDK_DATA_SCHEMA']
             minifyEnabled false
