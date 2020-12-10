@@ -40,7 +40,7 @@ interface FragraphApi {
     @POST("/api/v1/histories")
     suspend fun postHistory(
         @Body request: PostHistoryRequest,
-    ): PostHistoryApiResponse
+    ): FragraphNetworkResponse<PostHistoryApiResponse, ErrorResponse>
 
     @GET("/api/v1/histories")
     suspend fun getHistories(
