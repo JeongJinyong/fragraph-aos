@@ -12,7 +12,7 @@ interface HistoryRepository {
     fun deleteHistory(historyId: Int): Flow<Boolean>
 
     fun saveMemo(historyId: Int, title: String, contents: String): Flow<Int>
-    fun getMemo(memoId: Int): Flow<Memo>
+    fun getMemo(historyId: Int, memoId: Int): Flow<Memo>
     fun updateMemo(historyId: Int, memo: Memo): Flow<Int>
     fun deleteMemo(historyId: Int, memoId: Int): Flow<Int>
 }

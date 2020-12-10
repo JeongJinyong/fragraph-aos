@@ -4,6 +4,7 @@ import android.content.Context
 import com.depromeet.fragraph.core.ext.*
 import com.depromeet.fragraph.data.api.FragraphApi
 import com.depromeet.fragraph.data.api.request.PostHistoryRequest
+import com.depromeet.fragraph.data.api.request.PostMemoRequest
 import com.depromeet.fragraph.data.local.LocalData
 import com.depromeet.fragraph.data.local.getDummyHistories
 import com.depromeet.fragraph.data.local.getDummyReports
@@ -102,13 +103,13 @@ class DataFragraphRepository @Inject constructor(
                         historyApi.playTime,
                         historyApi.incense.toIncense(category),
                         if(historyApi.memos.isNotEmpty()) historyApi.memos[0].toMemo(null) else null,
-                        historyApi.createdAt.toMilliseconds(DF_SIMPLE_ISO_8601),
+                        historyApi.createdAt.toMilliseconds(DF_SIMPLE_ISO_8601, LONDON),
                         historyApi.tags.map { it.toKeyword(category) }
                     )
                 }
                 emit(histories)
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     override fun saveHistories(keyword: List<Keyword>, incense: Incense, playtime: Int): Flow<Int> {
@@ -118,44 +119,60 @@ class DataFragraphRepository @Inject constructor(
             ).getBodyOrThrow()?.let { response ->
                 emit(response.data.historyId)
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     override fun deleteHistory(historyId: Int): Flow<Boolean> {
         return flow {
-            emit(true)
+            fragraphApi.deleteHistory(historyId).getBodyOrThrow()?.let { response ->
+                emit(true)
+            }
         }
     }
 
     override fun saveMemo(historyId: Int, title: String, contents: String): Flow<Int> {
         return flow {
-
-            localData.memoCached = Memo(1, title, contents, null)
-            emit(1)
-        }
+            fragraphApi.postMemo(historyId, PostMemoRequest(title, contents))
+                .getBodyOrThrow()?.let { response ->
+                    localData.memoCached = Memo(response.data.memoId, title, contents, null)
+                    emit(response.data.memoId)
+                }
+        }.flowOn(Dispatchers.IO)
     }
 
-    override fun getMemo(memoId: Int): Flow<Memo> {
+    override fun getMemo(historyId: Int, memoId: Int): Flow<Memo> {
         return flow {
             localData.memoCached?.let { emit(it) } ?: kotlin.run {
-
-                // Todo api 에서 memo 를 가져옴
-                emit(Memo(1, "abcdefgsasdfdef", "이거 메모 임시임", null))
+                fragraphApi.getMemo(historyId, memoId).getBodyOrThrow()?.let {response ->
+                    val memo = Memo(
+                        response.data.memoId,
+                        response.data.title,
+                        response.data.detail,
+                        null,
+                    )
+                    localData.memoCached = memo
+                    emit(memo)
+                }
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     override fun updateMemo(historyId: Int, memo: Memo): Flow<Int> {
         return flow {
-            localData.memoCached = Memo(memo.id, memo.title, memo.content, null)
-            emit(memo.id)
+            fragraphApi.putMemo(historyId, memo.id, PostMemoRequest(memo.title, memo.content)
+            ).getBodyOrThrow()?.let {response ->
+                localData.memoCached = Memo(response.data.memoId, memo.title, memo.content, null)
+                emit(response.data.memoId)
+            }
         }
     }
 
     override fun deleteMemo(historyId: Int, memoId: Int): Flow<Int> {
         return flow {
-            localData.memoCached = null
-            emit(memoId)
+            fragraphApi.deleteMemo(historyId, memoId).getBodyOrThrow()?.let {response ->
+                localData.memoCached = null
+                emit(memoId)
+            }
         }
     }
 

@@ -51,24 +51,30 @@ interface FragraphApi {
     @DELETE("/api/v1/histories/{history_id}")
     suspend fun deleteHistory(
         @Path("history_id") historyId: Int,
-    ): DeleteHistoriesApiResponse
+    ): FragraphNetworkResponse<DeleteHistoriesApiResponse, ErrorResponse>
 
     @POST("/api/v1/histories/{history_id}/memos")
     suspend fun postMemo(
         @Path("history_id") historyId: Int,
         @Body request: PostMemoRequest,
-    ): PostMemoResponse
+    ): FragraphNetworkResponse<PostMemoResponse, ErrorResponse>
+
+    @GET("/api/v1/histories/{history_id}/memos/{memo_id}")
+    suspend fun getMemo(
+        @Path("history_id") historyId: Int,
+        @Path("memo_id") memoId: Int,
+    ): FragraphNetworkResponse<GetMemoResponse, ErrorResponse>
 
     @PUT("/api/v1/histories/{history_id}/memos/{memo_id}")
     suspend fun putMemo(
         @Path("history_id") historyId: Int,
         @Path("memo_id") memoId: Int,
         @Body request: PostMemoRequest,
-    ): PutMemoResponse
+    ): FragraphNetworkResponse<PutMemoResponse, ErrorResponse>
 
     @DELETE("/api/v1/histories/{history_id}/memos/{memo_id}")
     suspend fun deleteMemo(
         @Path("history_id") historyId: Int,
         @Path("memo_id") memoId: Int,
-    ): DeleteMemoResponse
+    ): FragraphNetworkResponse<DeleteMemoResponse, ErrorResponse>
 }

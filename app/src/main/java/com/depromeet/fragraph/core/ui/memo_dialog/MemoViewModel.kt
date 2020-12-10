@@ -55,7 +55,7 @@ class MemoViewModel @ViewModelInject constructor(
         if (memoId != null) {
             Timber.d("memoId: $memoId")
             viewModelScope.launch(Dispatchers.IO) {
-                historyRepository.getMemo(memoId!!)
+                historyRepository.getMemo(historyId, memoId!!)
                     .collect {
                         memoId = it.id
                         _memoTitle.postValue(it.title)
@@ -68,6 +68,11 @@ class MemoViewModel @ViewModelInject constructor(
     }
     
     fun saveMemo() {
+        if (memoTitle.value!!.isEmpty() && memoContent.value!!.isEmpty()) {
+            _memoToastMessageEvent.postValue(Event(R.string.memo_content_null))
+            return
+        }
+
         if (historyId != null) {
             viewModelScope.launch(Dispatchers.IO) {
                 memoId?.let {id ->
@@ -128,7 +133,7 @@ class MemoViewModel @ViewModelInject constructor(
     }
 
     fun onTitleChanged(s: CharSequence, start :Int, before : Int, count: Int) {
-        if(s.isNotEmpty() && _memoContent.value!!.isNotEmpty()) {
+        if(s.isNotEmpty() || _memoContent.value!!.isNotEmpty()) {
             _hasContents.postValue(true)
         } else {
             _hasContents.postValue(false)
@@ -138,7 +143,7 @@ class MemoViewModel @ViewModelInject constructor(
     fun onContentChanged(s: CharSequence, start :Int, before : Int, count: Int) {
         memoContentsLength.postValue(s.length.toString())
 
-        if(s.isNotEmpty() && _memoTitle.value!!.isNotEmpty()) {
+        if(s.isNotEmpty() || _memoTitle.value!!.isNotEmpty()) {
             _hasContents.postValue(true)
         } else {
             _hasContents.postValue(false)

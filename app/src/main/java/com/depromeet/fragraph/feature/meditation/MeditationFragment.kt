@@ -93,7 +93,10 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
             selectDialogViewModel.setDialogType(SelectDialogType.SESSION_OUT)
             blurBackground()
             meditationViewModel.openDialog(memoVisibility = false, selectDialogVisibility = true)
+        })
 
+        meditationViewModel.backEvent.observe(viewLifecycleOwner, EventObserver {
+            findNavController().popBackStack()
         })
 
         meditationViewModel.onMemoWritingClickEvent.observe(viewLifecycleOwner, EventObserver {
@@ -136,14 +139,14 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
                     meditationViewModel.closeDialog()
                 }
                 SAVE_MEMO_CONFIRM -> {
-                    memoViewModel.saveMemo()
+                    blurBackground()
+                    meditationViewModel.openDialog(memoVisibility = true, selectDialogVisibility = false)
                 }
                 OUT_SESSION_CANCEL -> {
                     meditationViewModel.closeDialog()
                 }
                 OUT_SESSION_CONFIRM -> {
                     meditationViewModel.deleteHistory()
-                    findNavController().popBackStack()
                 }
                 FINISH_SESSION_CANCEL -> {
                     // Todo 더 하고 싶은 경우는 나중에 다시 개발 ....

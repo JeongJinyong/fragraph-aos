@@ -10,6 +10,7 @@ import com.depromeet.fragraph.domain.model.Meditation
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
 import com.depromeet.fragraph.domain.repository.HistoryRepository
 import com.depromeet.fragraph.domain.repository.MeditationRepository
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -20,11 +21,13 @@ class MeditationViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private var isFinished = false
-
     private val _exitEvent = MutableLiveData<Event<Unit>>()
     val exitEvent: LiveData<Event<Unit>>
         get() = _exitEvent
+
+    private val _backEvent = MutableLiveData<Event<Unit>>()
+    val backEvent: LiveData<Event<Unit>>
+        get() = _backEvent
 
     private val _errorEvent = MutableLiveData<Event<Unit>>()
     val errorEvent: LiveData<Event<Unit>>
@@ -123,8 +126,12 @@ class MeditationViewModel @ViewModelInject constructor(
         meditation.value?.let {
             viewModelScope.launch {
                 historyRepository.deleteHistory(it.historyId)
+                    .catch {
+                        Timber.d("삭제중 오류 발생")
+                    }
                     .collect {
                         Timber.d("삭제 완료")
+                        _backEvent.postValue(Event(Unit))
                     }
             }
         }

@@ -12,6 +12,18 @@ data class PostMemoResponse(
     )
 }
 
+data class GetMemoResponse(
+    override val code: String,
+    override val message: String,
+    override val data: GetMemoData
+): ApiResponse<GetMemoResponse.GetMemoData> {
+    data class GetMemoData(
+        val memoId: Int,
+        val title: String,
+        val detail: String,
+    )
+}
+
 data class PutMemoResponse(
     override val code: String,
     override val message: String,
