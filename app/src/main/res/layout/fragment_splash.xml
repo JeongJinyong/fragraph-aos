@@ -5,18 +5,84 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/iv_splash_top"
+            android:layout_width="104dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="@dimen/space_large"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/signin_left_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0"/>
+
+        <ImageView
+            android:id="@+id/iv_splash_fragraph"
+            android:layout_width="120dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="@dimen/space_large"
+            android:layout_marginTop="@dimen/space_x_small"
+            android:src="@drawable/splash_fragraph"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_splash_top"
+            app:layout_constraintHorizontal_bias="0"/>
+
+        <ImageView
+            android:id="@+id/iv_splash_bar"
+            android:layout_width="6dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/space_large"
+            android:layout_marginTop="@dimen/space_large"
+            android:src="@drawable/splash_bar"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_splash_fragraph"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0"/>
+
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginEnd="@dimen/space_large"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/app_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintVertical_bias="1"/>
+
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_view_splash"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
             app:lottie_loop="false"
             app:lottie_fileName="lottie/lottie_splash.json"
             />
 
-    </FrameLayout>
+        <FrameLayout
+            android:id="@+id/lottie_frame"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorBackground"
+            app:layout_constraintStart_toStartOf="@+id/lottie_view_splash"
+            app:layout_constraintEnd_toEndOf="@+id/lottie_view_splash"
+            app:layout_constraintBottom_toBottomOf="@+id/lottie_view_splash"
+            app:layout_constraintTop_toTopOf="@+id/lottie_view_splash"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -34,19 +34,6 @@
             tools:src="@drawable/default_history_background" />
 
         <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:alpha="0.38"
-            android:background="#000000"
-            app:bind_visible_alpha_anim="@{incense.isCenter ? View.INVISIBLE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_incense_select"
-            app:layout_constraintTop_toTopOf="@+id/iv_incense_select"
-            app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
-            app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
-            tools:visibility="gone"
-            />
-
-        <FrameLayout
             android:id="@+id/fl_incense_content_container"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -106,6 +93,21 @@
             app:layout_constraintBottom_toBottomOf="@+id/iv_incense_select"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
+            />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0.38"
+            android:background="#000000"
+            android:clickable="true"
+            android:focusable="true"
+            app:bind_visible_alpha_anim="@{incense.isCenter ? View.INVISIBLE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_incense_select"
+            app:layout_constraintTop_toTopOf="@+id/iv_incense_select"
+            app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
+            app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
+            tools:visibility="gone"
             />
 
         <TextView

@@ -159,7 +159,7 @@
             <TextView
                 android:id="@+id/tv_meditation_playtime_min"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:text="@{vm.remainingTimeMin}"
                 android:textColor="@color/colorWhiteGray_6"
                 android:textSize="56sp"
@@ -172,7 +172,7 @@
             <TextView
                 android:id="@+id/tv_meditation_playtime_mid"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:text=" : "
                 android:textColor="@color/colorWhiteGray_6"
                 android:textSize="56sp"
@@ -184,7 +184,7 @@
             <TextView
                 android:id="@+id/tv_meditation_playtime_seconds"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:text="@{vm.remainingTimeSeconds}"
                 android:textColor="@color/colorWhiteGray_6"
                 android:textSize="56sp"
@@ -195,7 +195,24 @@
                 />
         </LinearLayout>
 
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="280dp"
+            android:src="@drawable/temp_peppermint"
+            android:scaleType="fitStart"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="26dp"
+            android:layout_marginTop="-3dp"
+            app:layout_constraintStart_toEndOf="@+id/pb_music_duration"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_meditation_playtime"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0"
+            />
+
         <TextView
+            android:visibility="invisible"
             android:id="@+id/tv_meditation_incense"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -217,6 +234,7 @@
             />
 
         <com.depromeet.fragraph.core.ui.TextOutLineView
+            android:visibility="invisible"
             android:id="@+id/tv_meditation_incense2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

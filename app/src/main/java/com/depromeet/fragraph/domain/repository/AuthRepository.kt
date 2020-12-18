@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface AuthRepository {
     fun getAccessToken(): Flow<String?>
     fun loginWithKakao(kakaoToken: String): Flow<UserCreated>
+    fun loginWithGoogle(googleToken: String): Flow<UserCreated>
 }

@@ -13,7 +13,7 @@ interface FragraphApi {
     suspend fun loginWithSocial(
         @Path("provider_name") providerName: String,
         @Body request: SocialLoginRequest,
-    ): LoginWithSocialApiResponse
+    ): FragraphNetworkResponse<LoginWithSocialApiResponse, ErrorResponse>
 
     @GET("/api/v1/me")
     suspend fun getMyInfo(): FragraphNetworkResponse<GetMyInfoApiResponse, ErrorResponse>

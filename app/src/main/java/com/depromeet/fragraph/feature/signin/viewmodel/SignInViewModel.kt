@@ -4,6 +4,8 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.depromeet.fragraph.core.event.Event
+import com.depromeet.fragraph.core.ext.combine
+import com.depromeet.fragraph.domain.model.PageType
 import com.depromeet.fragraph.domain.repository.AuthRepository
 import com.depromeet.fragraph.domain.repository.UserRepository
 import com.depromeet.fragraph.feature.signin.SignInFragment
@@ -26,13 +28,22 @@ class SignInViewModel @ViewModelInject constructor(
     val kakaoOpened: LiveData<Event<Unit>>
         get() = _kakaoOpened
 
+    private val _googleSignInOpened = MutableLiveData<Event<Unit>>()
+    val googleSignInOpened: LiveData<Event<Unit>>
+        get() = _googleSignInOpened
+
     private val _openMainEvent = MutableLiveData<Event<Unit>>()
     val openMainEvent: LiveData<Event<Unit>>
         get() = _openMainEvent
 
     fun openKakao() {
-        Timber.tag(SignInFragment.TAG).d("kakao 로그인 클릭")
+        Timber.tag(TAG).d("kakao 로그인 클릭")
         _kakaoOpened.value = Event(Unit)
+    }
+
+    fun openGoogleSignIn() {
+        Timber.tag(TAG).d("google 로그인 클릭")
+        _googleSignInOpened.value = Event(Unit)
     }
 
     fun signInByKakao(kakaoToken: String) {
@@ -40,6 +51,24 @@ class SignInViewModel @ViewModelInject constructor(
 
         viewModelScope.launch(Dispatchers.IO) {
             authRepository.loginWithKakao(kakaoToken)
+                .flatMapConcat { userRepository.getMyInfo() }
+                .catch {
+                    Timber.tag(SignInFragment.TAG).e("오류 발생")
+                }
+                .collect {
+                    Timber.tag(TAG).i("로그인 성공, user: $it.")
+                    _isProgressed.postValue(false)
+                    _openMainEvent.postValue(Event(Unit))
+                }
+        }
+    }
+
+    fun signInByGoogle(googleToken: String) {
+        Timber.d("구글 로그인 !!! token : $googleToken")
+        _isProgressed.value = true
+
+        viewModelScope.launch(Dispatchers.IO) {
+            authRepository.loginWithGoogle(googleToken)
                 .flatMapConcat { userRepository.getMyInfo() }
                 .catch {
                     Timber.tag(SignInFragment.TAG).e("오류 발생")

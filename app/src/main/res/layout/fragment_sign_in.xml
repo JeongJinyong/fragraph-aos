@@ -16,26 +16,50 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:layout_width="104dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="@dimen/space_large"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/signin_left_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0"/>
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/signin_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/fl_signin_kakao_container"
+            app:layout_constraintHorizontal_bias="0.5"/>
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/fl_time_select_container"
+            android:id="@+id/fl_signin_kakao_container"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginStart="@dimen/space_large"
             android:layout_marginEnd="@dimen/space_large"
             android:background="#ffff00"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/fl_signin_google_container"
             app:layout_constraintVertical_bias="1"
+            app:layout_constraintVertical_chainStyle="packed"
             >
 
             <ImageView
                 android:id="@+id/iv_kakao_icon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/kakao_login_large_wide"
+                android:layout_width="19dp"
+                android:layout_height="17dp"
+                android:src="@drawable/ic_kakao"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -63,6 +87,74 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:onClick="@{() -> vm.openKakao()}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--        <com.google.android.gms.common.SignInButton-->
+<!--            android:id="@+id/sign_in_google"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="48dp"-->
+<!--            android:layout_marginBottom="40dp"-->
+<!--            android:layout_marginStart="@dimen/space_large"-->
+<!--            android:layout_marginEnd="@dimen/space_large"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/fl_signin_kakao_container"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintVertical_bias="1"/>-->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fl_signin_google_container"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="40dp"
+            android:layout_marginStart="@dimen/space_large"
+            android:layout_marginEnd="@dimen/space_large"
+            android:background="#F2F6FC"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fl_signin_kakao_container"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="1"
+            >
+
+            <ImageView
+                android:id="@+id/iv_google_icon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_google"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv_google_login"
+                app:layout_constraintVertical_bias="0.5"/>
+
+            <TextView
+                android:id="@+id/tv_google_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="Google로 시작"
+                android:textColor="#0F1724"
+                android:textSize="14sp"
+                android:fontFamily="@font/spoqa_han_sans_regular"
+                android:layout_marginStart="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_google_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintVertical_bias="0.5"/>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:onClick="@{() -> vm.openGoogleSignIn()}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

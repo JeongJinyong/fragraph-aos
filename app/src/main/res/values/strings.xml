@@ -12,6 +12,10 @@
     <string name="back">돌아가기</string>
     <string name="out">나가기</string>
 
+    <!--  signIn  -->
+    <string name="signIn_google_error">구글 로그인 실패, 다시 시도해 주세요</string>
+    <string name="signIn_kakao_error">카카오 로그인 실패, 다시 시도해 주세요</string>
+
     <!--  report view  -->
     <string name="report_description_prefix">지금까지 총</string>
     <string name="report_description">&#160;%s번&#160;</string>
