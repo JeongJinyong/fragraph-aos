@@ -11,7 +11,8 @@ import com.depromeet.fragraph.R
 import com.depromeet.fragraph.base.SharedViewModel
 import com.depromeet.fragraph.core.event.EventObserver
 import com.depromeet.fragraph.databinding.FragmentSignInBinding
-import com.depromeet.fragraph.feature.signin.viewmodel.SignInViewModel
+import com.depromeet.fragraph.feature.signin.viewmodel.GoogleSignInViewModel
+import com.depromeet.fragraph.feature.signin.viewmodel.KakaoSignInViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.kakao.sdk.auth.LoginClient
@@ -24,7 +25,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
-    private val signInViewModel: SignInViewModel by viewModels()
+    private val kakaoSignInViewModel: KakaoSignInViewModel by viewModels()
+
+    private val googleSignInViewModel: GoogleSignInViewModel by viewModels()
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
@@ -44,7 +47,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         }.map {
             it.idToken ?: kotlin.run { throw Exception("google idToken 가져오는데 에러") }
         }.onSuccess {
-            signInViewModel.signInByGoogle(it)
+            googleSignInViewModel.signInByGoogle(it)
         }.onFailure {
             Timber.e(it, "fail to google login ")
             sharedViewModel.showToastMessage(R.string.signIn_google_error)
@@ -59,16 +62,17 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         binding = FragmentSignInBinding
             .bind(view).apply {
                 lifecycleOwner = this@SignInFragment
-                vm = signInViewModel
+                googleSignInVM = googleSignInViewModel
+                kakaoSignInVM = kakaoSignInViewModel
             }
 
-        signInViewModel.kakaoOpened.observe(viewLifecycleOwner, EventObserver { event ->
+        kakaoSignInViewModel.kakaoOpened.observe(viewLifecycleOwner, EventObserver { event ->
             val kakaoCallbackWeb: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
                     Timber.tag(TAG).e(error, "카카오 로그인 실패")
                     sharedViewModel.showToastMessage(R.string.signIn_kakao_error)
                 } else if (token != null) {
-                    signInViewModel.signInByKakao(token.accessToken)
+                    kakaoSignInViewModel.signInByKakao(token.accessToken)
                 }
             }
 
@@ -82,7 +86,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                         sharedViewModel.showToastMessage(R.string.signIn_kakao_error)
                     }
                 } else if (token != null) {
-                    signInViewModel.signInByKakao(token.accessToken)
+                    kakaoSignInViewModel.signInByKakao(token.accessToken)
                 }
             }
 
@@ -94,12 +98,16 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
             }
         })
 
-        signInViewModel.googleSignInOpened.observe(viewLifecycleOwner, EventObserver { event ->
+        kakaoSignInViewModel.openMainEvent.observe(viewLifecycleOwner, EventObserver { event ->
+            goReport()
+        })
+
+        googleSignInViewModel.googleSignInOpened.observe(viewLifecycleOwner, EventObserver { event ->
             val signInIntent = mGoogleSignInClient.signInIntent
             requestGoogleSignIn.launch(signInIntent)
         })
 
-        signInViewModel.openMainEvent.observe(viewLifecycleOwner, EventObserver { event ->
+        googleSignInViewModel.openMainEvent.observe(viewLifecycleOwner, EventObserver { event ->
             goReport()
         })
 

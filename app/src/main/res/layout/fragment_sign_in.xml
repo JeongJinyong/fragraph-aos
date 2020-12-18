@@ -8,8 +8,12 @@
 
     <data>
         <variable
-            name="vm"
-            type="com.depromeet.fragraph.feature.signin.viewmodel.SignInViewModel" />
+            name="kakaoSignInVM"
+            type="com.depromeet.fragraph.feature.signin.viewmodel.KakaoSignInViewModel" />
+
+        <variable
+            name="googleSignInVM"
+            type="com.depromeet.fragraph.feature.signin.viewmodel.GoogleSignInViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -86,7 +90,7 @@
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:onClick="@{() -> vm.openKakao()}"
+                android:onClick="@{() -> kakaoSignInVM.openKakao()}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -94,19 +98,6 @@
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--        <com.google.android.gms.common.SignInButton-->
-<!--            android:id="@+id/sign_in_google"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:layout_marginBottom="40dp"-->
-<!--            android:layout_marginStart="@dimen/space_large"-->
-<!--            android:layout_marginEnd="@dimen/space_large"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/fl_signin_kakao_container"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintVertical_bias="1"/>-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/fl_signin_google_container"
@@ -154,7 +145,7 @@
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:onClick="@{() -> vm.openGoogleSignIn()}"
+                android:onClick="@{() -> googleSignInVM.openGoogleSignIn()}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -162,6 +153,47 @@
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:clickable="true"
+            android:focusable="true"
+            app:bind_loading_1="@{googleSignInVM.isProgressed}"
+            app:bind_loading_2="@{kakaoSignInVM.isProgressed}"
+            >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:alpha="0.38"
+            android:background="#000000"
+            />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie_view_splash"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="false"
+                app:lottie_loop="true"
+                app:lottie_fileName="lottie/lottie_splash.json"
+                app:bind_loading_1="@{googleSignInVM.isProgressed}"
+                app:bind_loading_2="@{kakaoSignInVM.isProgressed}"
+                />
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

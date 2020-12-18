@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class SignInViewModel @ViewModelInject constructor(
+class KakaoSignInViewModel @ViewModelInject constructor(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository,
     @Assisted private val savedStateHandle: SavedStateHandle
@@ -28,22 +28,13 @@ class SignInViewModel @ViewModelInject constructor(
     val kakaoOpened: LiveData<Event<Unit>>
         get() = _kakaoOpened
 
-    private val _googleSignInOpened = MutableLiveData<Event<Unit>>()
-    val googleSignInOpened: LiveData<Event<Unit>>
-        get() = _googleSignInOpened
-
     private val _openMainEvent = MutableLiveData<Event<Unit>>()
     val openMainEvent: LiveData<Event<Unit>>
         get() = _openMainEvent
 
     fun openKakao() {
-        Timber.tag(TAG).d("kakao 로그인 클릭")
+        Timber.d("kakao 로그인 클릭")
         _kakaoOpened.value = Event(Unit)
-    }
-
-    fun openGoogleSignIn() {
-        Timber.tag(TAG).d("google 로그인 클릭")
-        _googleSignInOpened.value = Event(Unit)
     }
 
     fun signInByKakao(kakaoToken: String) {
@@ -53,35 +44,13 @@ class SignInViewModel @ViewModelInject constructor(
             authRepository.loginWithKakao(kakaoToken)
                 .flatMapConcat { userRepository.getMyInfo() }
                 .catch {
-                    Timber.tag(SignInFragment.TAG).e("오류 발생")
+                    Timber.e("오류 발생")
                 }
                 .collect {
-                    Timber.tag(TAG).i("로그인 성공, user: $it.")
+                    Timber.i("로그인 성공, user: $it.")
                     _isProgressed.postValue(false)
                     _openMainEvent.postValue(Event(Unit))
                 }
         }
-    }
-
-    fun signInByGoogle(googleToken: String) {
-        Timber.d("구글 로그인 !!! token : $googleToken")
-        _isProgressed.value = true
-
-        viewModelScope.launch(Dispatchers.IO) {
-            authRepository.loginWithGoogle(googleToken)
-                .flatMapConcat { userRepository.getMyInfo() }
-                .catch {
-                    Timber.tag(SignInFragment.TAG).e("오류 발생")
-                }
-                .collect {
-                    Timber.tag(TAG).i("로그인 성공, user: $it.")
-                    _isProgressed.postValue(false)
-                    _openMainEvent.postValue(Event(Unit))
-                }
-        }
-    }
-
-    companion object {
-        const val TAG = "SignInViewModel"
     }
 }
