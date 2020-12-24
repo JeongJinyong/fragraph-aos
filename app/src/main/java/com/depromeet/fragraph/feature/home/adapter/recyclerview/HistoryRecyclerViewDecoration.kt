@@ -1,4 +1,4 @@
-package com.depromeet.fragraph.feature.report.adapter.recyclerview
+package com.depromeet.fragraph.feature.home.adapter.recyclerview
 
 import android.graphics.Rect
 import android.view.View

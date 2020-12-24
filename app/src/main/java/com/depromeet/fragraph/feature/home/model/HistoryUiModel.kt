@@ -1,4 +1,4 @@
-package com.depromeet.fragraph.feature.report.model
+package com.depromeet.fragraph.feature.home.model
 
 import androidx.lifecycle.MutableLiveData
 import com.depromeet.fragraph.domain.model.Memo

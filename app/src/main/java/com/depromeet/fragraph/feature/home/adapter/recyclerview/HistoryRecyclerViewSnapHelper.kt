@@ -1,10 +1,9 @@
-package com.depromeet.fragraph.feature.report.adapter.recyclerview
+package com.depromeet.fragraph.feature.home.adapter.recyclerview
 
 import android.view.View
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.fragraph.core.ext.dpToPx
-import timber.log.Timber
 
 
 class HistoryRecyclerViewSnapHelper(

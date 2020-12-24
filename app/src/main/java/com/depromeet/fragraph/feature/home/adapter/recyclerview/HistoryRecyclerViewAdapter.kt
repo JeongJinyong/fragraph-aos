@@ -1,4 +1,4 @@
-package com.depromeet.fragraph.feature.report.adapter.recyclerview
+package com.depromeet.fragraph.feature.home.adapter.recyclerview
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
@@ -11,7 +11,7 @@ import com.depromeet.fragraph.R
 import com.depromeet.fragraph.base.ui.IRecyclerViewAdapter
 import com.depromeet.fragraph.core.ext.milliSecondsToDay
 import com.depromeet.fragraph.databinding.ItemHistoryBinding
-import com.depromeet.fragraph.feature.report.model.HistoryUiModel
+import com.depromeet.fragraph.feature.home.model.HistoryUiModel
 
 class HistoryRecyclerViewAdapter(
     private var lifecycleOwner: LifecycleOwner,
@@ -42,8 +42,15 @@ class HistoryRecyclerViewAdapter(
     override fun getItemCount(): Int = historyList.size
 
     override fun setItems(data: List<HistoryUiModel>) {
+        val previousSize = historyList.size
+        val newSize = data.size
         historyList.clear()
         historyList.addAll(data)
+//        if (newSize - previousSize > 0) {
+//            notifyItemRangeChanged(0, newSize) // 버그 존재,,
+//        } else {
+//
+//        }
         notifyDataSetChanged()
         val position = historyList.indexOfFirst {
             it.createdAt.milliSecondsToDay().toInt() == positionLocaleDay

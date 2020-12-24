@@ -1,4 +1,4 @@
-package com.depromeet.fragraph.feature.report
+package com.depromeet.fragraph.feature.home
 
 import android.os.Bundle
 import android.view.View
@@ -7,24 +7,21 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.depromeet.fragraph.R
 import com.depromeet.fragraph.core.event.EventObserver
-import com.depromeet.fragraph.databinding.FragmentReportBinding
+import com.depromeet.fragraph.databinding.FragmentHomeBinding
 import com.depromeet.fragraph.databinding.ViewHistoryCalendarBinding
-import com.depromeet.fragraph.feature.report.adapter.recyclerview.HistoryRecyclerViewAdapter
-import com.depromeet.fragraph.feature.report.adapter.recyclerview.HistoryRecyclerViewDecoration
-import com.depromeet.fragraph.feature.report.adapter.recyclerview.HistoryRecyclerViewScrollListener
-import com.depromeet.fragraph.feature.report.adapter.recyclerview.HistoryRecyclerViewSnapHelper
-import com.depromeet.fragraph.feature.report.view.calendar.DayViewCalendarContainer
-import com.depromeet.fragraph.feature.report.viewmodel.ReportViewModel
+import com.depromeet.fragraph.feature.home.adapter.recyclerview.HistoryRecyclerViewAdapter
+import com.depromeet.fragraph.feature.home.adapter.recyclerview.HistoryRecyclerViewDecoration
+import com.depromeet.fragraph.feature.home.adapter.recyclerview.HistoryRecyclerViewScrollListener
+import com.depromeet.fragraph.feature.home.adapter.recyclerview.HistoryRecyclerViewSnapHelper
+import com.depromeet.fragraph.feature.home.view.calendar.DayViewCalendarContainer
+import com.depromeet.fragraph.feature.home.viewmodel.HomeViewModel
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_report.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
-import okhttp3.internal.notify
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -34,16 +31,27 @@ import java.util.*
 // Todo 안되있는 것 리스트
 
 // api 연동
-// 홈 화면에서 메모 클릭 (나중)
 // 스크롤 잘 안되는 거 (나중)
 // 향상을 더 하고싶은 경우 (나중)
 
+// 홈 화면에서 메모 클릭
+// 글이 없으면 flip 이 되지 않는다.
+// 메모 비어보이게
+// 바탕화면 pause
+// 히스토리 뜰 때 관련 명상 향이면 bold 아니면 stroke 처리
+// 메모 눌렀을 때 플로팅버튼 사라지도록 수정
+// 향 선택 키워드 간격 정리 (슬라이드 가능하게)
+// 뒤로가기 클릭시 (x) 버튼과 동일하게
+// 바텀 네비? 다크톤으로
+// 로그인 클릭시 lottie 애니메이션 재생
+
+
 @AndroidEntryPoint
-class ReportFragment: Fragment(R.layout.fragment_report) {
+class HomeFragment: Fragment(R.layout.fragment_home) {
 
-    private val reportViewModel: ReportViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
 
-    lateinit var binding: FragmentReportBinding
+    lateinit var binding: FragmentHomeBinding
 
     lateinit var historyAdapter: HistoryRecyclerViewAdapter
 
@@ -51,15 +59,14 @@ class ReportFragment: Fragment(R.layout.fragment_report) {
     private val today = LocalDate.now()
     private var year = LocalDate.now().year
     private var month = LocalDate.now().month.value
-    private val monthTitleFormatter = DateTimeFormatter.ofPattern("MMMM")
     private var selectedDate: LocalDate = LocalDate.now()
     lateinit var selectedCalendarDay: CalendarDay
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding = FragmentReportBinding.bind(view)
+        binding = FragmentHomeBinding.bind(view)
             .apply {
-                vm = reportViewModel
-                lifecycleOwner = this@ReportFragment
+                vm = homeViewModel
+                lifecycleOwner = this@HomeFragment
             }
 
         historyCalenderBinding = binding.viewReportHistoryCalender
@@ -97,9 +104,9 @@ class ReportFragment: Fragment(R.layout.fragment_report) {
 
         initCalender()
 
-        reportViewModel.refreshData()
+        homeViewModel.refreshData()
 
-        reportViewModel.openRecommendationEvent.observe(viewLifecycleOwner, EventObserver {
+        homeViewModel.openRecommendationEvent.observe(viewLifecycleOwner, EventObserver {
             goKeywordSelect()
         })
     }
@@ -119,7 +126,7 @@ class ReportFragment: Fragment(R.layout.fragment_report) {
             // Called only when a new container is needed.
             override fun create(view: View) = DayViewCalendarContainer(view) { clickDay->
                 historyAdapter.setLocaleDay(clickDay.day)
-                reportViewModel.onCalendarClick(year, month, clickDay.day)
+                homeViewModel.onCalendarClick(year, month, clickDay.day)
                 selectedDate = clickDay.date
                 historyCalenderBinding.calendarViewHistory.notifyDayChanged(clickDay)
                 historyCalenderBinding.calendarViewHistory.notifyDayChanged(selectedCalendarDay)
@@ -156,13 +163,13 @@ class ReportFragment: Fragment(R.layout.fragment_report) {
         // scroll listener
         historyCalenderBinding.calendarViewHistory.monthScrollListener = {
             historyCalenderBinding.tvHistoryCalenderYear.text = it.yearMonth.year.toString()
-            historyCalenderBinding.tvHistoryCalenderMonth.text = monthTitleFormatter.format(it.yearMonth)
+            historyCalenderBinding.tvHistoryCalenderMonth.text = "${it.yearMonth.monthValue} 월"
             year = it.yearMonth.year
             month = it.yearMonth.month.value
         }
     }
 
     private fun goKeywordSelect() {
-        findNavController().navigate(R.id.action_reportFragment_to_keywordSelectFragment)
+        findNavController().navigate(R.id.action_homeFragment_to_keywordSelectFragment)
     }
 }

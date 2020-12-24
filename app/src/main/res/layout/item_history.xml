@@ -7,7 +7,7 @@
     <data>
         <variable
             name="history"
-            type="com.depromeet.fragraph.feature.report.model.HistoryUiModel" />
+            type="com.depromeet.fragraph.feature.home.model.HistoryUiModel" />
 
         <import type="android.view.View"/>
     </data>

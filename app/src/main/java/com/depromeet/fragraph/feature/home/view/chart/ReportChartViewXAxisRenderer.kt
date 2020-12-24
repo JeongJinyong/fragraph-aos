@@ -1,4 +1,4 @@
-package com.depromeet.fragraph.feature.report.view.chart
+package com.depromeet.fragraph.feature.home.view.chart
 
 import android.graphics.Canvas
 import com.github.mikephil.charting.components.XAxis

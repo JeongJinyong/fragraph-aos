@@ -152,7 +152,7 @@
             android:textColor="@color/colorBlackGray_1"
             android:textSize="14sp"
             android:maxLength="180"
-            android:fontFamily="@font/spoqa_han_sans_bold"
+            android:fontFamily="@font/spoqa_han_sans_regular"
             android:lineSpacingExtra="3sp"
             android:includeFontPadding="false"
             android:background="@android:color/transparent"

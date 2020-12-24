@@ -195,24 +195,22 @@
                 />
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="280dp"
-            android:src="@drawable/temp_peppermint"
-            android:scaleType="fitStart"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="26dp"
-            android:layout_marginTop="-3dp"
-            app:layout_constraintStart_toEndOf="@+id/pb_music_duration"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_meditation_playtime"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintVertical_bias="0"
-            />
+<!--        <ImageView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="280dp"-->
+<!--            android:src="@drawable/temp_peppermint"-->
+<!--            android:scaleType="fitStart"-->
+<!--            android:layout_marginStart="20dp"-->
+<!--            android:layout_marginEnd="76dp"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/pb_music_duration"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/ll_meditation_playtime"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0"-->
+<!--            app:layout_constraintVertical_bias="0"-->
+<!--            />-->
 
         <TextView
-            android:visibility="invisible"
             android:id="@+id/tv_meditation_incense"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -221,7 +219,8 @@
             android:fontFamily="@font/gilroy_extra_bold"
             android:includeFontPadding="false"
             android:lineSpacingExtra="0sp"
-            android:lineHeight="56dp"
+            android:lineHeight="60dp"
+            android:translationY="-5dp"
             android:layout_marginStart="@dimen/space_large"
             app:layout_constraintStart_toEndOf="@+id/pb_music_duration"
             app:layout_constraintEnd_toEndOf="parent"
@@ -234,7 +233,6 @@
             />
 
         <com.depromeet.fragraph.core.ui.TextOutLineView
-            android:visibility="invisible"
             android:id="@+id/tv_meditation_incense2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -245,9 +243,10 @@
             android:fontFamily="@font/gilroy_extra_bold"
             android:lineSpacingExtra="0sp"
             android:layout_marginStart="@dimen/space_large"
-            android:lineHeight="56dp"
+            android:lineHeight="60dp"
+            android:translationY="-19dp"
             app:text_stroke="true"
-            app:text_stroke_width_dp="2"
+            app:text_stroke_width_dp="1.5"
             app:text_stroke_color="@color/colorWhiteGray_6"
             app:layout_constraintStart_toEndOf="@+id/pb_music_duration"
             app:layout_constraintEnd_toEndOf="parent"
@@ -255,7 +254,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0"
-            tools:text="별빛을 보다\n문득"/>
+            tools:text="Close your \neyes and \nfeel it"/>
 
         <Button
             android:id="@+id/btn_meditation_memo"

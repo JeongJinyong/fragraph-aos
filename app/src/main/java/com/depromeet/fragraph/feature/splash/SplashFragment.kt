@@ -42,7 +42,7 @@ class SplashFragment : Fragment() {
             override fun onAnimationEnd(animation: Animator?) {
                 // animation 을 한번은 실행시키기 위해 호출
                 splashViewModel.finishAnimation()
-                binding.lottieViewSplash.playAnimation()
+//                binding.lottieViewSplash.playAnimation()
             }
 
             override fun onAnimationCancel(animation: Animator?) {}
@@ -66,7 +66,7 @@ class SplashFragment : Fragment() {
     }
 
     private fun goReport() {
-        findNavController().navigate(R.id.action_splashFragment_to_reportFragment)
+        findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
     }
 
     companion object {

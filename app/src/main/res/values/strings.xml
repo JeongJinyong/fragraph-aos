@@ -53,7 +53,7 @@
     <string name="memo_on_writing_title">작성 중인 메모가 있습니다.</string>
     <string name="memo_on_writing_description">메모를 저장하고 나갈까요?</string>
     <string name="session_out_title">나가기</string>
-    <string name="session_out_description">세션을 저장하지 않고 종료하시겠어요?</string>
+    <string name="session_out_description">지금 바로 종료하시겠어요?</string>
     <string name="session_finish_title">세션종료</string>
     <string name="session_finish_description">오늘도 편안한 향상 시간이 되셨나요?\n세션을 저장하고 끝마치고 싶다면 확인을 선택해주세요.</string>
 </resources>

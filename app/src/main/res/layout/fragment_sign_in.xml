@@ -20,27 +20,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="104dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="@dimen/space_large"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/signin_left_top"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0"/>
-
-        <ImageView
-            android:layout_width="120dp"
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/signin_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/fl_signin_kakao_container"
-            app:layout_constraintHorizontal_bias="0.5"/>
+            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginBottom="20dp"
+            app:lottie_imageAssetsFolder="images"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="lottie/logo.json"
+            app:lottie_loop="true" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -180,8 +172,8 @@
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lottie_view_splash"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -189,7 +181,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:lottie_autoPlay="false"
                 app:lottie_loop="true"
-                app:lottie_fileName="lottie/lottie_splash.json"
+                app:lottie_fileName="lottie/loading.json"
                 app:bind_loading_1="@{googleSignInVM.isProgressed}"
                 app:bind_loading_2="@{kakaoSignInVM.isProgressed}"
                 />

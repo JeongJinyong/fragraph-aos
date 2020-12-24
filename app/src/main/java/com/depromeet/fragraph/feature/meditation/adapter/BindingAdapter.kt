@@ -8,12 +8,18 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.depromeet.fragraph.core.ext.enums.toMeditationTitle
+import com.depromeet.fragraph.core.ui.RemovePaddingView
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
 import jp.wasabeef.blurry.Blurry
 
 @BindingAdapter("bind_incense_title_meditation")
 fun TextView.bindIncenseTitleMeditation(value: IncenseTitle) {
     this.text = value.toMeditationTitle()
+}
+
+@BindingAdapter("bind_incense_title_meditation")
+fun RemovePaddingView.bindIncenseTitleMeditation(value: IncenseTitle) {
+    this.getTextView()?.text = value.toMeditationTitle()
 }
 
 @BindingAdapter("bind_meditation_memo_background")

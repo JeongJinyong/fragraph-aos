@@ -7,7 +7,7 @@
     <data>
         <variable
             name="history"
-            type="com.depromeet.fragraph.feature.report.model.HistoryUiModel" />
+            type="com.depromeet.fragraph.feature.home.model.HistoryUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -58,45 +58,49 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_history_empty_incense_title"
             />
 
-        <TextView
+        <com.depromeet.fragraph.core.ui.TextOutLineView
             android:id="@+id/tv_history_empty_description_first"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:includeFontPadding="false"
             android:text="기록이 없습니다."
+            android:textColor="#00ffffff"
             android:textSize="22sp"
-            android:textColor="@color/colorWhiteGray_6"
             android:fontFamily="@font/spoqa_han_sans_bold"
             android:layout_marginStart="@dimen/space_large"
+            app:text_stroke="true"
+            app:text_stroke_width_dp="0.8"
+            app:text_stroke_color="@color/colorWhiteGray_6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view_history_empty_top_line"
             app:layout_constraintBottom_toTopOf="@+id/tv_keyword_second"
             app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintVertical_bias="0.5"
-            tools:text="기록이 없습니다."/>
+            app:layout_constraintVertical_bias="0.5"/>
 
-        <TextView
+        <com.depromeet.fragraph.core.ui.TextOutLineView
             android:id="@+id/tv_keyword_second"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:includeFontPadding="false"
-            android:text="향상을 시작해주세요!"
+            android:text="명상을 시작해주세요!"
             android:textSize="22sp"
-            android:textColor="@color/colorWhiteGray_6"
+            android:textColor="#00ffffff"
             android:fontFamily="@font/spoqa_han_sans_bold"
             android:layout_marginStart="@dimen/space_large"
             android:layout_marginTop="@dimen/space_xx_small"
+            app:text_stroke="true"
+            app:text_stroke_width_dp="0.8"
+            app:text_stroke_color="@color/colorWhiteGray_6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_history_empty_description_first"
             app:layout_constraintBottom_toTopOf="@+id/view_history_empty_bottom_line"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintVertical_bias="0.5"
-            tools:text="향상을 시작해주세요!"/>
+            app:layout_constraintVertical_bias="0.5"/>
 
         <View
             android:id="@+id/view_history_empty_bottom_line"

@@ -114,7 +114,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     }
 
     private fun goReport() {
-        findNavController().navigate(R.id.action_signInFragment_to_reportFragment)
+        findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
     }
 
     companion object {

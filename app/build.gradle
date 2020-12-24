@@ -42,7 +42,7 @@ android {
     buildTypes {
 
         debug {
-            buildConfigField "String", "API_ENDPOINT", "\"https://9adfeb1bccdd.ngrok.io/\""
+            buildConfigField "String", "API_ENDPOINT", "\"https://fragraph.kscory.link/\""
             resValue "string", "google_client_id", apikeyProperties['GOOGLE_CLIENT_ID']
             resValue "string", "kakao_sdk_app_key", apikeyProperties['KAKAO_SDK_APP_KEY']
             resValue "string", "kakao_sdk_data_schema", apikeyProperties['KAKAO_SDK_DATA_SCHEMA']

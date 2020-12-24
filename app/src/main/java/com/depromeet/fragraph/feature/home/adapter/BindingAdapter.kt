@@ -1,4 +1,4 @@
-package com.depromeet.fragraph.feature.report.adapter
+package com.depromeet.fragraph.feature.home.adapter
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -8,7 +8,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.depromeet.fragraph.base.GlideApp
 import com.depromeet.fragraph.core.ext.enums.backgroundResourceId
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
-import com.depromeet.fragraph.feature.report.view.chart.ReportChartView
+import com.depromeet.fragraph.feature.home.view.chart.ReportChartView
 
 
 @BindingAdapter("bind_incense", "bind_bar_data", requireAll = true)

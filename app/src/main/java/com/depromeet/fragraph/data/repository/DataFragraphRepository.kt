@@ -115,7 +115,7 @@ class DataFragraphRepository @Inject constructor(
     override fun saveHistories(keyword: List<Keyword>, incense: Incense, playtime: Int): Flow<Int> {
         return flow {
             fragraphApi.postHistory(
-                PostHistoryRequest(keyword.map { it.id }, incense.id, playtime)
+                PostHistoryRequest(localData.selectedKeywords.map { it.id }, incense.id, playtime)
             ).getBodyOrThrow()?.let { response ->
                 emit(response.data.historyId)
             }

@@ -298,7 +298,7 @@ class BlurLayout : FrameLayout {
      * caching behavior.
      */
     private val positionInScreen: Point
-        private get() {
+        get() {
             val pointF = getPositionInScreen(this)
             return Point(pointF.x.toInt(), pointF.y.toInt())
         }

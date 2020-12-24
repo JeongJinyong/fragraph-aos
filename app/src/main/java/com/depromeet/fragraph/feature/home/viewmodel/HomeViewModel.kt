@@ -1,4 +1,4 @@
-package com.depromeet.fragraph.feature.report.viewmodel
+package com.depromeet.fragraph.feature.home.viewmodel
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
@@ -10,10 +10,10 @@ import com.depromeet.fragraph.core.ext.milliSecondsToDay
 import com.depromeet.fragraph.core.ext.milliSecondsToMonth
 import com.depromeet.fragraph.domain.repository.HistoryRepository
 import com.depromeet.fragraph.domain.repository.ReportRepository
-import com.depromeet.fragraph.feature.report.model.HistoryUiModel
-import com.depromeet.fragraph.feature.report.model.ReportUiModel
-import com.depromeet.fragraph.feature.report.model.getDefaultReportUiModel
-import com.depromeet.fragraph.feature.report.model.getEmptyUiModel
+import com.depromeet.fragraph.feature.home.model.HistoryUiModel
+import com.depromeet.fragraph.feature.home.model.ReportUiModel
+import com.depromeet.fragraph.feature.home.model.getDefaultReportUiModel
+import com.depromeet.fragraph.feature.home.model.getEmptyUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.LocalDate
 
-class ReportViewModel @ViewModelInject constructor(
+class HomeViewModel @ViewModelInject constructor(
     private val reportRepository: ReportRepository,
     private val historyRepository: HistoryRepository,
     @Assisted private val savedStateHandle: SavedStateHandle

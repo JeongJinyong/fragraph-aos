@@ -7,7 +7,7 @@
     <data>
         <variable
             name="history"
-            type="com.depromeet.fragraph.feature.report.model.HistoryUiModel" />
+            type="com.depromeet.fragraph.feature.home.model.HistoryUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

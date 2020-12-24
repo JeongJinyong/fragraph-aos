@@ -1,4 +1,4 @@
-package com.depromeet.fragraph.feature.report.view.chart
+package com.depromeet.fragraph.feature.home.view.chart
 
 import android.content.Context
 import android.graphics.Color

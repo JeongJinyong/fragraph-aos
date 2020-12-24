@@ -22,35 +22,48 @@ class LocalData {
         Incense(
             1,
             IncenseTitle.SANDALWOOD,
-            "심장기능을 강화하고 혈액순환을 촉진, 마음을 진정시키는 효과가 뛰어납니다.",
+            "샌들우드는 심신의 안정과 평화를\n" +
+                    "가져다줘요. 신경의 긴장과 불안을 진정시키는 작용이 우수하여 향을\n" +
+                    "맡고 있으면 근심과 걱정이 스르륵 사라지는 것을 느낄 수 있어요.",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/image_sandalwood.png",
             categories[0]
         ),
         Incense(
             2,
             IncenseTitle.PEPPERMINT,
-            "기침, 감기, 천식, 알레르기 및 결핵 등 호흡기계에 건강상 효능을 제공, 기억력 증진 및 스트레스 완화 효과가 있을 수 있습니다.",
+            "페퍼민트는 기억력 개선과\n" +
+                    "각성 효과가 있어요. 마음을 강하게 해 주고 머리를 맑게 해주어\n" +
+                    "새로운 것을 잘 받아들일 수 있도록 도와줘요.",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/image_peppermint.png",
             categories[1]
         ),
         Incense(
             3,
             IncenseTitle.LAVENDER,
-            "주성분은 아세트산리날릴, 리날올, 피넨, 리모넨, 게라니올, 시네올 등이다. 이는 신경을 안정시켜주고 스트레스 해소 및 불면증 예방에 탁월한 효과가 있다.",
+            "라벤더는 정신적 이완을 도와주어\n" +
+                    "불면증, 불안감, 우울증의 증상을\n" +
+                    "완화하는 데 효과적이에요. 불안하거나 잠이 오지 않을 때 라벤더 향으로 마음의 안식을 가져보세요.",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/image_lavendar.png",
             categories[2]
         ),
         Incense(
             4,
             IncenseTitle.ORANGE,
-            "림프 흐름을 자극하여 부은 조직의 치료를 돕고, 셀룰라이트 처치에도 사용됩니다. 건성 피부, 염증이 있는 피부, 여드름 성향의 피부를 진정시키는 데 유용합니다. 또한 재생성이 있어 노화 피부와 거칠고 굳어진 피부치료에 사용하면 좋습니다.",
+            "오렌지는 몸과 마음을 밝고\n" +
+                    "따뜻하게 하여 활력을 주는 효과가 있어요. 마음이 지치고 울적한 날 \n" +
+                    "렌지 향으로 기분을 전환해 보는건\n" +
+                    "어떨까요?",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/image_orange.png",
             categories[3]
         ),
         Incense(
             5,
             IncenseTitle.EUCALYPTUS,
-            "근육통 안화효과, 다피가료움증 개선, 호흡기 건강에 도움을 줍니다.",
+            "유칼립투스는 진정작용에 탁월한\n" +
+                    "효능이 있다고 알려졌어요.\n" +
+                    "예민해진 신경을 이완시켜주고\n" +
+                    "스트레스를 해소하는 데 도움을\n" +
+                    "줄 거에요.",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/image_eucalyptus.png",
             categories[4]
         ),
@@ -82,27 +95,27 @@ class LocalData {
     val musics = listOf(
         Music(
             1,
-            "별빛을 보다\n문득",
+            "Siix0 - \nWalking Alone",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/music/music_sandalwood.mp3"
         ),
         Music(
             2,
-            "Lifting\nDreams",
+            "Miguel\nJohn -\nPsalms",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/music/music_peppermint.mp3"
         ),
         Music(
             3,
-            "Kiss the\nSky",
+            "Chiro -\nSlump",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/music/music_lavender.mp3"
         ),
         Music(
             4,
-            "Angels\nDream",
+            "Chiro -\nWith my \nold bike",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/music/music_orange.mp3"
         ),
         Music(
             5,
-            "Heavenly",
+            "Ryan -\nMilk Coffee",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/music/music_eucalyptus.mp3"
         ),
     )

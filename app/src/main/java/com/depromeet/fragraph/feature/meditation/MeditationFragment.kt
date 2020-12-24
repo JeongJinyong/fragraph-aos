@@ -146,7 +146,8 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
                     meditationViewModel.closeDialog()
                 }
                 OUT_SESSION_CONFIRM -> {
-                    meditationViewModel.deleteHistory()
+//                    meditationViewModel.deleteHistory()
+                    findNavController().popBackStack()
                 }
                 FINISH_SESSION_CANCEL -> {
                     // Todo 더 하고 싶은 경우는 나중에 다시 개발 ....

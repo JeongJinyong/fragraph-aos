@@ -1,8 +1,7 @@
-package com.depromeet.fragraph.feature.report.adapter.recyclerview
+package com.depromeet.fragraph.feature.home.adapter.recyclerview
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import timber.log.Timber
 
 class HistoryRecyclerViewScrollListener(
     private val layoutManager: LinearLayoutManager,

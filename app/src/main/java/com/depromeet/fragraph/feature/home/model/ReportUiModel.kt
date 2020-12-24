@@ -1,4 +1,4 @@
-package com.depromeet.fragraph.feature.report.model
+package com.depromeet.fragraph.feature.home.model
 
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
 
