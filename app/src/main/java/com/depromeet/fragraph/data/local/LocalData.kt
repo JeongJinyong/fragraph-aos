@@ -23,8 +23,10 @@ class LocalData {
             1,
             IncenseTitle.SANDALWOOD,
             "샌들우드는 심신의 안정과 평화를\n" +
-                    "가져다줘요. 신경의 긴장과 불안을 진정시키는 작용이 우수하여 향을\n" +
-                    "맡고 있으면 근심과 걱정이 스르륵 사라지는 것을 느낄 수 있어요.",
+                    "가져다줘요. 신경의 긴장과 불안을\n" +
+                    "진정시키는 작용이 우수하여 향을\n" +
+                    "맡고 있으면 근심과 걱정이 스르륵\n" +
+                    "사라지는 것을 느낄 수 있어요.",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/image_sandalwood.png",
             categories[0]
         ),
@@ -32,8 +34,10 @@ class LocalData {
             2,
             IncenseTitle.PEPPERMINT,
             "페퍼민트는 기억력 개선과\n" +
-                    "각성 효과가 있어요. 마음을 강하게 해 주고 머리를 맑게 해주어\n" +
-                    "새로운 것을 잘 받아들일 수 있도록 도와줘요.",
+                    "각성 효과가 있어요. 마음을 강하게\n" +
+                    "해 주고 머리를 맑게 해주어\n" +
+                    "새로운 것을 잘 받아들일 수 있도록\n" +
+                    "도와줘요.",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/image_peppermint.png",
             categories[1]
         ),
@@ -42,7 +46,9 @@ class LocalData {
             IncenseTitle.LAVENDER,
             "라벤더는 정신적 이완을 도와주어\n" +
                     "불면증, 불안감, 우울증의 증상을\n" +
-                    "완화하는 데 효과적이에요. 불안하거나 잠이 오지 않을 때 라벤더 향으로 마음의 안식을 가져보세요.",
+                    "완화하는 데 효과적이에요. 불안하\n" +
+                    "거나 잠이 오지 않을 때 라벤더 향으\n" +
+                    "로 마음의 안식을 가져보세요.",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/image_lavendar.png",
             categories[2]
         ),
@@ -50,8 +56,9 @@ class LocalData {
             4,
             IncenseTitle.ORANGE,
             "오렌지는 몸과 마음을 밝고\n" +
-                    "따뜻하게 하여 활력을 주는 효과가 있어요. 마음이 지치고 울적한 날 \n" +
-                    "렌지 향으로 기분을 전환해 보는건\n" +
+                    "따뜻하게 하여 활력을 주는 효과가\n" +
+                    "있어요. 마음이 지치고 울적한 날 \n" +
+                    "오렌지 향으로 기분을 전환해 보는건\n" +
                     "어떨까요?",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/image_orange.png",
             categories[3]
@@ -95,7 +102,7 @@ class LocalData {
     val musics = listOf(
         Music(
             1,
-            "Siix0 - \nWalking Alone",
+            "Siix0 - \nWalking \nAlone",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/music/music_sandalwood.mp3"
         ),
         Music(
