@@ -3,14 +3,18 @@ package com.depromeet.fragraph.feature.meditation.adapter
 import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.AnimRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
+import com.depromeet.fragraph.R
 import com.depromeet.fragraph.core.ext.enums.toMeditationTitle
 import com.depromeet.fragraph.core.ui.RemovePaddingView
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
 import jp.wasabeef.blurry.Blurry
+import timber.log.Timber
 
 @BindingAdapter("bind_incense_title_meditation")
 fun TextView.bindIncenseTitleMeditation(value: IncenseTitle) {
@@ -42,5 +46,15 @@ fun ConstraintLayout.bindDialogsVisibility(memoVisibility: Boolean, selectVisibi
         this.visibility = View.VISIBLE
     } else {
         this.visibility = View.GONE
+    }
+}
+
+@BindingAdapter("bind_is_motion_playing")
+fun ImageView.bindPlayingMotionAnim(isMotionPlaying: Boolean) {
+    if (isMotionPlaying) {
+        val rotation = AnimationUtils.loadAnimation(context, R.anim.rotate)
+        this.startAnimation(rotation)
+    } else {
+        this.clearAnimation()
     }
 }

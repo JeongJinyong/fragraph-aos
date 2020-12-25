@@ -33,6 +33,10 @@ class MeditationViewModel @ViewModelInject constructor(
     val errorEvent: LiveData<Event<Unit>>
         get() = _errorEvent
 
+    private val _onBackgroundClickEvent = MutableLiveData<Event<Unit>>()
+    val onBackgroundClickEvent: LiveData<Event<Unit>>
+        get() = _onBackgroundClickEvent
+
     private val _onMemoWritingClickEvent = MutableLiveData<Event<Meditation>>()
     val onMemoWritingClickEvent: LiveData<Event<Meditation>>
         get() = _onMemoWritingClickEvent
@@ -89,6 +93,10 @@ class MeditationViewModel @ViewModelInject constructor(
     val musicTitle: LiveData<String>
         get() = _musicTitle
 
+    private val _isMusicPlaying = MutableLiveData(false)
+    val isMusicPlaying: LiveData<Boolean>
+        get() = _isMusicPlaying
+
     init {
         meditationRepository.getMeditation()?.let {
             _meditation.value = it
@@ -99,6 +107,7 @@ class MeditationViewModel @ViewModelInject constructor(
             _day.postValue("${it.date.miliSecondsToStringFormat(JUST_DAY)}요일")
             _totalPlaytime.postValue(it.playtime * 1000)
             this.setRemainingTime(it.playtime * 1000)
+            _isMusicPlaying.postValue(true)
         } ?: kotlin.run {
             Timber.d("null???????")
             onErrorMeditation()
@@ -152,6 +161,11 @@ class MeditationViewModel @ViewModelInject constructor(
                 _onMemoBackgroundClickEvent.value = Event(SelectDialogType.HIDE_DIALOG)
             }
         }
+    }
+
+    fun onBackgroundClick() {
+        _isMusicPlaying.postValue(!_isMusicPlaying.value!!)
+        _onBackgroundClickEvent.postValue(Event(Unit))
     }
 
     fun onErrorMeditation() {

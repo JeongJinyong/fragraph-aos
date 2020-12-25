@@ -99,6 +99,14 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
             findNavController().popBackStack()
         })
 
+        meditationViewModel.onBackgroundClickEvent.observe(viewLifecycleOwner, EventObserver {
+            if (player.isPlaying()) {
+                player.pause()
+            } else {
+                startPlayer()
+            }
+        })
+
         meditationViewModel.onMemoWritingClickEvent.observe(viewLifecycleOwner, EventObserver {
             memoViewModel.setMemoDefault(it.historyId, it.date)
             blurBackground()
@@ -175,13 +183,17 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
         viewLifecycleOwner.lifecycleScope.launch {
             player.remainingTimeFlow()
                 .collect {
-                    if (it > 0) {
-                        meditationViewModel.setRemainingTime(it)
-                    } else {
-                        blurBackground()
-                        player.pause()
-                        meditationViewModel.openDialog(memoVisibility = false, selectDialogVisibility = true)
-                        selectDialogViewModel.setDialogType(SelectDialogType.SESSION_FINISH)
+                    when (it) {
+                        Player.FINISHED -> {
+                            blurBackground()
+                            player.pause()
+                            meditationViewModel.openDialog(memoVisibility = false, selectDialogVisibility = true)
+                            selectDialogViewModel.setDialogType(SelectDialogType.SESSION_FINISH)
+                        }
+                        Player.PAUSED -> {
+                            // Nothing to do
+                        }
+                        else -> meditationViewModel.setRemainingTime(it)
                     }
                 }
         }

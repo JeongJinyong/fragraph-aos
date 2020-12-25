@@ -85,7 +85,12 @@ class Player {
             flowTime += 1000
             emit(this@Player.remainingTime())
         }
-        emit(0)
+        if (!runFlag) {
+            emit(PAUSED)
+        }
+        if (this@Player.remainingTime() <= 0) {
+            emit(FINISHED)
+        }
     }.flowOn(Dispatchers.IO)
 
     fun releasePlayer() {
@@ -95,5 +100,10 @@ class Player {
             mediaPlayer = null
             runFlag = false
         }
+    }
+
+    companion object {
+        const val FINISHED = -1
+        const val PAUSED = 0
     }
 }
