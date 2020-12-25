@@ -96,13 +96,13 @@
             />
 
         <FrameLayout
+            android:id="@+id/fl_iv_incense_alpha"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:alpha="0.38"
             android:background="#000000"
             android:clickable="true"
             android:focusable="true"
-            app:bind_visible_alpha_anim="@{incense.isCenter ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/iv_incense_select"
             app:layout_constraintTop_toTopOf="@+id/iv_incense_select"
             app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
@@ -128,7 +128,7 @@
             tools:text="Lavender" />
 
         <TextView
-
+            android:id="@+id/tv_incense_title_alpha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
@@ -142,7 +142,6 @@
             app:layout_constraintBottom_toTopOf="@+id/view_incese_line_title"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="1"
-            app:bind_visible_alpha_anim="@{incense.isCenter ? View.INVISIBLE : View.VISIBLE}"
             tools:text="Lavender" />
 
         <View
@@ -159,6 +158,7 @@
             />
 
         <View
+            android:id="@+id/view_incese_line_title_alpha"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="#61000000"
@@ -168,7 +168,6 @@
             app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
             app:layout_constraintBottom_toTopOf="@+id/tv_incense_effect"
             app:layout_constraintVertical_bias="1"
-            app:bind_visible_alpha_anim="@{incense.isCenter ? View.INVISIBLE : View.VISIBLE}"
             />
 
         <TextView
@@ -182,13 +181,14 @@
             android:layout_marginBottom="2dp"
             app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
             app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
-            app:layout_constraintBottom_toTopOf="@+id/tv_incense_keywords"
+            app:layout_constraintBottom_toTopOf="@+id/hsv_incense_keywords"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="1"
             app:bind_incense_title_text_effect="@{incense.title}"
             tools:text="숙면, 신경안정" />
 
         <TextView
+            android:id="@+id/tv_incense_effect_alpha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
@@ -198,45 +198,89 @@
             android:layout_marginBottom="2dp"
             app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
             app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
-            app:layout_constraintBottom_toTopOf="@+id/tv_incense_keywords"
+            app:layout_constraintBottom_toTopOf="@+id/hsv_incense_keywords"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="1"
             app:bind_incense_title_text_effect="@{incense.title}"
-            app:bind_visible_alpha_anim="@{incense.isCenter ? View.INVISIBLE : View.VISIBLE}"
             tools:text="숙면, 신경안정"/>
-
-        <TextView
-            android:id="@+id/tv_incense_keywords"
+        
+        <HorizontalScrollView
+            android:id="@+id/hsv_incense_keywords"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:textSize="12sp"
-            android:textColor="@color/colorBlackGray_3"
             android:fontFamily="@font/spoqa_han_sans_regular"
             app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
             app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintVertical_bias="1"
-            app:bind_incense_select_keywords="@{incense.keywords}"
-            tools:text="#키워드1 #키워드2 #키워드3"
-            />
+            app:layout_constraintVertical_bias="1">
 
-        <TextView
-            android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textSize="12sp"
+                    android:textColor="@color/colorBlackGray_3"
+                    android:fontFamily="@font/spoqa_han_sans_regular"
+                    android:layout_marginEnd="@dimen/space_x_small"
+                    app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
+                    app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintVertical_bias="1"
+                    app:bind_incense_select_keywords="@{incense.keywords}"
+                    app:bind_keywords_index="@{0}"
+                    tools:text="#키워드1"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textSize="12sp"
+                    android:textColor="@color/colorBlackGray_3"
+                    android:fontFamily="@font/spoqa_han_sans_regular"
+                    android:layout_marginEnd="@dimen/space_x_small"
+                    app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
+                    app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintVertical_bias="1"
+                    app:bind_incense_select_keywords="@{incense.keywords}"
+                    app:bind_keywords_index="@{1}"
+                    tools:text="#키워드2"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textSize="12sp"
+                    android:textColor="@color/colorBlackGray_3"
+                    android:fontFamily="@font/spoqa_han_sans_regular"
+                    app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
+                    app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintVertical_bias="1"
+                    app:bind_incense_select_keywords="@{incense.keywords}"
+                    app:bind_keywords_index="@{2}"
+                    tools:text="#키워드3"
+                    />
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:textSize="12sp"
-            android:textColor="#61000000"
-            android:fontFamily="@font/spoqa_han_sans_regular"
-            app:layout_constraintEnd_toEndOf="@+id/iv_incense_select"
-            app:layout_constraintStart_toStartOf="@+id/iv_incense_select"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintVertical_bias="1"
-            app:bind_incense_select_keywords="@{incense.keywords}"
+            app:constraint_referenced_ids="fl_iv_incense_alpha,tv_incense_title_alpha,view_incese_line_title_alpha,tv_incense_effect_alpha"
             app:bind_visible_alpha_anim="@{incense.isCenter ? View.INVISIBLE : View.VISIBLE}"
-            tools:text="#키워드1 #키워드2 #키워드3"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

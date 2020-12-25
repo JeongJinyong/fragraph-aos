@@ -12,10 +12,11 @@ import com.depromeet.fragraph.domain.model.Keyword
 import timber.log.Timber
 
 
-@BindingAdapter("bind_incense_select_keywords")
-fun TextView.bindIncenseSelectKeywords(keywords: List<Keyword>) {
-    this.text = keywords.map { "#${it.name}"  }
-        .reduce { acc, name -> "$acc $name "}
+@BindingAdapter("bind_incense_select_keywords", "bind_keywords_index", requireAll = true)
+fun TextView.bindIncenseSelectKeywords(keywords: List<Keyword>, index: Int) {
+    if(keywords.size > index) {
+        this.text = context.getString(R.string.keyword_format, keywords[index].name)
+    }
 }
 
 @BindingAdapter("bind_incense_select_playtime")

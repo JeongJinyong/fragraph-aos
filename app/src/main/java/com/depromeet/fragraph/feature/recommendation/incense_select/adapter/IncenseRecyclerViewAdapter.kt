@@ -1,7 +1,9 @@
 package com.depromeet.fragraph.feature.recommendation.incense_select.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
@@ -14,7 +16,7 @@ import com.depromeet.fragraph.feature.recommendation.incense_select.model.Incens
 class IncenseRecyclerViewAdapter(
     private val lifecycleOwner: LifecycleOwner,
     private val itemSetCallback: () -> Unit,
-): RecyclerView.Adapter<IncenseRecyclerViewAdapter.ViewHolder>(),
+): RecyclerView.Adapter<IncenseRecyclerViewAdapter.ViewHolder>(), View.OnTouchListener,
     IRecyclerViewAdapter<IncenseItemUiModel> {
 
     private val incenseList = mutableListOf<IncenseItemUiModel>()
@@ -43,14 +45,24 @@ class IncenseRecyclerViewAdapter(
         incenseList[position].changeCenterPosition(isCenter)
     }
 
-    class ViewHolder(
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        v?.parent?.requestDisallowInterceptTouchEvent(true)
+        return false
+    }
+
+    inner class ViewHolder(
         val binding: ItemIncenseBinding,
         private val lifecycleOwner: LifecycleOwner
     ): RecyclerView.ViewHolder(binding.root) {
 
+        @SuppressLint("ClickableViewAccessibility")
         fun bind(incense: IncenseItemUiModel) {
             binding.incense = incense
             binding.lifecycleOwner = lifecycleOwner
+            binding.hsvIncenseKeywords.setOnTouchListener { v, event ->
+                v?.parent?.requestDisallowInterceptTouchEvent(true)
+                false
+            }
         }
     }
 }

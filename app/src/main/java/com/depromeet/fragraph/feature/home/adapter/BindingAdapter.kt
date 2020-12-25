@@ -3,6 +3,7 @@ package com.depromeet.fragraph.feature.home.adapter
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.widget.ImageView
+import androidx.constraintlayout.widget.Group
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.depromeet.fragraph.base.GlideApp

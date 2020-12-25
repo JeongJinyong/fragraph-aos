@@ -2,10 +2,8 @@ package com.depromeet.fragraph.core.binding
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -79,7 +77,7 @@ fun View.bindVisibleAlphaAnim(visibility: Int) {
 @BindingAdapter("bind_visible_slide_anim", "bind_slide_position", requireAll = true)
 fun View.bindVisibleSlideAnim(visibility: Int, gravity: Int) {
     val transition = Slide(gravity)
-    transition.duration = 300
+    transition.duration = 200
     transition.addTarget(this)
     TransitionManager.beginDelayedTransition(this.parent as ViewGroup, transition)
     this.visibility = if (visibility == View.VISIBLE) View.VISIBLE else View.GONE
