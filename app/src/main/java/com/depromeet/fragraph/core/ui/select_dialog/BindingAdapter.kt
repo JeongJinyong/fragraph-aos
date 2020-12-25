@@ -47,7 +47,7 @@ fun TextView.bindSelectDialogLeftBtn(type: SelectDialogType) {
     this.text = when (type) {
         SelectDialogType.MEMO_ON_WRITING -> resources.getString(R.string.out)
         SelectDialogType.SESSION_OUT -> resources.getString(R.string.cancel)
-        SelectDialogType.SESSION_FINISH -> resources.getString(R.string.cancel)
+        SelectDialogType.SESSION_FINISH -> ""
         else -> resources.getString(R.string.unknown)
     }
 }

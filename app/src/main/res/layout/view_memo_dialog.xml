@@ -68,7 +68,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="14dp"
-            android:onClick="@{() -> vm.saveMemo()}"
+            android:onClick="@{() -> vm.saveMemo(false)}"
             app:layout_constraintStart_toEndOf="@+id/tv_memo_delete"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

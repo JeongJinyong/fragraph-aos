@@ -1,4 +1,4 @@
-package com.depromeet.fragraph.feature.meditation.adapter
+package com.depromeet.fragraph.core.binding
 
 import android.view.View
 import android.widget.FrameLayout

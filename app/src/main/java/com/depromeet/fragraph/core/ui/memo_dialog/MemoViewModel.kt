@@ -67,10 +67,14 @@ class MemoViewModel @ViewModelInject constructor(
         }
     }
     
-    fun saveMemo() {
+    fun saveMemo(forceClose: Boolean = false) {
         if (memoTitle.value!!.isEmpty() && memoContent.value!!.isEmpty()) {
             _memoToastMessageEvent.postValue(Event(R.string.memo_content_null))
-            return
+            if (forceClose) {
+                _memoCloseEvent.postValue(Event(Unit))
+            } else {
+                return
+            }
         }
 
         if (historyId != null) {

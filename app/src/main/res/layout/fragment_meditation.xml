@@ -266,6 +266,7 @@
             android:layout_marginEnd="@dimen/space_large"
             android:layout_marginBottom="@dimen/space_x_large"
             android:onClick="@{() -> vm.onWritingMemoClick()}"
+            android:visibility="@{vm.memoDialogVisible ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

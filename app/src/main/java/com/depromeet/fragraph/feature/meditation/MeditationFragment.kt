@@ -1,10 +1,12 @@
 package com.depromeet.fragraph.feature.meditation
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -39,6 +41,8 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
     private val selectDialogViewModel: SelectDialogViewModel by viewModels()
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
+
+    private var backType = BackType.OPEN_SESSION_OUT_DIALOG
 
     @Inject
     lateinit var player: Player
@@ -93,6 +97,7 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
             selectDialogViewModel.setDialogType(SelectDialogType.SESSION_OUT)
             blurBackground()
             meditationViewModel.openDialog(memoVisibility = false, selectDialogVisibility = true)
+            backType = BackType.CLOSE_DIALOG
         })
 
         meditationViewModel.backEvent.observe(viewLifecycleOwner, EventObserver {
@@ -111,16 +116,21 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
             memoViewModel.setMemoDefault(it.historyId, it.date)
             blurBackground()
             meditationViewModel.openDialog(memoVisibility = true, selectDialogVisibility = false)
+            backType = BackType.CLOSE_DIALOG
         })
 
         meditationViewModel.onMemoBackgroundClickEvent.observe(viewLifecycleOwner, EventObserver {
             inputMethodManager.hideSoftInputFromWindow(memoBinding.etMemoContent.windowToken, 0)
-            Timber.d("check!!!: ${player.remainingTime()}")
             if (player.remainingTime() > 0) {
                 when (it) {
                     SelectDialogType.HIDE_DIALOG -> {
                         Blurry.delete(binding.fragmentMeditationContainer)
                         meditationViewModel.closeDialog()
+                    }
+                    // Todo 저장하는게 잘 이해는 안감.... 다시 물어보자 !!
+                    SelectDialogType.MEMO_ON_WRITING -> {
+                        // 이 경우에는 메모를 저장
+                        memoViewModel.saveMemo(true)
                     }
                     else -> {
                         meditationViewModel.openDialog(memoVisibility = false, selectDialogVisibility = true)
@@ -138,6 +148,7 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
             meditationViewModel.closeDialog()
             inputMethodManager.hideSoftInputFromWindow(memoBinding.etMemoContent.windowToken, 0)
             Blurry.delete(binding.fragmentMeditationContainer)
+            backType = BackType.OPEN_SESSION_OUT_DIALOG
         })
 
         selectDialogViewModel.onBtcClickEvent.observe(viewLifecycleOwner, EventObserver {
@@ -189,6 +200,7 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
                             player.pause()
                             meditationViewModel.openDialog(memoVisibility = false, selectDialogVisibility = true)
                             selectDialogViewModel.setDialogType(SelectDialogType.SESSION_FINISH)
+                            backType = BackType.FINISH_MEDITATION
                         }
                         Player.PAUSED -> {
                             // Nothing to do
@@ -197,6 +209,31 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
                     }
                 }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        requireActivity().onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Timber.d("backType: $backType")
+                when (backType) {
+                    BackType.OPEN_SESSION_OUT_DIALOG -> {
+                        selectDialogViewModel.setDialogType(SelectDialogType.SESSION_OUT)
+                        blurBackground()
+                        meditationViewModel.openDialog(memoVisibility = false, selectDialogVisibility = true)
+                        backType = BackType.CLOSE_DIALOG
+                    }
+                    BackType.CLOSE_DIALOG -> {
+                        meditationViewModel.closeDialog()
+                        Blurry.delete(binding.fragmentMeditationContainer)
+                        backType = BackType.OPEN_SESSION_OUT_DIALOG
+                    }
+                    BackType.FINISH_MEDITATION -> {
+                        findNavController().popBackStack()
+                    }
+                }
+            }
+        })
     }
 
     override fun onStart() {
@@ -216,6 +253,12 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
     override fun onDetach() {
         player.releasePlayer()
         super.onDetach()
+    }
+
+    enum class BackType() {
+        OPEN_SESSION_OUT_DIALOG,
+        CLOSE_DIALOG,
+        FINISH_MEDITATION,
     }
 
     companion object {

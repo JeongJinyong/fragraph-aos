@@ -154,7 +154,7 @@ class MeditationViewModel @ViewModelInject constructor(
 
     fun onDialogBackgroundClick() {
         meditation.value?.let {
-            // 메모 dialog 가 올라가 있다면 select 를 보여줌
+            // 메모 dialog 가 올라가 있다면 메모를 저장하고 dialog 를 내림
             if (_memoDialogVisible.value!!) {
                 _onMemoBackgroundClickEvent.value = Event(SelectDialogType.MEMO_ON_WRITING)
             } else {

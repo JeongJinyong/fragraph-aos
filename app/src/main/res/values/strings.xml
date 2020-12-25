@@ -43,7 +43,7 @@
     <string name="memo_no_title">제목</string>
     <string name="memo_no_content_history">이 날엔 무슨일이 있었나요?</string>
 
-    <string name="memo_content_null">내용을 입력해주세요</string>
+    <string name="memo_content_null">메모 내용을 입력헤야 저장할 수 있습니다.</string>
     <string name="memo_save_success">저장 완료</string>
     <string name="memo_save_failure">메모 저장 실패</string>
     <string name="memo_delete_success">메모 삭제 완료</string>
