@@ -10,6 +10,7 @@
             type="com.depromeet.fragraph.feature.recommendation.incense_select.viewmodel.IncenseSelectViewModel" />
 
         <import type="android.view.View"/>
+        <import type="android.view.Gravity"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -220,15 +221,29 @@
                 android:onClick="@{() -> vm.onPlaytimeBackgroundClick()}"
                 app:bind_visible_alpha_anim="@{vm.playtimePickerVisible ? View.VISIBLE : View.GONE}"
                 />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:elevation="10dp"
+            app:bind_visible_slide_anim="@{vm.playtimePickerVisible ? View.VISIBLE : View.GONE}"
+            app:bind_slide_position="@{Gravity.BOTTOM}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1"
+            >
 
             <include
                 android:id="@+id/view_incense_playtime_picker"
                 layout="@layout/view_incense_playtime_picker"
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
-                android:layout_gravity="bottom"
                 />
-
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

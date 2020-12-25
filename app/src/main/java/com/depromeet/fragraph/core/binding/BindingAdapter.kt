@@ -2,6 +2,7 @@ package com.depromeet.fragraph.core.binding
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Fade
+import androidx.transition.Slide
 import androidx.transition.TransitionManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -69,6 +71,15 @@ fun TextView.bindIncenseTitleTextEffect(value: IncenseTitle) {
 fun View.bindVisibleAlphaAnim(visibility: Int) {
     val transition = Fade()
     transition.duration = 200
+    transition.addTarget(this)
+    TransitionManager.beginDelayedTransition(this.parent as ViewGroup, transition)
+    this.visibility = if (visibility == View.VISIBLE) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("bind_visible_slide_anim", "bind_slide_position", requireAll = true)
+fun View.bindVisibleSlideAnim(visibility: Int, gravity: Int) {
+    val transition = Slide(gravity)
+    transition.duration = 300
     transition.addTarget(this)
     TransitionManager.beginDelayedTransition(this.parent as ViewGroup, transition)
     this.visibility = if (visibility == View.VISIBLE) View.VISIBLE else View.GONE
