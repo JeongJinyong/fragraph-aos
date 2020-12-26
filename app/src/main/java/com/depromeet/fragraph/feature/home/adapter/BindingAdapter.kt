@@ -38,6 +38,8 @@ fun TextOutLineView.bindKeywords(selectedKeywords: List<Keyword>, unselectedKeyw
     if (selectedKeywords.size > index) {
         this.text = context.getString(R.string.keyword_format, selectedKeywords[index].name)
         this.setTextColor(context.getColor(R.color.colorWhiteGray_6))
+        this.setStrokeWidth(0f)
+        this.invalidate()
         return
     }
 

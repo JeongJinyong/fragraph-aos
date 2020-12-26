@@ -13,9 +13,9 @@ import com.depromeet.fragraph.core.ext.dpToPx
 
 class TextOutLineView: AppCompatTextView {
 
-    var stroke = false
-    var strokeWidth = 0.0f
-    var strokeColor: Int = 0xffffff
+    private var stroke = false
+    private var strokeWidth = 0.0f
+    private var strokeColor: Int = 0xffffff
 
     constructor(context: Context) : super(context, null) {}
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
@@ -39,7 +39,10 @@ class TextOutLineView: AppCompatTextView {
             paint.style = Paint.Style.FILL
             setTextColor(states)
         }
-
         super.onDraw(canvas)
+    }
+
+    fun setStrokeWidth(width: Float) {
+        strokeWidth = width
     }
 }

@@ -1,6 +1,7 @@
 package com.depromeet.fragraph.feature.home
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -36,6 +37,7 @@ import java.time.temporal.WeekFields
 import java.util.*
 import javax.inject.Inject
 
+
 // Todo 안되있는 것 리스트
 
 // 메모 비어보이게
@@ -45,8 +47,6 @@ import javax.inject.Inject
 
 // === Meditation
 // x 버튼 클릭 모달 -> 문구 수정될듯 !!!
-
-
 
 @AndroidEntryPoint
 class HomeFragment: Fragment(R.layout.fragment_home) {
@@ -105,6 +105,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
 
 
+        val displayMetrics = DisplayMetrics()
+        requireContext().display?.getRealMetrics(displayMetrics)
         // animation test
         val distance = 80000
         val scale: Float = resources.displayMetrics.density * distance
@@ -113,9 +115,22 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             RecyclerView.HORIZONTAL,
             false
         )
-        historyAdapter = HistoryRecyclerViewAdapter(viewLifecycleOwner, scale, today.dayOfMonth) { position ->
-            binding.rvHistories.scrollToPosition(position)
-        }
+        historyAdapter = HistoryRecyclerViewAdapter(viewLifecycleOwner, scale, today.dayOfMonth)
+        historyAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onChanged() {
+                if (historyAdapter.previousPosition == -1) return
+                if (historyAdapter.currentPosition > historyAdapter.previousPosition) {
+                    val margin = requireContext().dpToPx(20f).toInt()
+                    val rvWidth = binding.rvHistories.height * 27 / 35
+                    val disWith = displayMetrics.widthPixels
+                    binding.rvHistories.scrollToPosition(historyAdapter.currentPosition)
+                    binding.rvHistories.smoothScrollBy(disWith - margin - rvWidth, 0)
+                } else {
+                    binding.rvHistories.scrollToPosition(historyAdapter.currentPosition + 1)
+//                    binding.rvHistories.smoothScrollToPosition(historyAdapter.currentPosition)
+                }
+            }
+        })
 
         binding.rvHistories.apply {
             adapter = historyAdapter

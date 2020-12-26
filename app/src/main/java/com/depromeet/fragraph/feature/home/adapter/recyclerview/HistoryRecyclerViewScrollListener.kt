@@ -34,7 +34,6 @@ class HistoryRecyclerViewScrollListener(
 
             // 마지막인 경우
             if (firstPosition == lastPosition) {
-
                 historyAdapter.changeCenterValue(firstPosition, isCenter = false)
                 historyAdapter.changeCenterValue(lastPosition, isCenter = true)
                 return

@@ -13,14 +13,17 @@ import com.depromeet.fragraph.base.ui.IRecyclerViewAdapter
 import com.depromeet.fragraph.core.ext.milliSecondsToDay
 import com.depromeet.fragraph.databinding.ItemHistoryBinding
 import com.depromeet.fragraph.feature.home.model.HistoryUiModel
+import timber.log.Timber
+import java.util.concurrent.Flow
 
 class HistoryRecyclerViewAdapter(
     private var lifecycleOwner: LifecycleOwner,
     private val scale: Float,
     private var positionLocaleDay: Int,
-    private val firstScrollCallback: (position: Int) -> Unit,
 ): RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder>(), IRecyclerViewAdapter<HistoryUiModel> {
 
+    var previousPosition = -1
+    var currentPosition = -1
     private val historyList = mutableListOf<HistoryUiModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -48,13 +51,13 @@ class HistoryRecyclerViewAdapter(
     }
 
     override fun setItems(data: List<HistoryUiModel>) {
+        previousPosition = currentPosition
         historyList.clear()
         historyList.addAll(data)
-        notifyDataSetChanged()
-        val position = historyList.indexOfFirst {
+        currentPosition = historyList.indexOfFirst {
             it.createdAt.milliSecondsToDay().toInt() == positionLocaleDay
         }
-        firstScrollCallback(position)
+        notifyDataSetChanged()
     }
 
     fun setLocaleDay(day: Int) {
@@ -66,6 +69,12 @@ class HistoryRecyclerViewAdapter(
     }
 
     fun changeCenterValue(position: Int, isCenter: Boolean) {
+        if (position == -1) {
+            return
+        }
+        if (historyList.size < position) {
+            return
+        }
         historyList[position].changeCenterPosition(isCenter)
     }
 
@@ -81,14 +90,6 @@ class HistoryRecyclerViewAdapter(
             itemView.context,
             R.animator.hisotry_flip_left_out
         ) as AnimatorSet
-
-        init {
-//            val moreContainer: FrameLayout = itemView.findViewById(R.id.iv_history_more_container)
-//            moreContainer.setOnTouchListener { v, event ->
-//                v?.parent?.requestDisallowInterceptTouchEvent(true)
-//                false
-//            }
-        }
 
         fun bind(history: HistoryUiModel, lifecycleOwner: LifecycleOwner) {
             binding.history = history
