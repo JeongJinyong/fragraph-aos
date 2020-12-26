@@ -10,6 +10,8 @@
             type="com.depromeet.fragraph.feature.home.viewmodel.HomeViewModel" />
 
         <import type="android.view.View"/>
+        <import type="android.view.Gravity"/>
+        <import type="com.depromeet.fragraph.core.ui.select_dialog.SelectDialogType"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -158,8 +160,8 @@
             android:lineSpacingExtra="0sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tv_history_month_drop"
-            app:layout_constraintTop_toBottomOf="@+id/tv_history_title"
-            app:layout_constraintBottom_toTopOf="@+id/tv_history_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_history_title"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_history_title"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintVertical_bias="0.5"
             tools:text="11월"
@@ -176,8 +178,8 @@
             android:src="@drawable/ic_baseline_keyboard_arrow_down_16_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_history_title"
-            app:layout_constraintBottom_toTopOf="@+id/tv_history_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_history_title"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_history_title"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintVertical_bias="0.5"
             />
@@ -228,6 +230,7 @@
             />
 
         <FrameLayout
+            android:id="@+id/fl_history_calendar_container"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clickable="true"
@@ -247,7 +250,7 @@
                 android:layout_height="match_parent"
                 android:background="#000000"
                 android:alpha="0.6"
-                android:onClick="@{() -> vm.onHistoryCalendarBackgroundClick()}"
+                android:onClick="@{() -> vm.hideCalendar()}"
                 app:bind_visible_alpha_anim="@{vm.historyCalendarVisible ? View.VISIBLE : View.GONE}"
                 />
 
@@ -261,6 +264,221 @@
                 />
 
         </FrameLayout>
+
+        <!--    edit history dialog    -->
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:elevation="10dp"
+            android:visibility="@{vm.moreDialogVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1"
+            tools:visibility="gone"
+            >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#000000"
+                android:alpha="0.6"
+                android:onClick="@{() -> vm.hideEditDialog()}"
+                />
+        </FrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:clickable="true"
+            android:focusable="true"
+            android:elevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1"
+            app:bind_visible_slide_anim="@{vm.moreDialogVisible ? View.VISIBLE : View.GONE}"
+            app:bind_slide_position="@{Gravity.BOTTOM}"
+            tools:visibility="gone"
+            >
+
+            <TextView
+                android:id="@+id/tv_history_more_cancel"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:background="@color/colorWhiteGray_5"
+                android:text="@string/cancel"
+                android:textColor="@color/colorOrange"
+                android:textSize="16sp"
+                android:fontFamily="@font/spoqa_han_sans_regular"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="0sp"
+                android:gravity="center"
+                android:onClick="@{() -> vm.hideEditDialog()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <View
+                android:id="@+id/view_home_edit_line_first"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="#A6A6A6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/tv_history_more_cancel"
+                app:layout_constraintVertical_bias="1"
+                />
+
+            <TextView
+                android:id="@+id/tv_history_more_edit"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:background="@color/colorWhiteGray_5"
+                android:text="@string/edit"
+                android:textColor="@color/colorOrange"
+                android:textSize="16sp"
+                android:fontFamily="@font/spoqa_han_sans_regular"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="0sp"
+                android:gravity="center"
+                android:visibility="@{vm.editHistory.memo == null ? View.GONE : View.VISIBLE}"
+                android:onClick="@{() -> vm.openSelectDialog(SelectDialogType.HOME_HISTORY_EDIT)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/view_home_edit_line_first"
+                />
+
+            <View
+                android:id="@+id/view_home_edit_line_second"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="#A6A6A6"
+                android:visibility="@{vm.editHistory.memo == null ? View.GONE : View.VISIBLE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/tv_history_more_edit"
+                app:layout_constraintVertical_bias="1"
+                />
+
+            <TextView
+                android:id="@+id/tv_history_more_delete"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:background="@color/colorWhiteGray_5"
+                android:text="@string/delete"
+                android:textColor="@color/colorOrange"
+                android:textSize="16sp"
+                android:fontFamily="@font/spoqa_han_sans_regular"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="0sp"
+                android:gravity="center"
+                android:onClick="@{() -> vm.openSelectDialog(SelectDialogType.HOME_HISTORY_DELETE)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/view_home_edit_line_second"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <!-- select dialog container -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fl_history_select_dialog_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:elevation="10dp"
+            android:visibility="@{vm.selectDialogVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1"
+            tools:visibility="gone"
+            >
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="#000000"
+                android:alpha="0.6"
+                android:onClick="@{() -> vm.hideSelectDialog()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <include layout="@layout/view_select_dialog"
+                android:id="@+id/view_select_dialog"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_xx_large"
+                android:layout_marginEnd="@dimen/space_xx_large"
+                android:layout_marginBottom="50dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- // select dialog container -->
+
+        <!--    memo dialog container    -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fl_meditation_memo_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:elevation="10dp"
+            android:background="#3D000000"
+            android:visibility="@{vm.memoDialogVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1"
+            tools:visibility="visible"
+            >
+
+            <FrameLayout
+                android:id="@+id/iv_memo_blur"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:onClick="@{() -> vm.hideMemoDialog()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <include layout="@layout/view_memo_dialog"
+                android:id="@+id/view_memo_dialog"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/space_xx_large"
+                android:layout_marginEnd="@dimen/space_xx_large"
+                android:layout_marginTop="@dimen/memo_top_margin"
+                android:layout_marginBottom="@dimen/memo_bottom_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!--    // memo dialog container    -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

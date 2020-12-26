@@ -53,6 +53,12 @@ fun Long.miliSecondsToStringFormat(format: String, timezone: String = SEOUL): St
     return dateformater.format(Date(this))
 }
 
+fun Long.milliSecondsToYear(timezone: String = SEOUL): String {
+    val dateformater: DateFormat = SimpleDateFormat(JUST_YEAR)
+    dateformater.timeZone = TimeZone.getTimeZone(timezone)
+    return dateformater.format(Date(this))
+}
+
 fun Long.milliSecondsToMonth(timezone: String = SEOUL): String {
     val dateformater: DateFormat = SimpleDateFormat(JUST_MONTH)
     dateformater.timeZone = TimeZone.getTimeZone(timezone)

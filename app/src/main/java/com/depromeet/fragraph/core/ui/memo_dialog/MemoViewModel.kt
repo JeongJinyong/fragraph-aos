@@ -29,6 +29,10 @@ class MemoViewModel @ViewModelInject constructor(
     val memoCloseEvent: LiveData<Event<Unit>>
         get() = _memoCloseEvent
 
+    private val _savedMemoEvent = MutableLiveData<Event<Unit>>()
+    val savedMemoEvent: LiveData<Event<Unit>>
+        get() = _savedMemoEvent
+
     private val _createdAt = MutableLiveData(0L)
     val createdAt: MutableLiveData<Long>
         get() = _createdAt
@@ -66,6 +70,14 @@ class MemoViewModel @ViewModelInject constructor(
             resetMemo()
         }
     }
+
+    fun setMemoDefault(historyId: Int, createdAt: Long, memo: Memo) {
+        this.historyId = historyId
+        memoId = memo.id
+        _createdAt.postValue(createdAt)
+        _memoTitle.postValue(memo.title)
+        _memoContent.postValue(memo.content)
+    }
     
     fun saveMemo(forceClose: Boolean = false) {
         if (memoTitle.value!!.isEmpty() && memoContent.value!!.isEmpty()) {
@@ -87,6 +99,7 @@ class MemoViewModel @ViewModelInject constructor(
                         .collect {
                              memoId = it
                             _memoToastMessageEvent.postValue(Event(R.string.memo_save_success))
+                            _savedMemoEvent.postValue(Event(Unit))
                             _memoCloseEvent.postValue(Event(Unit))
                         }
                 } ?: kotlin.run {
@@ -97,6 +110,7 @@ class MemoViewModel @ViewModelInject constructor(
                         .collect {
                             memoId = it
                             _memoToastMessageEvent.postValue(Event(R.string.memo_save_success))
+                            _savedMemoEvent.postValue(Event(Unit))
                             _memoCloseEvent.postValue(Event(Unit))
                         }
                 }

@@ -55,14 +55,17 @@ class IncenseRecyclerViewAdapter(
         private val lifecycleOwner: LifecycleOwner
     ): RecyclerView.ViewHolder(binding.root) {
 
-        @SuppressLint("ClickableViewAccessibility")
-        fun bind(incense: IncenseItemUiModel) {
-            binding.incense = incense
-            binding.lifecycleOwner = lifecycleOwner
+
+        init {
             binding.hsvIncenseKeywords.setOnTouchListener { v, event ->
                 v?.parent?.requestDisallowInterceptTouchEvent(true)
                 false
             }
+        }
+
+        fun bind(incense: IncenseItemUiModel) {
+            binding.incense = incense
+            binding.lifecycleOwner = lifecycleOwner
         }
     }
 }

@@ -17,10 +17,9 @@ import com.depromeet.fragraph.R
 import com.depromeet.fragraph.base.SharedViewModel
 import com.depromeet.fragraph.core.event.EventObserver
 import com.depromeet.fragraph.core.ext.dpToPx
-import com.depromeet.fragraph.core.ext.toast
 import com.depromeet.fragraph.core.player.Player
-import com.depromeet.fragraph.core.ui.select_dialog.*
 import com.depromeet.fragraph.core.ui.memo_dialog.MemoViewModel
+import com.depromeet.fragraph.core.ui.select_dialog.*
 import com.depromeet.fragraph.core.util.KeyboardHelper
 import com.depromeet.fragraph.databinding.FragmentMeditationBinding
 import com.depromeet.fragraph.feature.meditation.viewmodel.MeditationViewModel

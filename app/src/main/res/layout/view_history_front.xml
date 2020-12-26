@@ -60,6 +60,19 @@
             android:src="@drawable/ic_more_horizontal"
             />
 
+        <FrameLayout
+            android:id="@+id/iv_history_more_container"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+            android:onClick="@{() -> history.moreClick()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/view_history_top_line"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintVertical_bias="0.5"
+            />
+
         <View
             android:id="@+id/view_history_top_line"
             android:layout_width="0dp"
@@ -73,17 +86,39 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_history_incense_title"
             />
 
-        <TextView
+<!--        <TextView-->
+<!--            android:id="@+id/tv_keyword_first"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:includeFontPadding="false"-->
+<!--            android:text="@{@string/keyword_format(history.keywordFirst)}"-->
+<!--            android:textSize="22sp"-->
+<!--            android:textColor="@color/colorWhiteGray_6"-->
+<!--            android:fontFamily="@font/spoqa_han_sans_bold"-->
+<!--            android:layout_marginStart="@dimen/space_large"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/view_history_top_line"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/tv_keyword_second"-->
+<!--            app:layout_constraintVertical_chainStyle="packed"-->
+<!--            app:layout_constraintHorizontal_bias="0"-->
+<!--            app:layout_constraintVertical_bias="0.5"-->
+<!--            tools:text="#잠이 오지 않는"/>-->
+
+        <com.depromeet.fragraph.core.ui.TextOutLineView
             android:id="@+id/tv_keyword_first"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:includeFontPadding="false"
-            android:text="@{@string/history_keyword(history.keywordFirst)}"
+            android:textColor="#00ffffff"
             android:textSize="22sp"
-            android:textColor="@color/colorWhiteGray_6"
             android:fontFamily="@font/spoqa_han_sans_bold"
             android:layout_marginStart="@dimen/space_large"
+            app:text_stroke="true"
+            app:text_stroke_width_dp="0.5"
+            app:text_stroke_color="@color/colorWhiteGray_6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view_history_top_line"
@@ -91,49 +126,60 @@
             app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0.5"
+            app:bind_selected_keyword="@{history.selectedKeywords}"
+            app:bind_unselected_keyword="@{history.unselectedKeywords}"
+            app:bind_keywords_index="@{0}"
             tools:text="#잠이 오지 않는"/>
 
-        <TextView
+        <com.depromeet.fragraph.core.ui.TextOutLineView
             android:id="@+id/tv_keyword_second"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{history.keywordSecond != null ? View.VISIBLE : View.GONE}"
-            android:text="@{history.keywordSecond != null ? @string/history_keyword(history.keywordSecond): @string/unknown}"
+            android:layout_alignParentBottom="true"
+            android:includeFontPadding="false"
+            android:textColor="#00ffffff"
             android:textSize="22sp"
-            android:textColor="@color/colorWhiteGray_6"
             android:fontFamily="@font/spoqa_han_sans_bold"
             android:layout_marginStart="@dimen/space_large"
             android:layout_marginTop="@dimen/space_xx_small"
-            android:includeFontPadding="false"
-            android:lineSpacingExtra="0dp"
+            app:text_stroke="true"
+            app:text_stroke_width_dp="0.5"
+            app:text_stroke_color="@color/colorWhiteGray_6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_keyword_first"
             app:layout_constraintBottom_toTopOf="@+id/tv_keyword_third"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0.5"
+            app:bind_selected_keyword="@{history.selectedKeywords}"
+            app:bind_unselected_keyword="@{history.unselectedKeywords}"
+            app:bind_keywords_index="@{1}"
             tools:text="#피곤한"/>
 
-        <TextView
+        <com.depromeet.fragraph.core.ui.TextOutLineView
             android:id="@+id/tv_keyword_third"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{history.keywordThird != null ? View.VISIBLE : View.GONE}"
-            android:text="@{history.keywordThird != null ? @string/history_keyword(history.keywordThird): @string/unknown}"
-            android:textSize="22sp"
-            android:textColor="@color/colorWhiteGray_6"
-            android:fontFamily="@font/spoqa_han_sans_bold"
+            android:layout_alignParentBottom="true"
             android:includeFontPadding="false"
-            android:lineSpacingExtra="0dp"
+            android:textColor="#00ffffff"
+            android:textSize="22sp"
+            android:fontFamily="@font/spoqa_han_sans_bold"
             android:layout_marginStart="@dimen/space_large"
             android:layout_marginTop="@dimen/space_xx_small"
+            app:text_stroke="true"
+            app:text_stroke_width_dp="0.5"
+            app:text_stroke_color="@color/colorWhiteGray_6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_keyword_second"
             app:layout_constraintBottom_toBottomOf="@+id/view_history_bottom_line"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintVertical_bias="0.5"
-            tools:text="#스트레스"/>
+            app:bind_selected_keyword="@{history.selectedKeywords}"
+            app:bind_unselected_keyword="@{history.unselectedKeywords}"
+            app:bind_keywords_index="@{2}"
+            tools:text="#스트레스" />
 
         <View
             android:id="@+id/view_history_bottom_line"

@@ -6,6 +6,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewTreeObserver
 import android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE
 import android.widget.PopupWindow
+import timber.log.Timber
 
 class KeyboardHelper(
     private val rootView: View,
@@ -26,6 +27,7 @@ class KeyboardHelper(
         height = MATCH_PARENT
 
         rootView.viewTreeObserver?.addOnGlobalLayoutListener((ViewTreeObserver.OnGlobalLayoutListener {
+            Timber.d("keyboardHeight: ${getKeyboardHeight()}")
             keyboardHeightCallback(getKeyboardHeight())
         }))
     }

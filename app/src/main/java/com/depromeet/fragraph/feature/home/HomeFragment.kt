@@ -2,13 +2,21 @@ package com.depromeet.fragraph.feature.home
 
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.depromeet.fragraph.R
+import com.depromeet.fragraph.base.SharedViewModel
 import com.depromeet.fragraph.core.event.EventObserver
+import com.depromeet.fragraph.core.ext.dpToPx
+import com.depromeet.fragraph.core.ui.memo_dialog.MemoViewModel
+import com.depromeet.fragraph.core.ui.select_dialog.*
+import com.depromeet.fragraph.core.util.KeyboardHelper
 import com.depromeet.fragraph.databinding.FragmentHomeBinding
 import com.depromeet.fragraph.databinding.ViewHistoryCalendarBinding
 import com.depromeet.fragraph.feature.home.adapter.recyclerview.HistoryRecyclerViewAdapter
@@ -24,23 +32,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import java.time.LocalDate
 import java.time.YearMonth
-import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
 import java.util.*
+import javax.inject.Inject
 
 // Todo 안되있는 것 리스트
 
-// 바텀 네비? 다크톤으로
-// 로그인 클릭시 lottie 애니메이션 재생
+// 메모 비어보이게
 
 // === Home
-// 스크롤 잘 안되는 거 (나중)
-// 홈 화면에서 메모 클릭
-// 히스토리 뜰 때 관련 명상 향이면 bold 아니면 stroke 처리
-// stroke 얇게
-// 글이 없으면 flip 이 되지 않는다.
-// 내가 선택한 향과 맞지 않으면 메모 비어보이게
-// 캘린더 선택하는 textview 안나옴...
+// 스크롤 잘 안되는 거 (후순위)
 
 // === Meditation
 // x 버튼 클릭 모달 -> 문구 수정될듯 !!!
@@ -51,6 +52,12 @@ import java.util.*
 class HomeFragment: Fragment(R.layout.fragment_home) {
 
     private val homeViewModel: HomeViewModel by viewModels()
+
+    private val memoViewModel: MemoViewModel by viewModels()
+
+    private val selectDialogViewModel: SelectDialogViewModel by viewModels()
+
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     lateinit var binding: FragmentHomeBinding
 
@@ -63,6 +70,11 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     private var selectedDate: LocalDate = LocalDate.now()
     lateinit var selectedCalendarDay: CalendarDay
 
+    @Inject
+    lateinit var inputMethodManager: InputMethodManager
+
+    lateinit var keyboardHelper: KeyboardHelper
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentHomeBinding.bind(view)
             .apply {
@@ -71,6 +83,27 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             }
 
         historyCalenderBinding = binding.viewReportHistoryCalender
+
+        binding.viewSelectDialog.apply {
+            vm = selectDialogViewModel
+            lifecycleOwner = this@HomeFragment
+        }
+
+        val memoBinding = binding.viewMemoDialog.apply {
+            vm = memoViewModel
+            lifecycleOwner = this@HomeFragment
+        }
+
+        keyboardHelper = KeyboardHelper(binding.root) {
+            val lp = memoBinding.root.layoutParams as ConstraintLayout.LayoutParams
+            if (it > 0) {
+                lp.bottomMargin = it + requireContext().dpToPx(16f).toInt()
+            } else {
+                lp.bottomMargin = resources.getDimensionPixelSize(R.dimen.memo_bottom_margin)
+            }
+            memoBinding.root.layoutParams = lp
+        }
+
 
         // animation test
         val distance = 80000
@@ -104,11 +137,52 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
 
         initCalender()
-
-        homeViewModel.refreshData()
+//        homeViewModel.refreshData()
 
         homeViewModel.openRecommendationEvent.observe(viewLifecycleOwner, EventObserver {
             goKeywordSelect()
+        })
+
+        homeViewModel.openSelectDialogEvent.observe(viewLifecycleOwner, EventObserver {
+            selectDialogViewModel.setDialogType(it)
+        })
+
+        homeViewModel.openMemoDialogEvent.observe(viewLifecycleOwner, EventObserver {
+            memoViewModel.setMemoDefault(it.first, it.second, it.third)
+        })
+
+        homeViewModel.homeViewModelToastEvent.observe(viewLifecycleOwner, EventObserver {
+            sharedViewModel.showToastMessage(it)
+        })
+
+        memoViewModel.memoCloseEvent.observe(viewLifecycleOwner, EventObserver {
+            inputMethodManager.hideSoftInputFromWindow(memoBinding.etMemoContent.windowToken, 0)
+            homeViewModel.hideAllBackground()
+        })
+
+        memoViewModel.savedMemoEvent.observe(viewLifecycleOwner, EventObserver {
+            homeViewModel.refreshEditedData()
+        })
+
+        memoViewModel.memoToastMessageEvent.observe(viewLifecycleOwner, EventObserver {
+            sharedViewModel.showToastMessage(it)
+        })
+
+        selectDialogViewModel.onBtcClickEvent.observe(viewLifecycleOwner, EventObserver {
+            when (it) {
+                HOME_HISTORY_DELETE_CANCEL -> {
+                    homeViewModel.hideAllBackground()
+                }
+                HOME_HISTORY_DELETE_CONFIRM -> {
+                    homeViewModel.deleteHistory()
+                }
+                HOME_HISTORY_EDIT_CANCEL -> {
+                    homeViewModel.hideAllBackground()
+                }
+                HOME_HISTORY_EDIT_CONFIRM -> {
+                    homeViewModel.openMemoDialog()
+                }
+            }
         })
     }
 
@@ -127,7 +201,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             // Called only when a new container is needed.
             override fun create(view: View) = DayViewCalendarContainer(view) { clickDay->
                 historyAdapter.setLocaleDay(clickDay.day)
-                homeViewModel.onCalendarClick(year, month, clickDay.day)
+                homeViewModel.refreshCalendarData(year, month, clickDay.day)
                 selectedDate = clickDay.date
                 historyCalenderBinding.calendarViewHistory.notifyDayChanged(clickDay)
                 historyCalenderBinding.calendarViewHistory.notifyDayChanged(selectedCalendarDay)
@@ -172,5 +246,10 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
     private fun goKeywordSelect() {
         findNavController().navigate(R.id.action_homeFragment_to_keywordSelectFragment)
+    }
+
+    override fun onDestroy() {
+        keyboardHelper.dismiss()
+        super.onDestroy()
     }
 }

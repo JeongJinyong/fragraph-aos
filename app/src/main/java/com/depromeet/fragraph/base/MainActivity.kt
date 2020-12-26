@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         // Fixme 삭제 !!
         // 만료된 sample 토큰: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiMiIsImlzcyI6ImFjY291bnRzLmRlcHJvbWVldC5jb20iLCJpYXQiOjE2MDM0MzgxMDYsImV4cCI6MTYwNDA0MjkwNn0.f_Kv78-NK9Ec1oQ2UYCgj3Me9I__M5XO5nTVEZpIQJE
 //        Timber.tag(TAG).i("token: ${this.authSharedPreferences().getString(KEY_AUTH_TOKEN, null)}")
-//        this.authSharedPreferences().edit().clear().commit();
+//        this.authSharedPreferences().edit().clear().commit()
 
         binding = DataBindingUtil.setContentView(
             this,

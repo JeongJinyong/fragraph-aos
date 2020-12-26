@@ -6,5 +6,6 @@ data class History (
     val incense: Incense,
     val memo: Memo?,
     val createdAt: Long,
-    val keywords: List<Keyword>
+    val selectedKeywords: List<Keyword>,
+    val unselectedKeywords: List<Keyword>
 )

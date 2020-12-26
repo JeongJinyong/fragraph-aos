@@ -30,9 +30,12 @@
             app:layout_constraintHorizontal_bias="0.5"
             android:layout_marginBottom="20dp"
             app:lottie_imageAssetsFolder="images"
-            app:lottie_autoPlay="true"
+            app:lottie_autoPlay="false"
             app:lottie_fileName="lottie/logo.json"
-            app:lottie_loop="true" />
+            app:lottie_loop="true"
+            android:elevation="3dp"
+            app:bind_loading_1="@{googleSignInVM.isProgressed}"
+            app:bind_loading_2="@{kakaoSignInVM.isProgressed}"/>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -169,22 +172,6 @@
             android:alpha="0.38"
             android:background="#000000"
             />
-
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/lottie_view_splash"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:lottie_autoPlay="false"
-                app:lottie_loop="true"
-                app:lottie_fileName="lottie/loading.json"
-                app:bind_loading_1="@{googleSignInVM.isProgressed}"
-                app:bind_loading_2="@{kakaoSignInVM.isProgressed}"
-                />
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

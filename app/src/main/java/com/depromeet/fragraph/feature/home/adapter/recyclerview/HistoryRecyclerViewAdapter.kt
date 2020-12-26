@@ -4,6 +4,7 @@ import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
@@ -17,8 +18,9 @@ class HistoryRecyclerViewAdapter(
     private var lifecycleOwner: LifecycleOwner,
     private val scale: Float,
     private var positionLocaleDay: Int,
-    private val firstScrollCallback: (position: Int) -> Unit
+    private val firstScrollCallback: (position: Int) -> Unit,
 ): RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder>(), IRecyclerViewAdapter<HistoryUiModel> {
+
     private val historyList = mutableListOf<HistoryUiModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,16 +43,13 @@ class HistoryRecyclerViewAdapter(
 
     override fun getItemCount(): Int = historyList.size
 
+    override fun onViewDetachedFromWindow(holder: ViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+    }
+
     override fun setItems(data: List<HistoryUiModel>) {
-        val previousSize = historyList.size
-        val newSize = data.size
         historyList.clear()
         historyList.addAll(data)
-//        if (newSize - previousSize > 0) {
-//            notifyItemRangeChanged(0, newSize) // 버그 존재,,
-//        } else {
-//
-//        }
         notifyDataSetChanged()
         val position = historyList.indexOfFirst {
             it.createdAt.milliSecondsToDay().toInt() == positionLocaleDay
@@ -74,33 +73,50 @@ class HistoryRecyclerViewAdapter(
         val binding: ItemHistoryBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        private val mSetRightIn: AnimatorSet = AnimatorInflater.loadAnimator(
+            itemView.context,
+            R.animator.hisotry_flip_right_in
+        ) as AnimatorSet
+        private val mSetLeftOut: AnimatorSet = AnimatorInflater.loadAnimator(
+            itemView.context,
+            R.animator.hisotry_flip_left_out
+        ) as AnimatorSet
+
+        init {
+//            val moreContainer: FrameLayout = itemView.findViewById(R.id.iv_history_more_container)
+//            moreContainer.setOnTouchListener { v, event ->
+//                v?.parent?.requestDisallowInterceptTouchEvent(true)
+//                false
+//            }
+        }
+
         fun bind(history: HistoryUiModel, lifecycleOwner: LifecycleOwner) {
             binding.history = history
             binding.lifecycleOwner = lifecycleOwner
+            if (history.isBack) {
+                binding.flHistoryBack.rotationY = 0f
+                binding.flHistoryBack.alpha = 1f
+                binding.flHistoryFront.rotationY = 180f
+                binding.flHistoryFront.alpha = 0f
+            } else {
+                binding.flHistoryFront.rotationY = 0f
+                binding.flHistoryFront.alpha = 1f
+                binding.flHistoryBack.rotationY = 180f
+                binding.flHistoryBack.alpha = 0f
+            }
 
-            val mSetRightIn: AnimatorSet = AnimatorInflater.loadAnimator(
-                itemView.context,
-                R.animator.hisotry_flip_right_in
-            ) as AnimatorSet
-            val mSetRightOut: AnimatorSet = AnimatorInflater.loadAnimator(
-                itemView.context,
-                R.animator.hisotry_flip_right_out
-            ) as AnimatorSet
-            val mSetLeftIn: AnimatorSet = AnimatorInflater.loadAnimator(
-                itemView.context,
-                R.animator.hisotry_flip_left_in
-            ) as AnimatorSet
-            val mSetLeftOut: AnimatorSet = AnimatorInflater.loadAnimator(
-                itemView.context,
-                R.animator.hisotry_flip_left_out
-            ) as AnimatorSet
+            // 메모가 없다면 flip 되지 않음
+            if (history.memo == null) {
+                binding.flHistoryItem.setOnClickListener(null)
+                return
+            }
 
             binding.flHistoryItem.setOnClickListener {
                 if (!history.isBack) {
-                    mSetRightOut.setTarget(binding.flHistoryFront)
-                    mSetLeftIn.setTarget(binding.flHistoryBack)
-                    mSetRightOut.start()
-                    mSetLeftIn.start()
+                    mSetRightIn.setTarget(binding.flHistoryBack)
+                    mSetLeftOut.setTarget(binding.flHistoryFront)
+                    mSetRightIn.start()
+                    mSetLeftOut.start()
                     history.isBack = true
                 } else {
                     mSetRightIn.setTarget(binding.flHistoryFront)

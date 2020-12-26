@@ -17,6 +17,7 @@ data class TagsApiData(
     val id: Int,
     val name: String,
     val weight: Float,
+    val categoryId: Int,
 ) {
     fun toKeyword(category: Category): Keyword {
         return Keyword(id, name, weight, category)

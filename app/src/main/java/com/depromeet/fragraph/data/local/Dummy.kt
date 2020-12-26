@@ -81,8 +81,10 @@ fun getDummyHistories(localData: LocalData): List<History> {
             listOf(
                 keywords[(Math.random() * 49).toInt()],
                 keywords[(Math.random() * 49).toInt()],
+            ),
+            listOf(
                 keywords[(Math.random() * 49).toInt()]
-            )
+            ),
         ),
         History(
             2,
@@ -92,9 +94,11 @@ fun getDummyHistories(localData: LocalData): List<History> {
             1606917930578,
             listOf(
                 keywords[(Math.random() * 49).toInt()],
+            ),
+            listOf(
                 keywords[(Math.random() * 49).toInt()],
                 keywords[(Math.random() * 49).toInt()]
-            )
+            ),
         ),
         History(
             3,
@@ -104,9 +108,11 @@ fun getDummyHistories(localData: LocalData): List<History> {
             1607022330578,
             listOf(
                 keywords[(Math.random() * 49).toInt()],
+            ),
+            listOf(
                 keywords[(Math.random() * 49).toInt()],
                 keywords[(Math.random() * 49).toInt()]
-            )
+            ),
         ),
         History(
             4,
@@ -116,9 +122,11 @@ fun getDummyHistories(localData: LocalData): List<History> {
             1607101530578,
             listOf(
                 keywords[(Math.random() * 49).toInt()],
+            ),
+            listOf(
                 keywords[(Math.random() * 49).toInt()],
                 keywords[(Math.random() * 49).toInt()]
-            )
+            ),
         ),
         History(
             5,
@@ -129,8 +137,10 @@ fun getDummyHistories(localData: LocalData): List<History> {
             listOf(
                 keywords[(Math.random() * 49).toInt()],
                 keywords[(Math.random() * 49).toInt()],
+            ),
+            listOf(
                 keywords[(Math.random() * 49).toInt()]
-            )
+            ),
         ),
         History(
             6,
@@ -141,8 +151,10 @@ fun getDummyHistories(localData: LocalData): List<History> {
             listOf(
                 keywords[(Math.random() * 49).toInt()],
                 keywords[(Math.random() * 49).toInt()],
+            ),
+            listOf(
                 keywords[(Math.random() * 49).toInt()]
-            )
+            ),
         ),
         History(
             7,
@@ -152,9 +164,11 @@ fun getDummyHistories(localData: LocalData): List<History> {
             1607443530578,
             listOf(
                 keywords[(Math.random() * 49).toInt()],
+            ),
+            listOf(
                 keywords[(Math.random() * 49).toInt()],
                 keywords[(Math.random() * 49).toInt()]
-            )
+            ),
         ),
         History(
             8,
@@ -165,8 +179,10 @@ fun getDummyHistories(localData: LocalData): List<History> {
             listOf(
                 keywords[(Math.random() * 49).toInt()],
                 keywords[(Math.random() * 49).toInt()],
+            ),
+            listOf(
                 keywords[(Math.random() * 49).toInt()]
-            )
+            ),
         ),
         History(
             9,
@@ -178,7 +194,8 @@ fun getDummyHistories(localData: LocalData): List<History> {
                 keywords[(Math.random() * 49).toInt()],
                 keywords[(Math.random() * 49).toInt()],
                 keywords[(Math.random() * 49).toInt()]
-            )
+            ),
+            listOf(),
         ),
         History(
             10,
@@ -189,8 +206,10 @@ fun getDummyHistories(localData: LocalData): List<History> {
             listOf(
                 keywords[(Math.random() * 49).toInt()],
                 keywords[(Math.random() * 49).toInt()],
+            ),
+            listOf(
                 keywords[(Math.random() * 49).toInt()]
-            )
+            ),
         ),
         History(
             11,
@@ -200,9 +219,11 @@ fun getDummyHistories(localData: LocalData): List<History> {
             1607961930578,
             listOf(
                 keywords[(Math.random() * 49).toInt()],
+            ),
+            listOf(
                 keywords[(Math.random() * 49).toInt()],
                 keywords[(Math.random() * 49).toInt()]
-            )
+            ),
         ),
         History(
             12,
@@ -214,7 +235,9 @@ fun getDummyHistories(localData: LocalData): List<History> {
                 keywords[(Math.random() * 49).toInt()],
                 keywords[(Math.random() * 49).toInt()],
                 keywords[(Math.random() * 49).toInt()]
-            )
+            ),
+            listOf(
+            ),
         ),
         History(
             13,
@@ -226,7 +249,9 @@ fun getDummyHistories(localData: LocalData): List<History> {
                 keywords[(Math.random() * 49).toInt()],
                 keywords[(Math.random() * 49).toInt()],
                 keywords[(Math.random() * 49).toInt()]
-            )
+            ),
+            listOf(
+            ),
         ),
     )
 }

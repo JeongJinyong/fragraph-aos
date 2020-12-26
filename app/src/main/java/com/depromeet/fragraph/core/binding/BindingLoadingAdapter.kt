@@ -37,6 +37,6 @@ fun LottieAnimationView.bindTwoLoadingState(
     ) {
         this.playAnimation()
     } else{
-//        this.pauseAnimation()
+        this.pauseAnimation()
     }
 }

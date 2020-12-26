@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import timber.log.Timber
+import java.lang.Exception
 import javax.inject.Inject
 
 class DataFragraphRepository @Inject constructor(
@@ -104,7 +105,8 @@ class DataFragraphRepository @Inject constructor(
                         historyApi.incense.toIncense(category),
                         if(historyApi.memos.isNotEmpty()) historyApi.memos[0].toMemo(null) else null,
                         historyApi.createdAt.toMilliseconds(DF_SIMPLE_ISO_8601, LONDON),
-                        historyApi.tags.map { it.toKeyword(category) }
+                        historyApi.tags.filter { it.categoryId == category.id }.map { it.toKeyword(category) },
+                        historyApi.tags.filter { it.categoryId != category.id }.map { it.toKeyword(category) }
                     )
                 }
                 emit(histories)
@@ -142,7 +144,9 @@ class DataFragraphRepository @Inject constructor(
 
     override fun getMemo(historyId: Int, memoId: Int): Flow<Memo> {
         return flow {
-            localData.memoCached?.let { emit(it) } ?: kotlin.run {
+            if(localData.memoCached != null && localData.memoCached?.id == memoId) {
+                emit(localData.memoCached!!)
+            } else {
                 fragraphApi.getMemo(historyId, memoId).getBodyOrThrow()?.let {response ->
                     val memo = Memo(
                         response.data.memoId,
