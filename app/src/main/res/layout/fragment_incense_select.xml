@@ -125,7 +125,8 @@
             android:layout_marginStart="@dimen/space_large"
             android:layout_marginEnd="@dimen/space_x_small"
             android:layout_marginBottom="@dimen/space_x_large"
-            android:background="@drawable/btn_incense_playtime"
+            android:background="@drawable/btn_bg_incense_playtime"
+            android:onClick="@{() -> vm.onPlaytimeClick()}"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintEnd_toStartOf="@+id/btn_start_meditation"
             app:layout_constraintStart_toStartOf="parent"
@@ -165,15 +166,15 @@
                 app:layout_constraintVertical_bias="0.5"
                 tools:text="05 : 00"/>
 
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:onClick="@{() -> vm.onPlaytimeClick()}"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
+<!--            <FrameLayout-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:onClick="@{() -> vm.onPlaytimeClick()}"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

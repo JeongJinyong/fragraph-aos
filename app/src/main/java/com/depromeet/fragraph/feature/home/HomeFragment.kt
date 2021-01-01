@@ -118,17 +118,21 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         historyAdapter = HistoryRecyclerViewAdapter(viewLifecycleOwner, scale, today.dayOfMonth)
         historyAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onChanged() {
-                if (historyAdapter.previousPosition == -1) return
+                if (historyAdapter.previousPosition == -1) {
+                    binding.rvHistories.scrollToPosition(historyAdapter.currentPosition)
+                    return
+                }
                 if (historyAdapter.currentPosition > historyAdapter.previousPosition) {
                     val margin = requireContext().dpToPx(20f).toInt()
                     val rvWidth = binding.rvHistories.height * 27 / 35
                     val disWith = displayMetrics.widthPixels
                     binding.rvHistories.scrollToPosition(historyAdapter.currentPosition)
                     binding.rvHistories.smoothScrollBy(disWith - margin - rvWidth, 0)
-                } else {
-                    binding.rvHistories.scrollToPosition(historyAdapter.currentPosition + 1)
-//                    binding.rvHistories.smoothScrollToPosition(historyAdapter.currentPosition)
+                    return
                 }
+
+                binding.rvHistories.scrollToPosition(historyAdapter.currentPosition + 1)
+                binding.rvHistories.smoothScrollToPosition(historyAdapter.currentPosition)
             }
         })
 
@@ -152,7 +156,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
 
         initCalender()
-//        homeViewModel.refreshData()
+        homeViewModel.refreshToday()
 
         homeViewModel.openRecommendationEvent.observe(viewLifecycleOwner, EventObserver {
             goKeywordSelect()

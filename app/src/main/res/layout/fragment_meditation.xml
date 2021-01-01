@@ -258,6 +258,19 @@
             app:layout_constraintVertical_bias="0"
             tools:text="Close your \neyes and \nfeel it"/>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_pause"
+            android:layout_marginTop="95dp"
+            android:layout_marginBottom="160dp"
+            android:visibility="@{vm.isMusicPlaying ? View.GONE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_meditation_incense2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
         <Button
             android:id="@+id/btn_meditation_memo"
             android:background="@drawable/btn_bg_floating_memo"

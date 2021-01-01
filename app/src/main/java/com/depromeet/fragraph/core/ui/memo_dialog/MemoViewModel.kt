@@ -34,7 +34,7 @@ class MemoViewModel @ViewModelInject constructor(
         get() = _savedMemoEvent
 
     private val _createdAt = MutableLiveData(0L)
-    val createdAt: MutableLiveData<Long>
+    val createdAt: LiveData<Long>
         get() = _createdAt
 
     private val _memoTitle = MutableLiveData("")
@@ -46,11 +46,11 @@ class MemoViewModel @ViewModelInject constructor(
         get() = _memoContent
 
     private val _memoContentsLength = MutableLiveData("0")
-    val memoContentsLength: MutableLiveData<String>
+    val memoContentsLength: LiveData<String>
         get() = _memoContentsLength
 
     private val _hasContents = MutableLiveData(false)
-    val hasContents: MutableLiveData<Boolean>
+    val hasContents: LiveData<Boolean>
         get() = _hasContents
 
     fun setMemoDefault(historyId: Int, createdAt: Long) {
@@ -80,13 +80,14 @@ class MemoViewModel @ViewModelInject constructor(
     }
     
     fun saveMemo(forceClose: Boolean = false) {
-        if (memoTitle.value!!.isEmpty() && memoContent.value!!.isEmpty()) {
+        if (forceClose && !hasContents.value!!) {
+            _memoCloseEvent.postValue(Event(Unit))
+            return
+        }
+
+        if (!hasContents.value!!) {
             _memoToastMessageEvent.postValue(Event(R.string.memo_content_null))
-            if (forceClose) {
-                _memoCloseEvent.postValue(Event(Unit))
-            } else {
-                return
-            }
+            return
         }
 
         if (historyId != null) {
@@ -159,7 +160,7 @@ class MemoViewModel @ViewModelInject constructor(
     }
 
     fun onContentChanged(s: CharSequence, start :Int, before : Int, count: Int) {
-        memoContentsLength.postValue(s.length.toString())
+        _memoContentsLength.postValue(s.length.toString())
 
         if(s.isNotEmpty() || _memoTitle.value!!.isNotEmpty()) {
             _hasContents.postValue(true)

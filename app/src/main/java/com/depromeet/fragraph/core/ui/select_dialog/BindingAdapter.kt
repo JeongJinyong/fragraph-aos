@@ -13,7 +13,7 @@ fun TextView.bindSelectDialogTitle(type: SelectDialogType) {
         SelectDialogType.SESSION_FINISH -> resources.getString(R.string.session_finish_title)
         SelectDialogType.HOME_HISTORY_DELETE -> resources.getString(R.string.home_history_delete_title)
         SelectDialogType.HOME_HISTORY_EDIT -> resources.getString(R.string.home_history_edit_title)
-        else -> resources.getString(R.string.unknown)
+        else -> resources.getString(R.string.common_unknown)
     }
 }
 
@@ -23,7 +23,7 @@ fun TextView.bindSelectDialogDescription(type: SelectDialogType) {
         SelectDialogType.MEMO_ON_WRITING -> resources.getString(R.string.memo_on_writing_description)
         SelectDialogType.SESSION_OUT -> resources.getString(R.string.session_out_description)
         SelectDialogType.SESSION_FINISH -> resources.getString(R.string.session_finish_description)
-        else -> resources.getString(R.string.unknown)
+        else -> resources.getString(R.string.common_unknown)
     }
 
     this.visibility = when (type) {
@@ -37,23 +37,23 @@ fun TextView.bindSelectDialogDescription(type: SelectDialogType) {
 @BindingAdapter("bind_select_dialog_right")
 fun TextView.bindSelectDialogRightBtn(type: SelectDialogType) {
     this.text = when (type) {
-        SelectDialogType.MEMO_ON_WRITING -> resources.getString(R.string.back)
-        SelectDialogType.SESSION_OUT -> resources.getString(R.string.confirm)
-        SelectDialogType.SESSION_FINISH -> resources.getString(R.string.confirm)
-        SelectDialogType.HOME_HISTORY_DELETE -> resources.getString(R.string.delete)
-        SelectDialogType.HOME_HISTORY_EDIT -> resources.getString(R.string.edit)
-        else -> resources.getString(R.string.unknown)
+        SelectDialogType.MEMO_ON_WRITING -> resources.getString(R.string.common_back)
+        SelectDialogType.SESSION_OUT -> resources.getString(R.string.common_exit)
+        SelectDialogType.SESSION_FINISH -> resources.getString(R.string.common_confirm)
+        SelectDialogType.HOME_HISTORY_DELETE -> resources.getString(R.string.common_delete)
+        SelectDialogType.HOME_HISTORY_EDIT -> resources.getString(R.string.common_edit)
+        else -> resources.getString(R.string.common_unknown)
     }
 }
 
 @BindingAdapter("bind_select_dialog_left")
 fun TextView.bindSelectDialogLeftBtn(type: SelectDialogType) {
     this.text = when (type) {
-        SelectDialogType.MEMO_ON_WRITING -> resources.getString(R.string.out)
-        SelectDialogType.SESSION_OUT -> resources.getString(R.string.cancel)
+        SelectDialogType.MEMO_ON_WRITING -> resources.getString(R.string.common_out)
+        SelectDialogType.SESSION_OUT -> resources.getString(R.string.common_save)
         SelectDialogType.SESSION_FINISH -> ""
-        SelectDialogType.HOME_HISTORY_DELETE -> resources.getString(R.string.cancel)
-        SelectDialogType.HOME_HISTORY_EDIT -> resources.getString(R.string.cancel)
-        else -> resources.getString(R.string.unknown)
+        SelectDialogType.HOME_HISTORY_DELETE -> resources.getString(R.string.common_cancel)
+        SelectDialogType.HOME_HISTORY_EDIT -> resources.getString(R.string.common_cancel)
+        else -> resources.getString(R.string.common_unknown)
     }
 }

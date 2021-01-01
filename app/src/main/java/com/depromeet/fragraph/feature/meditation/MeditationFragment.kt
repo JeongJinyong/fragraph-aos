@@ -126,7 +126,7 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
                         Blurry.delete(binding.fragmentMeditationContainer)
                         meditationViewModel.closeDialog()
                     }
-                    // Todo 저장하는게 잘 이해는 안감.... 다시 물어보자 !!
+                    // Todo 저장하는게 잘 이해는 안감.... 다시 물어보자 !! (메모 있다가 배경 클릭(삭제? 저장?) / 뭔가 그냥 캐시이지 저장이 맞나??)
                     SelectDialogType.MEMO_ON_WRITING -> {
                         // 이 경우에는 메모를 저장
                         memoViewModel.saveMemo(true)
@@ -160,18 +160,15 @@ class MeditationFragment: Fragment(R.layout.fragment_meditation) {
                     blurBackground()
                     meditationViewModel.openDialog(memoVisibility = true, selectDialogVisibility = false)
                 }
-                OUT_SESSION_CANCEL -> {
-                    meditationViewModel.closeDialog()
-                }
-                OUT_SESSION_CONFIRM -> {
-//                    meditationViewModel.deleteHistory()
+                OUT_SESSION_SAVE -> {
+                    sharedViewModel.showToastMessage(R.string.meditation_session_out_save_success)
                     findNavController().popBackStack()
                 }
-                FINISH_SESSION_CANCEL -> {
-                    // Todo 더 하고 싶은 경우는 나중에 다시 개발 ....
+                OUT_SESSION_EXIT -> {
+                    meditationViewModel.deleteHistory()
                     findNavController().popBackStack()
                 }
-                FINISH_SESSION_CONFIRM -> {
+                FINISH_SESSION_RIGHT -> {
                     findNavController().popBackStack()
                 }
             }

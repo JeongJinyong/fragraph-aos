@@ -77,12 +77,6 @@ class HomeViewModel @ViewModelInject constructor(
     val histories: MutableLiveData<List<HistoryUiModel>>
         get() = _histories
 
-    init {
-        val today = LocalDate.now()
-        loadReport()
-        loadHistories(today.year, today.monthValue, today.dayOfMonth)
-    }
-
     private fun loadReport() {
         viewModelScope.launch(Dispatchers.IO) {
             reportRepository.getReport()
@@ -150,6 +144,12 @@ class HomeViewModel @ViewModelInject constructor(
                     histories.postValue(it)
                 }
         }
+    }
+
+    fun refreshToday() {
+        val today = LocalDate.now()
+        loadReport()
+        loadHistories(today.year, today.monthValue, today.dayOfMonth)
     }
 
     fun refreshEditedData() {
