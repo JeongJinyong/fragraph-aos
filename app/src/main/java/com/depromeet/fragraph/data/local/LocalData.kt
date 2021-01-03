@@ -102,12 +102,12 @@ class LocalData {
     val musics = listOf(
         Music(
             1,
-            "Siix0 - \nWalking \nAlone",
+            "Siix0 -\nWalking \nAlone",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/music/music_sandalwood.mp3"
         ),
         Music(
             2,
-            "Miguel\nJohn -\nPsalms",
+            "Miguel\nJohnson -\nPsalms",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/music/music_peppermint.mp3"
         ),
         Music(

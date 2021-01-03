@@ -37,16 +37,7 @@ import java.time.temporal.WeekFields
 import java.util.*
 import javax.inject.Inject
 
-
-// Todo 안되있는 것 리스트
-
-// 메모 비어보이게
-
-// === Home
-// 스크롤 잘 안되는 거 (후순위)
-
 // === Meditation
-// x 버튼 클릭 모달 -> 문구 수정될듯 !!!
 
 @AndroidEntryPoint
 class HomeFragment: Fragment(R.layout.fragment_home) {

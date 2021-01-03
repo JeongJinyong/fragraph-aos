@@ -78,15 +78,24 @@ class MemoViewModel @ViewModelInject constructor(
         _memoTitle.postValue(memo.title)
         _memoContent.postValue(memo.content)
     }
-    
-    fun saveMemo(forceClose: Boolean = false) {
-        if (forceClose && !hasContents.value!!) {
-            _memoCloseEvent.postValue(Event(Unit))
+
+    fun onBgClick() {
+        _memoCloseEvent.postValue(Event(Unit))
+        if (hasContents.value!!) {
+            saveMemo()
             return
         }
 
-        if (!hasContents.value!!) {
-            _memoToastMessageEvent.postValue(Event(R.string.memo_content_null))
+        if (memoId !== null) {
+            deleteMemo(true)
+            return
+        }
+    }
+    
+    fun saveMemo(forceSave: Boolean = false) {
+
+        if (!hasContents.value!! && !forceSave) {
+//            _memoToastMessageEvent.postValue(Event(R.string.memo_content_null))
             return
         }
 
@@ -121,7 +130,12 @@ class MemoViewModel @ViewModelInject constructor(
         }
     }
 
-    fun onDeleteClick() {
+    fun deleteMemo(forceDelete: Boolean = false) {
+        if (!hasContents.value!! && !forceDelete) {
+//            _memoToastMessageEvent.postValue(Event(R.string.memo_content_null))
+            return
+        }
+
         if (historyId != null) {
             viewModelScope.launch(Dispatchers.IO) {
                 memoId?.let {memoId ->
