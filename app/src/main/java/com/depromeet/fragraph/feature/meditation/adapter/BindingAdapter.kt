@@ -1,46 +1,30 @@
 package com.depromeet.fragraph.feature.meditation.adapter
 
-import android.graphics.Color
+import android.graphics.drawable.Animatable
+import android.graphics.drawable.Drawable
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.AnimRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.depromeet.fragraph.R
 import com.depromeet.fragraph.core.ext.enums.toMeditationTitle
-import com.depromeet.fragraph.core.ui.RemovePaddingView
 import com.depromeet.fragraph.domain.model.enums.IncenseTitle
-import jp.wasabeef.blurry.Blurry
 import timber.log.Timber
+
 
 @BindingAdapter("bind_incense_title_meditation")
 fun TextView.bindIncenseTitleMeditation(value: IncenseTitle) {
     this.text = value.toMeditationTitle()
 }
 
-@BindingAdapter("bind_incense_title_meditation")
-fun RemovePaddingView.bindIncenseTitleMeditation(value: IncenseTitle) {
-    this.getTextView()?.text = value.toMeditationTitle()
-}
-
-@BindingAdapter("bind_meditation_memo_background")
-fun ImageView.bindIncenseMeditationMemoBackground(visibility: Int) {
-    this.visibility = visibility
-    if (visibility == View.VISIBLE) {
-        Blurry.with(context)
-            .radius(10)
-            .sampling(8)
-            .color(Color.argb(66, 255, 255, 0))
-            .async()
-            .animate(500)
-            .onto(this.parent as ViewGroup)
-    }
-}
-
-@BindingAdapter("bind_dual_memo_dialog_visibility", "bind_dual_select_dialog_visibility", requireAll = true)
+@BindingAdapter(
+    "bind_dual_memo_dialog_visibility",
+    "bind_dual_select_dialog_visibility",
+    requireAll = true
+)
 fun ConstraintLayout.bindDialogsVisibility(memoVisibility: Boolean, selectVisibility: Boolean) {
     if (memoVisibility || selectVisibility) {
         this.visibility = View.VISIBLE
@@ -57,4 +41,32 @@ fun ImageView.bindPlayingMotionAnim(isMotionPlaying: Boolean) {
     } else {
         this.clearAnimation()
     }
+}
+
+@BindingAdapter("bind_bg_playing")
+fun ImageView.bindBgPlaying(isPlaying: Boolean) {
+    if (isPlaying) {
+        val drawable: Drawable? = this.drawable
+        if (drawable !== null && drawable is Animatable) {
+            drawable.start()
+        }
+    } else {
+        val drawable: Drawable? = this.drawable
+        if (drawable !== null && drawable is Animatable) {
+            drawable.stop()
+        }
+    }
+}
+
+@BindingAdapter(
+    value = [
+        "bind_memo_dialog_visible",
+        "bind_select_dialog_visible",
+    ], requireAll = false
+)
+fun Button.bindMemoBtnVisible(
+    state1: Boolean = false,
+    state2: Boolean = false,
+) {
+    this.visibility = if(state1 || state2) View.GONE else View.VISIBLE
 }

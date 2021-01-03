@@ -28,7 +28,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:image_from_url="@{vm.videoUrl}"
+            app:bind_gif_from_url="@{vm.videoUrl}"
+            app:bind_bg_playing="@{vm.isMusicPlaying}"
             tools:src="@drawable/default_history_background"/>
 
         <ImageView
@@ -279,13 +280,14 @@
             android:layout_marginEnd="@dimen/space_large"
             android:layout_marginBottom="@dimen/space_x_large"
             android:onClick="@{() -> vm.onWritingMemoClick()}"
-            android:visibility="@{vm.memoDialogVisible ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1"
             app:layout_constraintHorizontal_bias="1"
+            app:bind_memo_dialog_visible="@{vm.memoDialogVisible}"
+            app:bind_select_dialog_visible="@{vm.selectDialogVisible}"
             />
 
         <androidx.constraintlayout.widget.ConstraintLayout

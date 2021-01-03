@@ -2,6 +2,7 @@ package com.depromeet.fragraph.feature.meditation
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils

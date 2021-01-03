@@ -45,6 +45,17 @@ fun ImageView.bindImageFromUrl(imageUrl: String?) {
     }
 }
 
+@BindingAdapter("bind_gif_from_url")
+fun ImageView.bindGifFromUrl(imageUrl: String?) {
+    if (!imageUrl.isNullOrEmpty()) {
+        GlideApp.with(this.context)
+            .asGif()
+            .load(imageUrl)
+            .placeholder(ColorDrawable(Color.GRAY))
+            .into(this)
+    }
+}
+
 @BindingAdapter("bind_total_value")
 fun ProgressBar.bindTotalValue(value: Int) {
     this.max = value

@@ -46,9 +46,10 @@ class LocalData {
             IncenseTitle.LAVENDER,
             "라벤더는 정신적 이완을 도와주어\n" +
                     "불면증, 불안감, 우울증의 증상을\n" +
-                    "완화하는 데 효과적이에요. 불안하\n" +
-                    "거나 잠이 오지 않을 때 라벤더 향으\n" +
-                    "로 마음의 안식을 가져보세요.",
+                    "완화하는 데 효과적이에요.\n" +
+                    "불안하거나 잠이 오지 않을 때\n" +
+                    "라벤더 향으로 마음의 안식을\n" +
+                    "가져보세요.",
             "https://fragraph-contents.s3.ap-northeast-2.amazonaws.com/incense_image/image_lavendar.png",
             categories[2]
         ),
